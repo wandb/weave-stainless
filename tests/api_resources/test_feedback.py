@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import (
     FeedbackQueryResponse,
@@ -22,7 +22,7 @@ class TestFeedback:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: WandDemo) -> None:
+    def test_method_create(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -32,7 +32,7 @@ class TestFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    def test_method_create_with_all_params(self, client: WandDemo) -> None:
+    def test_method_create_with_all_params(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -48,7 +48,7 @@ class TestFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: WandDemo) -> None:
+    def test_raw_response_create(self, client: WeightsAndBiases) -> None:
         response = client.feedback.with_raw_response.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -62,7 +62,7 @@ class TestFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: WandDemo) -> None:
+    def test_streaming_response_create(self, client: WeightsAndBiases) -> None:
         with client.feedback.with_streaming_response.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -78,7 +78,7 @@ class TestFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_purge(self, client: WandDemo) -> None:
+    def test_method_purge(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -86,7 +86,7 @@ class TestFeedback:
         assert_matches_type(object, feedback, path=["response"])
 
     @parametrize
-    def test_raw_response_purge(self, client: WandDemo) -> None:
+    def test_raw_response_purge(self, client: WeightsAndBiases) -> None:
         response = client.feedback.with_raw_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -98,7 +98,7 @@ class TestFeedback:
         assert_matches_type(object, feedback, path=["response"])
 
     @parametrize
-    def test_streaming_response_purge(self, client: WandDemo) -> None:
+    def test_streaming_response_purge(self, client: WeightsAndBiases) -> None:
         with client.feedback.with_streaming_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -112,14 +112,14 @@ class TestFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_query(self, client: WandDemo) -> None:
+    def test_method_query(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.query(
             project_id="entity/project",
         )
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    def test_method_query_with_all_params(self, client: WandDemo) -> None:
+    def test_method_query_with_all_params(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.query(
             project_id="entity/project",
             fields=["id", "feedback_type", "payload.note"],
@@ -136,7 +136,7 @@ class TestFeedback:
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    def test_raw_response_query(self, client: WandDemo) -> None:
+    def test_raw_response_query(self, client: WeightsAndBiases) -> None:
         response = client.feedback.with_raw_response.query(
             project_id="entity/project",
         )
@@ -147,7 +147,7 @@ class TestFeedback:
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    def test_streaming_response_query(self, client: WandDemo) -> None:
+    def test_streaming_response_query(self, client: WeightsAndBiases) -> None:
         with client.feedback.with_streaming_response.query(
             project_id="entity/project",
         ) as response:
@@ -160,7 +160,7 @@ class TestFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_replace(self, client: WandDemo) -> None:
+    def test_method_replace(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -171,7 +171,7 @@ class TestFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    def test_method_replace_with_all_params(self, client: WandDemo) -> None:
+    def test_method_replace_with_all_params(self, client: WeightsAndBiases) -> None:
         feedback = client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -188,7 +188,7 @@ class TestFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    def test_raw_response_replace(self, client: WandDemo) -> None:
+    def test_raw_response_replace(self, client: WeightsAndBiases) -> None:
         response = client.feedback.with_raw_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -203,7 +203,7 @@ class TestFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    def test_streaming_response_replace(self, client: WandDemo) -> None:
+    def test_streaming_response_replace(self, client: WeightsAndBiases) -> None:
         with client.feedback.with_streaming_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -224,7 +224,7 @@ class TestAsyncFeedback:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -234,7 +234,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -250,7 +250,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.feedback.with_raw_response.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -264,7 +264,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackCreateResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.feedback.with_streaming_response.create(
             feedback_type="custom",
             payload={"key": "bar"},
@@ -280,7 +280,7 @@ class TestAsyncFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -288,7 +288,7 @@ class TestAsyncFeedback:
         assert_matches_type(object, feedback, path=["response"])
 
     @parametrize
-    async def test_raw_response_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.feedback.with_raw_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -300,7 +300,7 @@ class TestAsyncFeedback:
         assert_matches_type(object, feedback, path=["response"])
 
     @parametrize
-    async def test_streaming_response_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.feedback.with_streaming_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -314,14 +314,14 @@ class TestAsyncFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.query(
             project_id="entity/project",
         )
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_method_query_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.query(
             project_id="entity/project",
             fields=["id", "feedback_type", "payload.note"],
@@ -338,7 +338,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_raw_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.feedback.with_raw_response.query(
             project_id="entity/project",
         )
@@ -349,7 +349,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackQueryResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_streaming_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.feedback.with_streaming_response.query(
             project_id="entity/project",
         ) as response:
@@ -362,7 +362,7 @@ class TestAsyncFeedback:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_replace(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_replace(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -373,7 +373,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_method_replace_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_replace_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         feedback = await async_client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -390,7 +390,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_raw_response_replace(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_replace(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.feedback.with_raw_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
@@ -405,7 +405,7 @@ class TestAsyncFeedback:
         assert_matches_type(FeedbackReplaceResponse, feedback, path=["response"])
 
     @parametrize
-    async def test_streaming_response_replace(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_replace(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.feedback.with_streaming_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",

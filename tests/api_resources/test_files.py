@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import FileCreateResponse
 
@@ -18,7 +18,7 @@ class TestFiles:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: WandDemo) -> None:
+    def test_method_create(self, client: WeightsAndBiases) -> None:
         file = client.files.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -26,7 +26,7 @@ class TestFiles:
         assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: WandDemo) -> None:
+    def test_raw_response_create(self, client: WeightsAndBiases) -> None:
         response = client.files.with_raw_response.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -38,7 +38,7 @@ class TestFiles:
         assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: WandDemo) -> None:
+    def test_streaming_response_create(self, client: WeightsAndBiases) -> None:
         with client.files.with_streaming_response.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -52,7 +52,7 @@ class TestFiles:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_content(self, client: WandDemo) -> None:
+    def test_method_content(self, client: WeightsAndBiases) -> None:
         file = client.files.content(
             digest="digest",
             project_id="project_id",
@@ -60,7 +60,7 @@ class TestFiles:
         assert_matches_type(object, file, path=["response"])
 
     @parametrize
-    def test_raw_response_content(self, client: WandDemo) -> None:
+    def test_raw_response_content(self, client: WeightsAndBiases) -> None:
         response = client.files.with_raw_response.content(
             digest="digest",
             project_id="project_id",
@@ -72,7 +72,7 @@ class TestFiles:
         assert_matches_type(object, file, path=["response"])
 
     @parametrize
-    def test_streaming_response_content(self, client: WandDemo) -> None:
+    def test_streaming_response_content(self, client: WeightsAndBiases) -> None:
         with client.files.with_streaming_response.content(
             digest="digest",
             project_id="project_id",
@@ -90,7 +90,7 @@ class TestAsyncFiles:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create(self, async_client: AsyncWeightsAndBiases) -> None:
         file = await async_client.files.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -98,7 +98,7 @@ class TestAsyncFiles:
         assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.files.with_raw_response.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -110,7 +110,7 @@ class TestAsyncFiles:
         assert_matches_type(FileCreateResponse, file, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.files.with_streaming_response.create(
             file=b"raw file contents",
             project_id="project_id",
@@ -124,7 +124,7 @@ class TestAsyncFiles:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_content(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_content(self, async_client: AsyncWeightsAndBiases) -> None:
         file = await async_client.files.content(
             digest="digest",
             project_id="project_id",
@@ -132,7 +132,7 @@ class TestAsyncFiles:
         assert_matches_type(object, file, path=["response"])
 
     @parametrize
-    async def test_raw_response_content(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_content(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.files.with_raw_response.content(
             digest="digest",
             project_id="project_id",
@@ -144,7 +144,7 @@ class TestAsyncFiles:
         assert_matches_type(object, file, path=["response"])
 
     @parametrize
-    async def test_streaming_response_content(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_content(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.files.with_streaming_response.content(
             digest="digest",
             project_id="project_id",

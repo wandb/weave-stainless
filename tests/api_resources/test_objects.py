@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import (
     ObjectReadResponse,
@@ -22,7 +22,7 @@ class TestObjects:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: WandDemo) -> None:
+    def test_method_create(self, client: WeightsAndBiases) -> None:
         object_ = client.objects.create(
             obj={
                 "object_id": "object_id",
@@ -33,7 +33,7 @@ class TestObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    def test_method_create_with_all_params(self, client: WandDemo) -> None:
+    def test_method_create_with_all_params(self, client: WeightsAndBiases) -> None:
         object_ = client.objects.create(
             obj={
                 "object_id": "object_id",
@@ -46,7 +46,7 @@ class TestObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: WandDemo) -> None:
+    def test_raw_response_create(self, client: WeightsAndBiases) -> None:
         response = client.objects.with_raw_response.create(
             obj={
                 "object_id": "object_id",
@@ -61,7 +61,7 @@ class TestObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: WandDemo) -> None:
+    def test_streaming_response_create(self, client: WeightsAndBiases) -> None:
         with client.objects.with_streaming_response.create(
             obj={
                 "object_id": "object_id",
@@ -78,14 +78,14 @@ class TestObjects:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_query(self, client: WandDemo) -> None:
+    def test_method_query(self, client: WeightsAndBiases) -> None:
         object_ = client.objects.query(
             project_id="user/project",
         )
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    def test_method_query_with_all_params(self, client: WandDemo) -> None:
+    def test_method_query_with_all_params(self, client: WeightsAndBiases) -> None:
         object_ = client.objects.query(
             project_id="user/project",
             filter={
@@ -107,7 +107,7 @@ class TestObjects:
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    def test_raw_response_query(self, client: WandDemo) -> None:
+    def test_raw_response_query(self, client: WeightsAndBiases) -> None:
         response = client.objects.with_raw_response.query(
             project_id="user/project",
         )
@@ -118,7 +118,7 @@ class TestObjects:
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    def test_streaming_response_query(self, client: WandDemo) -> None:
+    def test_streaming_response_query(self, client: WeightsAndBiases) -> None:
         with client.objects.with_streaming_response.query(
             project_id="user/project",
         ) as response:
@@ -131,7 +131,7 @@ class TestObjects:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_read(self, client: WandDemo) -> None:
+    def test_method_read(self, client: WeightsAndBiases) -> None:
         object_ = client.objects.read(
             digest="digest",
             object_id="object_id",
@@ -140,7 +140,7 @@ class TestObjects:
         assert_matches_type(ObjectReadResponse, object_, path=["response"])
 
     @parametrize
-    def test_raw_response_read(self, client: WandDemo) -> None:
+    def test_raw_response_read(self, client: WeightsAndBiases) -> None:
         response = client.objects.with_raw_response.read(
             digest="digest",
             object_id="object_id",
@@ -153,7 +153,7 @@ class TestObjects:
         assert_matches_type(ObjectReadResponse, object_, path=["response"])
 
     @parametrize
-    def test_streaming_response_read(self, client: WandDemo) -> None:
+    def test_streaming_response_read(self, client: WeightsAndBiases) -> None:
         with client.objects.with_streaming_response.read(
             digest="digest",
             object_id="object_id",
@@ -172,7 +172,7 @@ class TestAsyncObjects:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create(self, async_client: AsyncWeightsAndBiases) -> None:
         object_ = await async_client.objects.create(
             obj={
                 "object_id": "object_id",
@@ -183,7 +183,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         object_ = await async_client.objects.create(
             obj={
                 "object_id": "object_id",
@@ -196,7 +196,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.objects.with_raw_response.create(
             obj={
                 "object_id": "object_id",
@@ -211,7 +211,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectCreateResponse, object_, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.objects.with_streaming_response.create(
             obj={
                 "object_id": "object_id",
@@ -228,14 +228,14 @@ class TestAsyncObjects:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query(self, async_client: AsyncWeightsAndBiases) -> None:
         object_ = await async_client.objects.query(
             project_id="user/project",
         )
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    async def test_method_query_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         object_ = await async_client.objects.query(
             project_id="user/project",
             filter={
@@ -257,7 +257,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    async def test_raw_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.objects.with_raw_response.query(
             project_id="user/project",
         )
@@ -268,7 +268,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectQueryResponse, object_, path=["response"])
 
     @parametrize
-    async def test_streaming_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.objects.with_streaming_response.query(
             project_id="user/project",
         ) as response:
@@ -281,7 +281,7 @@ class TestAsyncObjects:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_read(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_read(self, async_client: AsyncWeightsAndBiases) -> None:
         object_ = await async_client.objects.read(
             digest="digest",
             object_id="object_id",
@@ -290,7 +290,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectReadResponse, object_, path=["response"])
 
     @parametrize
-    async def test_raw_response_read(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_read(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.objects.with_raw_response.read(
             digest="digest",
             object_id="object_id",
@@ -303,7 +303,7 @@ class TestAsyncObjects:
         assert_matches_type(ObjectReadResponse, object_, path=["response"])
 
     @parametrize
-    async def test_streaming_response_read(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_read(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.objects.with_streaming_response.read(
             digest="digest",
             object_id="object_id",
