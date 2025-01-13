@@ -12,6 +12,7 @@ from .shared import (
     NotOperation as NotOperation,
     GetFieldOperator as GetFieldOperator,
     LiteralOperation as LiteralOperation,
+    ContainsOperation as ContainsOperation,
 )
 from .call_end_params import CallEndParams as CallEndParams
 from .server_info_res import ServerInfoRes as ServerInfoRes

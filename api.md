@@ -3,6 +3,7 @@
 ```python
 from wand_demo.types import (
     AndOperation,
+    ContainsOperation,
     EqOperation,
     GetFieldOperator,
     GtOperation,
