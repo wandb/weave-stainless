@@ -2,6 +2,17 @@
 
 from __future__ import annotations
 
+from .shared import (
+    EqOperation as EqOperation,
+    GtOperation as GtOperation,
+    InOperation as InOperation,
+    OrOperation as OrOperation,
+    AndOperation as AndOperation,
+    GteOperation as GteOperation,
+    NotOperation as NotOperation,
+    GetFieldOperator as GetFieldOperator,
+    LiteralOperation as LiteralOperation,
+)
 from .call_end_params import CallEndParams as CallEndParams
 from .server_info_res import ServerInfoRes as ServerInfoRes
 from .call_read_params import CallReadParams as CallReadParams

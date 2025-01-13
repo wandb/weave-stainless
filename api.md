@@ -1,3 +1,19 @@
+# Shared Types
+
+```python
+from wand_demo.types import (
+    AndOperation,
+    EqOperation,
+    GetFieldOperator,
+    GtOperation,
+    GteOperation,
+    InOperation,
+    LiteralOperation,
+    NotOperation,
+    OrOperation,
+)
+```
+
 # Services
 
 Types:
