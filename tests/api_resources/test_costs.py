@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import (
     CostQueryResponse,
@@ -22,7 +22,7 @@ class TestCosts:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: WandDemo) -> None:
+    def test_method_create(self, client: WeightsAndBiases) -> None:
         cost = client.costs.create(
             costs={
                 "foo": {
@@ -35,7 +35,7 @@ class TestCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    def test_method_create_with_all_params(self, client: WandDemo) -> None:
+    def test_method_create_with_all_params(self, client: WeightsAndBiases) -> None:
         cost = client.costs.create(
             costs={
                 "foo": {
@@ -53,7 +53,7 @@ class TestCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: WandDemo) -> None:
+    def test_raw_response_create(self, client: WeightsAndBiases) -> None:
         response = client.costs.with_raw_response.create(
             costs={
                 "foo": {
@@ -70,7 +70,7 @@ class TestCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: WandDemo) -> None:
+    def test_streaming_response_create(self, client: WeightsAndBiases) -> None:
         with client.costs.with_streaming_response.create(
             costs={
                 "foo": {
@@ -89,7 +89,7 @@ class TestCosts:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_purge(self, client: WandDemo) -> None:
+    def test_method_purge(self, client: WeightsAndBiases) -> None:
         cost = client.costs.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -97,7 +97,7 @@ class TestCosts:
         assert_matches_type(object, cost, path=["response"])
 
     @parametrize
-    def test_raw_response_purge(self, client: WandDemo) -> None:
+    def test_raw_response_purge(self, client: WeightsAndBiases) -> None:
         response = client.costs.with_raw_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -109,7 +109,7 @@ class TestCosts:
         assert_matches_type(object, cost, path=["response"])
 
     @parametrize
-    def test_streaming_response_purge(self, client: WandDemo) -> None:
+    def test_streaming_response_purge(self, client: WeightsAndBiases) -> None:
         with client.costs.with_streaming_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -123,14 +123,14 @@ class TestCosts:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_query(self, client: WandDemo) -> None:
+    def test_method_query(self, client: WeightsAndBiases) -> None:
         cost = client.costs.query(
             project_id="entity/project",
         )
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    def test_method_query_with_all_params(self, client: WandDemo) -> None:
+    def test_method_query_with_all_params(self, client: WeightsAndBiases) -> None:
         cost = client.costs.query(
             project_id="entity/project",
             fields=[
@@ -156,7 +156,7 @@ class TestCosts:
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    def test_raw_response_query(self, client: WandDemo) -> None:
+    def test_raw_response_query(self, client: WeightsAndBiases) -> None:
         response = client.costs.with_raw_response.query(
             project_id="entity/project",
         )
@@ -167,7 +167,7 @@ class TestCosts:
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    def test_streaming_response_query(self, client: WandDemo) -> None:
+    def test_streaming_response_query(self, client: WeightsAndBiases) -> None:
         with client.costs.with_streaming_response.query(
             project_id="entity/project",
         ) as response:
@@ -184,7 +184,7 @@ class TestAsyncCosts:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.create(
             costs={
                 "foo": {
@@ -197,7 +197,7 @@ class TestAsyncCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.create(
             costs={
                 "foo": {
@@ -215,7 +215,7 @@ class TestAsyncCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.costs.with_raw_response.create(
             costs={
                 "foo": {
@@ -232,7 +232,7 @@ class TestAsyncCosts:
         assert_matches_type(CostCreateResponse, cost, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.costs.with_streaming_response.create(
             costs={
                 "foo": {
@@ -251,7 +251,7 @@ class TestAsyncCosts:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -259,7 +259,7 @@ class TestAsyncCosts:
         assert_matches_type(object, cost, path=["response"])
 
     @parametrize
-    async def test_raw_response_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.costs.with_raw_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -271,7 +271,7 @@ class TestAsyncCosts:
         assert_matches_type(object, cost, path=["response"])
 
     @parametrize
-    async def test_streaming_response_purge(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.costs.with_streaming_response.purge(
             project_id="entity/project",
             query={"expr": {}},
@@ -285,14 +285,14 @@ class TestAsyncCosts:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.query(
             project_id="entity/project",
         )
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    async def test_method_query_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.query(
             project_id="entity/project",
             fields=[
@@ -318,7 +318,7 @@ class TestAsyncCosts:
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    async def test_raw_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.costs.with_raw_response.query(
             project_id="entity/project",
         )
@@ -329,7 +329,7 @@ class TestAsyncCosts:
         assert_matches_type(CostQueryResponse, cost, path=["response"])
 
     @parametrize
-    async def test_streaming_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.costs.with_streaming_response.query(
             project_id="entity/project",
         ) as response:

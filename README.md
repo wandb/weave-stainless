@@ -1,8 +1,8 @@
-# Wand Demo Python API library
+# Weights And Biases Python API library
 
 [![PyPI version](https://img.shields.io/pypi/v/wand_demo.svg)](https://pypi.org/project/wand_demo/)
 
-The Wand Demo Python library provides convenient access to the Wand Demo REST API from any Python 3.8+
+The Weights And Biases Python library provides convenient access to the Weights And Biases REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -27,9 +27,9 @@ pip install git+ssh://git@github.com/stainless-sdks/wand-demo-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
-client = WandDemo()
+client = WeightsAndBiases()
 
 object = client.objects.create(
     obj={
@@ -48,13 +48,13 @@ so that your Username is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncWandDemo` instead of `WandDemo` and use `await` with each API call:
+Simply import `AsyncWeightsAndBiases` instead of `WeightsAndBiases` and use `await` with each API call:
 
 ```python
 import asyncio
-from wand_demo import AsyncWandDemo
+from wand_demo import AsyncWeightsAndBiases
 
-client = AsyncWandDemo()
+client = AsyncWeightsAndBiases()
 
 
 async def main() -> None:
@@ -93,9 +93,9 @@ All errors inherit from `wand_demo.APIError`.
 
 ```python
 import wand_demo
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
-client = WandDemo()
+client = WeightsAndBiases()
 
 try:
     client.objects.create(
@@ -138,10 +138,10 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
 # Configure the default for all requests:
-client = WandDemo(
+client = WeightsAndBiases(
     # default is 2
     max_retries=0,
 )
@@ -162,16 +162,16 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
 # Configure the default for all requests:
-client = WandDemo(
+client = WeightsAndBiases(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = WandDemo(
+client = WeightsAndBiases(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -195,10 +195,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `WAND_DEMO_LOG` to `info`.
+You can enable logging by setting the environment variable `WEIGHTS_AND_BIASES_LOG` to `info`.
 
 ```shell
-$ export WAND_DEMO_LOG=info
+$ export WEIGHTS_AND_BIASES_LOG=info
 ```
 
 Or to `debug` for more verbose logging.
@@ -220,9 +220,9 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
-client = WandDemo()
+client = WeightsAndBiases()
 response = client.objects.with_raw_response.create(
     obj={
         "object_id": "object_id",
@@ -306,10 +306,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from wand_demo import WandDemo, DefaultHttpxClient
+from wand_demo import WeightsAndBiases, DefaultHttpxClient
 
-client = WandDemo(
-    # Or use the `WAND_DEMO_BASE_URL` env var
+client = WeightsAndBiases(
+    # Or use the `WEIGHTS_AND_BIASES_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
@@ -329,9 +329,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from wand_demo import WandDemo
+from wand_demo import WeightsAndBiases
 
-with WandDemo() as client:
+with WeightsAndBiases() as client:
   # make requests here
   ...
 

@@ -8,13 +8,13 @@ from typing import TYPE_CHECKING
 import anyio
 
 if TYPE_CHECKING:
-    from ._client import WandDemo, AsyncWandDemo
+    from ._client import WeightsAndBiases, AsyncWeightsAndBiases
 
 
 class SyncAPIResource:
-    _client: WandDemo
+    _client: WeightsAndBiases
 
-    def __init__(self, client: WandDemo) -> None:
+    def __init__(self, client: WeightsAndBiases) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post
@@ -28,9 +28,9 @@ class SyncAPIResource:
 
 
 class AsyncAPIResource:
-    _client: AsyncWandDemo
+    _client: AsyncWeightsAndBiases
 
-    def __init__(self, client: AsyncWandDemo) -> None:
+    def __init__(self, client: AsyncWeightsAndBiases) -> None:
         self._client = client
         self._get = client.get
         self._post = client.post

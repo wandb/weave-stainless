@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import (
     TableQueryResponse,
@@ -23,7 +23,7 @@ class TestTables:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_create(self, client: WandDemo) -> None:
+    def test_method_create(self, client: WeightsAndBiases) -> None:
         table = client.tables.create(
             table={
                 "project_id": "project_id",
@@ -33,7 +33,7 @@ class TestTables:
         assert_matches_type(TableCreateResponse, table, path=["response"])
 
     @parametrize
-    def test_raw_response_create(self, client: WandDemo) -> None:
+    def test_raw_response_create(self, client: WeightsAndBiases) -> None:
         response = client.tables.with_raw_response.create(
             table={
                 "project_id": "project_id",
@@ -47,7 +47,7 @@ class TestTables:
         assert_matches_type(TableCreateResponse, table, path=["response"])
 
     @parametrize
-    def test_streaming_response_create(self, client: WandDemo) -> None:
+    def test_streaming_response_create(self, client: WeightsAndBiases) -> None:
         with client.tables.with_streaming_response.create(
             table={
                 "project_id": "project_id",
@@ -63,7 +63,7 @@ class TestTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_update(self, client: WandDemo) -> None:
+    def test_method_update(self, client: WeightsAndBiases) -> None:
         table = client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -72,7 +72,7 @@ class TestTables:
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
     @parametrize
-    def test_raw_response_update(self, client: WandDemo) -> None:
+    def test_raw_response_update(self, client: WeightsAndBiases) -> None:
         response = client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -85,7 +85,7 @@ class TestTables:
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
     @parametrize
-    def test_streaming_response_update(self, client: WandDemo) -> None:
+    def test_streaming_response_update(self, client: WeightsAndBiases) -> None:
         with client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -100,7 +100,7 @@ class TestTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_query(self, client: WandDemo) -> None:
+    def test_method_query(self, client: WeightsAndBiases) -> None:
         table = client.tables.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -108,7 +108,7 @@ class TestTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    def test_method_query_with_all_params(self, client: WandDemo) -> None:
+    def test_method_query_with_all_params(self, client: WeightsAndBiases) -> None:
         table = client.tables.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -130,7 +130,7 @@ class TestTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    def test_raw_response_query(self, client: WandDemo) -> None:
+    def test_raw_response_query(self, client: WeightsAndBiases) -> None:
         response = client.tables.with_raw_response.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -142,7 +142,7 @@ class TestTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    def test_streaming_response_query(self, client: WandDemo) -> None:
+    def test_streaming_response_query(self, client: WeightsAndBiases) -> None:
         with client.tables.with_streaming_response.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -156,7 +156,7 @@ class TestTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_query_stats(self, client: WandDemo) -> None:
+    def test_method_query_stats(self, client: WeightsAndBiases) -> None:
         table = client.tables.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -164,7 +164,7 @@ class TestTables:
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
 
     @parametrize
-    def test_raw_response_query_stats(self, client: WandDemo) -> None:
+    def test_raw_response_query_stats(self, client: WeightsAndBiases) -> None:
         response = client.tables.with_raw_response.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -176,7 +176,7 @@ class TestTables:
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
 
     @parametrize
-    def test_streaming_response_query_stats(self, client: WandDemo) -> None:
+    def test_streaming_response_query_stats(self, client: WeightsAndBiases) -> None:
         with client.tables.with_streaming_response.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -194,7 +194,7 @@ class TestAsyncTables:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_create(self, async_client: AsyncWeightsAndBiases) -> None:
         table = await async_client.tables.create(
             table={
                 "project_id": "project_id",
@@ -204,7 +204,7 @@ class TestAsyncTables:
         assert_matches_type(TableCreateResponse, table, path=["response"])
 
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.tables.with_raw_response.create(
             table={
                 "project_id": "project_id",
@@ -218,7 +218,7 @@ class TestAsyncTables:
         assert_matches_type(TableCreateResponse, table, path=["response"])
 
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_create(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.tables.with_streaming_response.create(
             table={
                 "project_id": "project_id",
@@ -234,7 +234,7 @@ class TestAsyncTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_update(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_update(self, async_client: AsyncWeightsAndBiases) -> None:
         table = await async_client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -243,7 +243,7 @@ class TestAsyncTables:
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
     @parametrize
-    async def test_raw_response_update(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_update(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -256,7 +256,7 @@ class TestAsyncTables:
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
     @parametrize
-    async def test_streaming_response_update(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_update(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
@@ -271,7 +271,7 @@ class TestAsyncTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query(self, async_client: AsyncWeightsAndBiases) -> None:
         table = await async_client.tables.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -279,7 +279,7 @@ class TestAsyncTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    async def test_method_query_with_all_params(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         table = await async_client.tables.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -301,7 +301,7 @@ class TestAsyncTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    async def test_raw_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.tables.with_raw_response.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -313,7 +313,7 @@ class TestAsyncTables:
         assert_matches_type(TableQueryResponse, table, path=["response"])
 
     @parametrize
-    async def test_streaming_response_query(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_query(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.tables.with_streaming_response.query(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -327,7 +327,7 @@ class TestAsyncTables:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_query_stats(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_query_stats(self, async_client: AsyncWeightsAndBiases) -> None:
         table = await async_client.tables.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -335,7 +335,7 @@ class TestAsyncTables:
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
 
     @parametrize
-    async def test_raw_response_query_stats(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_query_stats(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.tables.with_raw_response.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",
@@ -347,7 +347,7 @@ class TestAsyncTables:
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
 
     @parametrize
-    async def test_streaming_response_query_stats(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_query_stats(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.tables.with_streaming_response.query_stats(
             digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
             project_id="my_entity/my_project",

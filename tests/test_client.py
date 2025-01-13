@@ -20,7 +20,7 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from wand_demo import WandDemo, AsyncWandDemo, APIResponseValidationError
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases, APIResponseValidationError
 from wand_demo._types import Omit
 from wand_demo._models import BaseModel, FinalRequestOptions
 from wand_demo._constants import RAW_RESPONSE_HEADER
@@ -49,7 +49,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: WandDemo | AsyncWandDemo) -> int:
+def _get_open_connections(client: WeightsAndBiases | AsyncWeightsAndBiases) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -57,8 +57,8 @@ def _get_open_connections(client: WandDemo | AsyncWandDemo) -> int:
     return len(pool._requests)
 
 
-class TestWandDemo:
-    client = WandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+class TestWeightsAndBiases:
+    client = WeightsAndBiases(base_url=base_url, username=username, password=password, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -109,7 +109,7 @@ class TestWandDemo:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -147,7 +147,7 @@ class TestWandDemo:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -276,7 +276,7 @@ class TestWandDemo:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -291,7 +291,7 @@ class TestWandDemo:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = WandDemo(
+            client = WeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -305,7 +305,7 @@ class TestWandDemo:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = WandDemo(
+            client = WeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -319,7 +319,7 @@ class TestWandDemo:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = WandDemo(
+            client = WeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -334,7 +334,7 @@ class TestWandDemo:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                WandDemo(
+                WeightsAndBiases(
                     base_url=base_url,
                     username=username,
                     password=password,
@@ -343,7 +343,7 @@ class TestWandDemo:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -354,7 +354,7 @@ class TestWandDemo:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = WandDemo(
+        client2 = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -369,7 +369,7 @@ class TestWandDemo:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_default_query_option(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -487,7 +487,7 @@ class TestWandDemo:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: WandDemo) -> None:
+    def test_multipart_repeating_array(self, client: WeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -574,7 +574,7 @@ class TestWandDemo:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = WandDemo(
+        client = WeightsAndBiases(
             base_url="https://example.com/from_init",
             username=username,
             password=password,
@@ -587,20 +587,20 @@ class TestWandDemo:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(WAND_DEMO_BASE_URL="http://localhost:5000/from/env"):
-            client = WandDemo(username=username, password=password, _strict_response_validation=True)
+        with update_env(WEIGHTS_AND_BIASES_BASE_URL="http://localhost:5000/from/env"):
+            client = WeightsAndBiases(username=username, password=password, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -610,7 +610,7 @@ class TestWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: WandDemo) -> None:
+    def test_base_url_trailing_slash(self, client: WeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -623,13 +623,13 @@ class TestWandDemo:
     @pytest.mark.parametrize(
         "client",
         [
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -639,7 +639,7 @@ class TestWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: WandDemo) -> None:
+    def test_base_url_no_trailing_slash(self, client: WeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -652,13 +652,13 @@ class TestWandDemo:
     @pytest.mark.parametrize(
         "client",
         [
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WandDemo(
+            WeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -668,7 +668,7 @@ class TestWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: WandDemo) -> None:
+    def test_absolute_request_url(self, client: WeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -679,7 +679,9 @@ class TestWandDemo:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = WandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
         assert not client.is_closed()
 
         copied = client.copy()
@@ -690,7 +692,9 @@ class TestWandDemo:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = WandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -711,7 +715,7 @@ class TestWandDemo:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            WandDemo(
+            WeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -726,14 +730,16 @@ class TestWandDemo:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = WandDemo(
+        strict_client = WeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = WandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=False)
+        client = WeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=False
+        )
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -761,7 +767,9 @@ class TestWandDemo:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = WandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -822,7 +830,7 @@ class TestWandDemo:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: WandDemo,
+        client: WeightsAndBiases,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -857,7 +865,7 @@ class TestWandDemo:
     @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: WandDemo, failures_before_success: int, respx_mock: MockRouter
+        self, client: WeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -887,7 +895,7 @@ class TestWandDemo:
     @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: WandDemo, failures_before_success: int, respx_mock: MockRouter
+        self, client: WeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -914,8 +922,10 @@ class TestWandDemo:
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
 
-class TestAsyncWandDemo:
-    client = AsyncWandDemo(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+class TestAsyncWeightsAndBiases:
+    client = AsyncWeightsAndBiases(
+        base_url=base_url, username=username, password=password, _strict_response_validation=True
+    )
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -968,7 +978,7 @@ class TestAsyncWandDemo:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1006,7 +1016,7 @@ class TestAsyncWandDemo:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1135,7 +1145,7 @@ class TestAsyncWandDemo:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1150,7 +1160,7 @@ class TestAsyncWandDemo:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncWandDemo(
+            client = AsyncWeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1164,7 +1174,7 @@ class TestAsyncWandDemo:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncWandDemo(
+            client = AsyncWeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1178,7 +1188,7 @@ class TestAsyncWandDemo:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncWandDemo(
+            client = AsyncWeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1193,7 +1203,7 @@ class TestAsyncWandDemo:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncWandDemo(
+                AsyncWeightsAndBiases(
                     base_url=base_url,
                     username=username,
                     password=password,
@@ -1202,7 +1212,7 @@ class TestAsyncWandDemo:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1213,7 +1223,7 @@ class TestAsyncWandDemo:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncWandDemo(
+        client2 = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1228,7 +1238,7 @@ class TestAsyncWandDemo:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_default_query_option(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url,
             username=username,
             password=password,
@@ -1346,7 +1356,7 @@ class TestAsyncWandDemo:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncWandDemo) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncWeightsAndBiases) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -1433,7 +1443,7 @@ class TestAsyncWandDemo:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url="https://example.com/from_init",
             username=username,
             password=password,
@@ -1446,20 +1456,20 @@ class TestAsyncWandDemo:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(WAND_DEMO_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncWandDemo(username=username, password=password, _strict_response_validation=True)
+        with update_env(WEIGHTS_AND_BIASES_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncWeightsAndBiases(username=username, password=password, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1469,7 +1479,7 @@ class TestAsyncWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncWandDemo) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncWeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1482,13 +1492,13 @@ class TestAsyncWandDemo:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1498,7 +1508,7 @@ class TestAsyncWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncWandDemo) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncWeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1511,13 +1521,13 @@ class TestAsyncWandDemo:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1527,7 +1537,7 @@ class TestAsyncWandDemo:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncWandDemo) -> None:
+    def test_absolute_request_url(self, client: AsyncWeightsAndBiases) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1538,7 +1548,7 @@ class TestAsyncWandDemo:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
         assert not client.is_closed()
@@ -1552,7 +1562,7 @@ class TestAsyncWandDemo:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
         async with client as c2:
@@ -1576,7 +1586,7 @@ class TestAsyncWandDemo:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncWandDemo(
+            AsyncWeightsAndBiases(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1592,14 +1602,14 @@ class TestAsyncWandDemo:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncWandDemo(
+        strict_client = AsyncWeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=False
         )
 
@@ -1630,7 +1640,7 @@ class TestAsyncWandDemo:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncWandDemo(
+        client = AsyncWeightsAndBiases(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
@@ -1694,7 +1704,7 @@ class TestAsyncWandDemo:
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncWandDemo,
+        async_client: AsyncWeightsAndBiases,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1730,7 +1740,7 @@ class TestAsyncWandDemo:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncWandDemo, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncWeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1761,7 +1771,7 @@ class TestAsyncWandDemo:
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncWandDemo, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncWeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 

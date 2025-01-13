@@ -27,7 +27,7 @@ from ._utils import (
 from ._version import __version__
 from .resources import refs, calls, costs, files, tables, objects, feedback, services
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import WandDemoError, APIStatusError
+from ._exceptions import APIStatusError, WeightsAndBiasesError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -39,14 +39,14 @@ __all__ = [
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "WandDemo",
-    "AsyncWandDemo",
+    "WeightsAndBiases",
+    "AsyncWeightsAndBiases",
     "Client",
     "AsyncClient",
 ]
 
 
-class WandDemo(SyncAPIClient):
+class WeightsAndBiases(SyncAPIClient):
     services: services.ServicesResource
     calls: calls.CallsResource
     objects: objects.ObjectsResource
@@ -55,8 +55,8 @@ class WandDemo(SyncAPIClient):
     files: files.FilesResource
     costs: costs.CostsResource
     feedback: feedback.FeedbackResource
-    with_raw_response: WandDemoWithRawResponse
-    with_streaming_response: WandDemoWithStreamedResponse
+    with_raw_response: WeightsAndBiasesWithRawResponse
+    with_streaming_response: WeightsAndBiasesWithStreamedResponse
 
     # client options
     username: str
@@ -86,7 +86,7 @@ class WandDemo(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous wand-demo client instance.
+        """Construct a new synchronous weights and biases client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -95,7 +95,7 @@ class WandDemo(SyncAPIClient):
         if username is None:
             username = os.environ.get("USERNAME")
         if username is None:
-            raise WandDemoError(
+            raise WeightsAndBiasesError(
                 "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
             )
         self.username = username
@@ -103,13 +103,13 @@ class WandDemo(SyncAPIClient):
         if password is None:
             password = os.environ.get("PASSWORD")
         if password is None:
-            raise WandDemoError(
+            raise WeightsAndBiasesError(
                 "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
         self.password = password
 
         if base_url is None:
-            base_url = os.environ.get("WAND_DEMO_BASE_URL")
+            base_url = os.environ.get("WEIGHTS_AND_BIASES_BASE_URL")
         if base_url is None:
             base_url = f"https://api.wandb.ai"
 
@@ -132,8 +132,8 @@ class WandDemo(SyncAPIClient):
         self.files = files.FilesResource(self)
         self.costs = costs.CostsResource(self)
         self.feedback = feedback.FeedbackResource(self)
-        self.with_raw_response = WandDemoWithRawResponse(self)
-        self.with_streaming_response = WandDemoWithStreamedResponse(self)
+        self.with_raw_response = WeightsAndBiasesWithRawResponse(self)
+        self.with_streaming_response = WeightsAndBiasesWithStreamedResponse(self)
 
     @property
     @override
@@ -243,7 +243,7 @@ class WandDemo(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncWandDemo(AsyncAPIClient):
+class AsyncWeightsAndBiases(AsyncAPIClient):
     services: services.AsyncServicesResource
     calls: calls.AsyncCallsResource
     objects: objects.AsyncObjectsResource
@@ -252,8 +252,8 @@ class AsyncWandDemo(AsyncAPIClient):
     files: files.AsyncFilesResource
     costs: costs.AsyncCostsResource
     feedback: feedback.AsyncFeedbackResource
-    with_raw_response: AsyncWandDemoWithRawResponse
-    with_streaming_response: AsyncWandDemoWithStreamedResponse
+    with_raw_response: AsyncWeightsAndBiasesWithRawResponse
+    with_streaming_response: AsyncWeightsAndBiasesWithStreamedResponse
 
     # client options
     username: str
@@ -283,7 +283,7 @@ class AsyncWandDemo(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async wand-demo client instance.
+        """Construct a new async weights and biases client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -292,7 +292,7 @@ class AsyncWandDemo(AsyncAPIClient):
         if username is None:
             username = os.environ.get("USERNAME")
         if username is None:
-            raise WandDemoError(
+            raise WeightsAndBiasesError(
                 "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
             )
         self.username = username
@@ -300,13 +300,13 @@ class AsyncWandDemo(AsyncAPIClient):
         if password is None:
             password = os.environ.get("PASSWORD")
         if password is None:
-            raise WandDemoError(
+            raise WeightsAndBiasesError(
                 "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
         self.password = password
 
         if base_url is None:
-            base_url = os.environ.get("WAND_DEMO_BASE_URL")
+            base_url = os.environ.get("WEIGHTS_AND_BIASES_BASE_URL")
         if base_url is None:
             base_url = f"https://api.wandb.ai"
 
@@ -329,8 +329,8 @@ class AsyncWandDemo(AsyncAPIClient):
         self.files = files.AsyncFilesResource(self)
         self.costs = costs.AsyncCostsResource(self)
         self.feedback = feedback.AsyncFeedbackResource(self)
-        self.with_raw_response = AsyncWandDemoWithRawResponse(self)
-        self.with_streaming_response = AsyncWandDemoWithStreamedResponse(self)
+        self.with_raw_response = AsyncWeightsAndBiasesWithRawResponse(self)
+        self.with_streaming_response = AsyncWeightsAndBiasesWithStreamedResponse(self)
 
     @property
     @override
@@ -440,8 +440,8 @@ class AsyncWandDemo(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class WandDemoWithRawResponse:
-    def __init__(self, client: WandDemo) -> None:
+class WeightsAndBiasesWithRawResponse:
+    def __init__(self, client: WeightsAndBiases) -> None:
         self.services = services.ServicesResourceWithRawResponse(client.services)
         self.calls = calls.CallsResourceWithRawResponse(client.calls)
         self.objects = objects.ObjectsResourceWithRawResponse(client.objects)
@@ -452,8 +452,8 @@ class WandDemoWithRawResponse:
         self.feedback = feedback.FeedbackResourceWithRawResponse(client.feedback)
 
 
-class AsyncWandDemoWithRawResponse:
-    def __init__(self, client: AsyncWandDemo) -> None:
+class AsyncWeightsAndBiasesWithRawResponse:
+    def __init__(self, client: AsyncWeightsAndBiases) -> None:
         self.services = services.AsyncServicesResourceWithRawResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithRawResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithRawResponse(client.objects)
@@ -464,8 +464,8 @@ class AsyncWandDemoWithRawResponse:
         self.feedback = feedback.AsyncFeedbackResourceWithRawResponse(client.feedback)
 
 
-class WandDemoWithStreamedResponse:
-    def __init__(self, client: WandDemo) -> None:
+class WeightsAndBiasesWithStreamedResponse:
+    def __init__(self, client: WeightsAndBiases) -> None:
         self.services = services.ServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.CallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.ObjectsResourceWithStreamingResponse(client.objects)
@@ -476,8 +476,8 @@ class WandDemoWithStreamedResponse:
         self.feedback = feedback.FeedbackResourceWithStreamingResponse(client.feedback)
 
 
-class AsyncWandDemoWithStreamedResponse:
-    def __init__(self, client: AsyncWandDemo) -> None:
+class AsyncWeightsAndBiasesWithStreamedResponse:
+    def __init__(self, client: AsyncWeightsAndBiases) -> None:
         self.services = services.AsyncServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithStreamingResponse(client.objects)
@@ -488,6 +488,6 @@ class AsyncWandDemoWithStreamedResponse:
         self.feedback = feedback.AsyncFeedbackResourceWithStreamingResponse(client.feedback)
 
 
-Client = WandDemo
+Client = WeightsAndBiases
 
-AsyncClient = AsyncWandDemo
+AsyncClient = AsyncWeightsAndBiases

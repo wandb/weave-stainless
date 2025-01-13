@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class WandDemoError(Exception):
+class WeightsAndBiasesError(Exception):
     pass
 
 
-class APIError(WandDemoError):
+class APIError(WeightsAndBiasesError):
     message: str
     request: httpx.Request
 

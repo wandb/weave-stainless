@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
 from wand_demo.types import RefReadBatchResponse
 
@@ -18,14 +18,14 @@ class TestRefs:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_read_batch(self, client: WandDemo) -> None:
+    def test_method_read_batch(self, client: WeightsAndBiases) -> None:
         ref = client.refs.read_batch(
             refs=["string"],
         )
         assert_matches_type(RefReadBatchResponse, ref, path=["response"])
 
     @parametrize
-    def test_raw_response_read_batch(self, client: WandDemo) -> None:
+    def test_raw_response_read_batch(self, client: WeightsAndBiases) -> None:
         response = client.refs.with_raw_response.read_batch(
             refs=["string"],
         )
@@ -36,7 +36,7 @@ class TestRefs:
         assert_matches_type(RefReadBatchResponse, ref, path=["response"])
 
     @parametrize
-    def test_streaming_response_read_batch(self, client: WandDemo) -> None:
+    def test_streaming_response_read_batch(self, client: WeightsAndBiases) -> None:
         with client.refs.with_streaming_response.read_batch(
             refs=["string"],
         ) as response:
@@ -53,14 +53,14 @@ class TestAsyncRefs:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_read_batch(self, async_client: AsyncWandDemo) -> None:
+    async def test_method_read_batch(self, async_client: AsyncWeightsAndBiases) -> None:
         ref = await async_client.refs.read_batch(
             refs=["string"],
         )
         assert_matches_type(RefReadBatchResponse, ref, path=["response"])
 
     @parametrize
-    async def test_raw_response_read_batch(self, async_client: AsyncWandDemo) -> None:
+    async def test_raw_response_read_batch(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.refs.with_raw_response.read_batch(
             refs=["string"],
         )
@@ -71,7 +71,7 @@ class TestAsyncRefs:
         assert_matches_type(RefReadBatchResponse, ref, path=["response"])
 
     @parametrize
-    async def test_streaming_response_read_batch(self, async_client: AsyncWandDemo) -> None:
+    async def test_streaming_response_read_batch(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.refs.with_streaming_response.read_batch(
             refs=["string"],
         ) as response:

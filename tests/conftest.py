@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Iterator, AsyncIterator
 import pytest
 from pytest_asyncio import is_async_test
 
-from wand_demo import WandDemo, AsyncWandDemo
+from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
@@ -33,24 +33,24 @@ password = "My Password"
 
 
 @pytest.fixture(scope="session")
-def client(request: FixtureRequest) -> Iterator[WandDemo]:
+def client(request: FixtureRequest) -> Iterator[WeightsAndBiases]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with WandDemo(
+    with WeightsAndBiases(
         base_url=base_url, username=username, password=password, _strict_response_validation=strict
     ) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncWandDemo]:
+async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncWeightsAndBiases]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncWandDemo(
+    async with AsyncWeightsAndBiases(
         base_url=base_url, username=username, password=password, _strict_response_validation=strict
     ) as client:
         yield client
