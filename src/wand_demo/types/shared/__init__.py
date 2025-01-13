@@ -8,4 +8,5 @@ from .and_operation import AndOperation as AndOperation
 from .gte_operation import GteOperation as GteOperation
 from .not_operation import NotOperation as NotOperation
 from .literal_operation import LiteralOperation as LiteralOperation
+from .contains_operation import ContainsOperation as ContainsOperation
 from .get_field_operator import GetFieldOperator as GetFieldOperator
