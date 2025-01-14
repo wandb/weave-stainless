@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Union
-from typing_extensions import TypeAlias
+from typing import Union, Iterable
+from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
-from pydantic import Field as FieldInfo
-
-from ..._compat import PYDANTIC_V2
-from ..._models import BaseModel
+from ..._utils import PropertyInfo
 from .eq_operation import EqOperation
 from .gt_operation import GtOperation
 from .in_operation import InOperation
@@ -33,13 +30,8 @@ And: TypeAlias = Union[
 ]
 
 
-class AndOperation(BaseModel):
-    and_: List[And] = FieldInfo(alias="$and")
+class AndOperation(TypedDict, total=False):
+    and_: Required[Annotated[Iterable[And], PropertyInfo(alias="$and")]]
 
 
 from .literal_operation import LiteralOperation
-
-if PYDANTIC_V2:
-    AndOperation.model_rebuild()
-else:
-    AndOperation.update_forward_refs()  # type: ignore

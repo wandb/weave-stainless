@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-from typing import List, Union
-from typing_extensions import TypeAlias
-
-from pydantic import Field as FieldInfo
+from typing import Union
+from typing_extensions import Literal, TypeAlias
 
 from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
@@ -16,9 +14,9 @@ from .gte_operation import GteOperation
 from .not_operation import NotOperation
 from .get_field_operator import GetFieldOperator
 
-__all__ = ["AndOperation", "And"]
+__all__ = ["ConvertSpec", "Input"]
 
-And: TypeAlias = Union[
+Input: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
     ConvertOperation,
@@ -33,13 +31,15 @@ And: TypeAlias = Union[
 ]
 
 
-class AndOperation(BaseModel):
-    and_: List[And] = FieldInfo(alias="$and")
+class ConvertSpec(BaseModel):
+    input: Input
+
+    to: Literal["double", "string", "int", "bool", "exists"]
 
 
 from .literal_operation import LiteralOperation
 
 if PYDANTIC_V2:
-    AndOperation.model_rebuild()
+    ConvertSpec.model_rebuild()
 else:
-    AndOperation.update_forward_refs()  # type: ignore
+    ConvertSpec.update_forward_refs()  # type: ignore

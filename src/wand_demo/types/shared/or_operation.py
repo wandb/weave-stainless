@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import List, Union
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import TypeAlias
 
 from pydantic import Field as FieldInfo
 
@@ -16,23 +16,12 @@ from .gte_operation import GteOperation
 from .not_operation import NotOperation
 from .get_field_operator import GetFieldOperator
 
-__all__ = ["OrOperation", "Or", "OrConvertOperation", "OrConvertOperationConvert"]
-
-
-class OrConvertOperationConvert(BaseModel):
-    input: object
-
-    to: Literal["double", "string", "int", "bool", "exists"]
-
-
-class OrConvertOperation(BaseModel):
-    convert: OrConvertOperationConvert = FieldInfo(alias="$convert")
-
+__all__ = ["OrOperation", "Or"]
 
 Or: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    OrConvertOperation,
+    ConvertOperation,
     AndOperation,
     OrOperation,
     NotOperation,
@@ -40,7 +29,7 @@ Or: TypeAlias = Union[
     GtOperation,
     GteOperation,
     InOperation,
-    object,
+    ContainsOperation,
 ]
 
 
@@ -52,9 +41,5 @@ from .literal_operation import LiteralOperation
 
 if PYDANTIC_V2:
     OrOperation.model_rebuild()
-    OrConvertOperation.model_rebuild()
-    OrConvertOperationConvert.model_rebuild()
 else:
     OrOperation.update_forward_refs()  # type: ignore
-    OrConvertOperation.update_forward_refs()  # type: ignore
-    OrConvertOperationConvert.update_forward_refs()  # type: ignore
