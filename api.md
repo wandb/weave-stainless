@@ -4,6 +4,9 @@
 from wand_demo.types import (
     AndOperation,
     ContainsOperation,
+    ContainsSpec,
+    ConvertOperation,
+    ConvertSpec,
     EqOperation,
     GetFieldOperator,
     GtOperation,

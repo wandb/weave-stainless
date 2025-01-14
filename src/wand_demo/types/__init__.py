@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 from .shared import (
+    ConvertSpec as ConvertSpec,
     EqOperation as EqOperation,
     GtOperation as GtOperation,
     InOperation as InOperation,
     OrOperation as OrOperation,
     AndOperation as AndOperation,
+    ContainsSpec as ContainsSpec,
     GteOperation as GteOperation,
     NotOperation as NotOperation,
+    ConvertOperation as ConvertOperation,
     GetFieldOperator as GetFieldOperator,
     LiteralOperation as LiteralOperation,
     ContainsOperation as ContainsOperation,
