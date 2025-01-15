@@ -19,29 +19,29 @@ __all__ = ["ContainsSpec", "Input", "Substr"]
 Input: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 Substr: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 
@@ -53,7 +53,11 @@ class ContainsSpec(BaseModel):
     case_insensitive: Optional[bool] = None
 
 
+from .or_operation import OrOperation
+from .and_operation import AndOperation
+from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
+from .contains_operation import ContainsOperation
 
 if PYDANTIC_V2:
     ContainsSpec.model_rebuild()

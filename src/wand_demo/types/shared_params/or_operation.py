@@ -18,15 +18,15 @@ __all__ = ["OrOperation", "Or"]
 Or: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 
@@ -34,4 +34,7 @@ class OrOperation(TypedDict, total=False):
     or_: Required[Annotated[Iterable[Or], PropertyInfo(alias="$or")]]
 
 
+from .and_operation import AndOperation
+from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
+from .contains_operation import ContainsOperation

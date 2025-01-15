@@ -19,15 +19,15 @@ __all__ = ["ConvertSpec", "Input"]
 Input: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 
@@ -37,7 +37,11 @@ class ConvertSpec(BaseModel):
     to: Literal["double", "string", "int", "bool", "exists"]
 
 
+from .or_operation import OrOperation
+from .and_operation import AndOperation
+from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
+from .contains_operation import ContainsOperation
 
 if PYDANTIC_V2:
     ConvertSpec.model_rebuild()
