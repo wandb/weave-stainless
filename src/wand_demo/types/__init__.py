@@ -33,7 +33,6 @@ from .table_query_params import TableQueryParams as TableQueryParams
 from .call_start_response import CallStartResponse as CallStartResponse
 from .cost_query_response import CostQueryResponse as CostQueryResponse
 from .file_content_params import FileContentParams as FileContentParams
-from .object_query_params import ObjectQueryParams as ObjectQueryParams
 from .table_create_params import TableCreateParams as TableCreateParams
 from .table_update_params import TableUpdateParams as TableUpdateParams
 from .cost_create_response import CostCreateResponse as CostCreateResponse
@@ -43,7 +42,6 @@ from .object_read_response import ObjectReadResponse as ObjectReadResponse
 from .table_query_response import TableQueryResponse as TableQueryResponse
 from .feedback_purge_params import FeedbackPurgeParams as FeedbackPurgeParams
 from .feedback_query_params import FeedbackQueryParams as FeedbackQueryParams
-from .object_query_response import ObjectQueryResponse as ObjectQueryResponse
 from .ref_read_batch_params import RefReadBatchParams as RefReadBatchParams
 from .table_create_response import TableCreateResponse as TableCreateResponse
 from .table_update_response import TableUpdateResponse as TableUpdateResponse
