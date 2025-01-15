@@ -64,13 +64,12 @@ Methods:
 Types:
 
 ```python
-from wand_demo.types import ObjectCreateResponse, ObjectQueryResponse, ObjectReadResponse
+from wand_demo.types import ObjectCreateResponse, ObjectReadResponse
 ```
 
 Methods:
 
 - <code title="post /obj/create">client.objects.<a href="./src/wand_demo/resources/objects.py">create</a>(\*\*<a href="src/wand_demo/types/object_create_params.py">params</a>) -> <a href="./src/wand_demo/types/object_create_response.py">ObjectCreateResponse</a></code>
-- <code title="post /objs/query">client.objects.<a href="./src/wand_demo/resources/objects.py">query</a>(\*\*<a href="src/wand_demo/types/object_query_params.py">params</a>) -> <a href="./src/wand_demo/types/object_query_response.py">ObjectQueryResponse</a></code>
 - <code title="post /obj/read">client.objects.<a href="./src/wand_demo/resources/objects.py">read</a>(\*\*<a href="src/wand_demo/types/object_read_params.py">params</a>) -> <a href="./src/wand_demo/types/object_read_response.py">ObjectReadResponse</a></code>
 
 # Tables
