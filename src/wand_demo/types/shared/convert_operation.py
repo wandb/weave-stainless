@@ -11,10 +11,10 @@ __all__ = ["ConvertOperation"]
 
 
 class ConvertOperation(BaseModel):
-    convert: ConvertSpec = FieldInfo(alias="$convert")
+    convert: object = FieldInfo(alias="$convert")
 
 
-from .convert_spec import ConvertSpec
+# from .convert_spec import ConvertSpec
 
 if PYDANTIC_V2:
     ConvertOperation.model_rebuild()
