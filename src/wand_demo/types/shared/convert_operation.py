@@ -11,6 +11,7 @@ __all__ = ["ConvertOperation"]
 
 
 class ConvertOperation(BaseModel):
+    # convert: "ConvertSpec" = FieldInfo(alias="$convert")
     convert: object = FieldInfo(alias="$convert")
 
 

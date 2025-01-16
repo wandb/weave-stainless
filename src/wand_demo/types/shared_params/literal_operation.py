@@ -13,7 +13,7 @@ __all__ = ["LiteralOperation"]
 class LiteralOperation(TypedDict, total=False):
     literal: Required[
         Annotated[
-            Union[str, float, bool, Dict[str, LiteralOperation], Iterable[LiteralOperation], None],
+            Union[str, float, bool, Dict[str, "LiteralOperation"], Iterable["LiteralOperation"], None],
             PropertyInfo(alias="$literal"),
         ]
     ]

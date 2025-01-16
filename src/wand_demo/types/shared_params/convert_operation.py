@@ -10,7 +10,7 @@ __all__ = ["ConvertOperation"]
 
 
 class ConvertOperation(TypedDict, total=False):
-    convert: Required[Annotated[ConvertSpec, PropertyInfo(alias="$convert")]]
+    convert: Required[Annotated["ConvertSpec", PropertyInfo(alias="$convert")]]
 
 
 from .convert_spec import ConvertSpec

@@ -10,7 +10,7 @@ __all__ = ["ContainsOperation"]
 
 
 class ContainsOperation(TypedDict, total=False):
-    contains: Required[Annotated[ContainsSpec, PropertyInfo(alias="$contains")]]
+    contains: Required[Annotated["ContainsSpec", PropertyInfo(alias="$contains")]]
 
 
 from .contains_spec import ContainsSpec

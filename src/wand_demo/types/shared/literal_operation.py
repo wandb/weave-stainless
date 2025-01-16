@@ -13,7 +13,7 @@ __all__ = ["LiteralOperation"]
 
 
 class LiteralOperation(BaseModel):
-    literal: Union[str, float, bool, Dict[str, LiteralOperation], List[LiteralOperation], None] = FieldInfo(
+    literal: Union[str, float, bool, Dict[str, "LiteralOperation"], List["LiteralOperation"], None] = FieldInfo(
         alias="$literal", default=None
     )
 
