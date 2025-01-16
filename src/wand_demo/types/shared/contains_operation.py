@@ -11,7 +11,7 @@ __all__ = ["ContainsOperation"]
 
 
 class ContainsOperation(BaseModel):
-    contains: ContainsSpec = FieldInfo(alias="$contains")
+    contains: "ContainsSpec" = FieldInfo(alias="$contains")
 
 
 from .contains_spec import ContainsSpec

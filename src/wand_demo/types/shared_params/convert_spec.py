@@ -17,15 +17,15 @@ __all__ = ["ConvertSpec", "Input"]
 Input: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 
@@ -35,4 +35,8 @@ class ConvertSpec(TypedDict, total=False):
     to: Required[Literal["double", "string", "int", "bool", "exists"]]
 
 
+from .or_operation import OrOperation
+from .and_operation import AndOperation
+from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
+from .contains_operation import ContainsOperation

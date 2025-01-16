@@ -21,15 +21,15 @@ __all__ = ["OrOperation", "Or"]
 Or: TypeAlias = Union[
     "LiteralOperation",
     GetFieldOperator,
-    ConvertOperation,
-    AndOperation,
-    OrOperation,
+    "ConvertOperation",
+    "AndOperation",
+    "OrOperation",
     NotOperation,
     EqOperation,
     GtOperation,
     GteOperation,
     InOperation,
-    ContainsOperation,
+    "ContainsOperation",
 ]
 
 
@@ -37,7 +37,10 @@ class OrOperation(BaseModel):
     or_: List[Or] = FieldInfo(alias="$or")
 
 
+from .and_operation import AndOperation
+from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
+from .contains_operation import ContainsOperation
 
 if PYDANTIC_V2:
     OrOperation.model_rebuild()

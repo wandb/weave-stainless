@@ -11,7 +11,7 @@ __all__ = ["ConvertOperation"]
 
 
 class ConvertOperation(BaseModel):
-    convert: ConvertSpec = FieldInfo(alias="$convert")
+    convert: "ConvertSpec" = FieldInfo(alias="$convert")
 
 
 from .convert_spec import ConvertSpec
