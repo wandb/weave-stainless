@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["ContainsSpec"]
@@ -18,3 +19,8 @@ class ContainsSpec(BaseModel):
 
 
 from .operation import Operation
+
+if PYDANTIC_V2:
+    ContainsSpec.model_rebuild()
+else:
+    ContainsSpec.update_forward_refs()  # type: ignore
