@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from typing import List, Iterable, Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
-__all__ = ["FeedbackQueryParams", "SortBy"]
+from .._utils import PropertyInfo
+
+__all__ = ["FeedbackQueryParams", "Query", "SortBy"]
 
 
 class FeedbackQueryParams(TypedDict, total=False):
@@ -17,9 +19,13 @@ class FeedbackQueryParams(TypedDict, total=False):
 
     offset: Optional[int]
 
-    query: Optional["Query"]
+    query: Optional[Query]
 
     sort_by: Optional[Iterable[SortBy]]
+
+
+class Query(TypedDict, total=False):
+    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
 
 
 class SortBy(TypedDict, total=False):
@@ -28,4 +34,4 @@ class SortBy(TypedDict, total=False):
     field: Required[str]
 
 
-from .shared_params.query import Query
+from .shared_params.expr import Expr

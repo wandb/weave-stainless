@@ -4,7 +4,6 @@
 from wand_demo._compat import PYDANTIC_V2
 
 from .expr import Expr as Expr
-from .query import Query as Query
 from .operation import Operation as Operation
 from .convert_spec import ConvertSpec as ConvertSpec
 from .eq_operation import EqOperation as EqOperation

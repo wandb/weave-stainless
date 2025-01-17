@@ -2,15 +2,21 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
-__all__ = ["CostPurgeParams"]
+from .._utils import PropertyInfo
+
+__all__ = ["CostPurgeParams", "Query"]
 
 
 class CostPurgeParams(TypedDict, total=False):
     project_id: Required[str]
 
-    query: Required["Query"]
+    query: Required[Query]
 
 
-from .shared_params.query import Query
+class Query(TypedDict, total=False):
+    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
+
+
+from .shared_params.expr import Expr

@@ -17,7 +17,6 @@ from wand_demo.types import (
     NotOperation,
     Operation,
     OrOperation,
-    Query,
 )
 ```
 
