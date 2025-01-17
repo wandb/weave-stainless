@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .shared import (
+    Operation as Operation,
     ConvertSpec as ConvertSpec,
     EqOperation as EqOperation,
     GtOperation as GtOperation,

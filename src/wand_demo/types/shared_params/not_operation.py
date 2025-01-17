@@ -11,4 +11,7 @@ __all__ = ["NotOperation"]
 
 
 class NotOperation(TypedDict, total=False):
-    not_: Required[Annotated[Iterable[object], PropertyInfo(alias="$not")]]
+    not_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$not")]]
+
+
+from .operation import Operation

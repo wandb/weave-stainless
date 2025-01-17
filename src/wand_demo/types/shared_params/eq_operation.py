@@ -11,4 +11,7 @@ __all__ = ["EqOperation"]
 
 
 class EqOperation(TypedDict, total=False):
-    eq: Required[Annotated[Iterable[object], PropertyInfo(alias="$eq")]]
+    eq: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$eq")]]
+
+
+from .operation import Operation

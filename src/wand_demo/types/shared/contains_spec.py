@@ -7,28 +7,9 @@ from typing_extensions import TypeAlias
 
 from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
-from .eq_operation import EqOperation
-from .gt_operation import GtOperation
-from .in_operation import InOperation
-from .gte_operation import GteOperation
-from .not_operation import NotOperation
 from .get_field_operator import GetFieldOperator
 
-__all__ = ["ContainsSpec", "Input", "Substr"]
-
-Input: TypeAlias = Union[
-    "LiteralOperation",
-    GetFieldOperator,
-    "ConvertOperation",
-    "AndOperation",
-    "OrOperation",
-    NotOperation,
-    EqOperation,
-    GtOperation,
-    GteOperation,
-    InOperation,
-    "ContainsOperation",
-]
+__all__ = ["ContainsSpec", "Substr"]
 
 Substr: TypeAlias = Union[
     "LiteralOperation",
@@ -36,25 +17,31 @@ Substr: TypeAlias = Union[
     "ConvertOperation",
     "AndOperation",
     "OrOperation",
-    NotOperation,
-    EqOperation,
-    GtOperation,
-    GteOperation,
-    InOperation,
+    "NotOperation",
+    "EqOperation",
+    "GtOperation",
+    "GteOperation",
+    "InOperation",
     "ContainsOperation",
 ]
 
 
 class ContainsSpec(BaseModel):
-    input: Input
+    input: "Operation"
 
     substr: Substr
 
     case_insensitive: Optional[bool] = None
 
 
+from .operation import Operation
+from .eq_operation import EqOperation
+from .gt_operation import GtOperation
+from .in_operation import InOperation
 from .or_operation import OrOperation
 from .and_operation import AndOperation
+from .gte_operation import GteOperation
+from .not_operation import NotOperation
 from .convert_operation import ConvertOperation
 from .literal_operation import LiteralOperation
 from .contains_operation import ContainsOperation
