@@ -8,6 +8,7 @@ from wand_demo.types import (
     ConvertOperation,
     ConvertSpec,
     EqOperation,
+    Expr,
     GetFieldOperator,
     GtOperation,
     GteOperation,

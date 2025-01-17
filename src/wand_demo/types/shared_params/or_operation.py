@@ -2,39 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable
-from typing_extensions import Required, Annotated, TypeAlias, TypedDict
+from typing import Iterable
+from typing_extensions import Required, Annotated, TypedDict
 
 from ..._utils import PropertyInfo
-from .get_field_operator import GetFieldOperator
 
-__all__ = ["OrOperation", "Or"]
-
-Or: TypeAlias = Union[
-    "LiteralOperation",
-    GetFieldOperator,
-    "ConvertOperation",
-    "AndOperation",
-    "OrOperation",
-    "NotOperation",
-    "EqOperation",
-    "GtOperation",
-    "GteOperation",
-    "InOperation",
-    "ContainsOperation",
-]
+__all__ = ["OrOperation"]
 
 
 class OrOperation(TypedDict, total=False):
-    or_: Required[Annotated[Iterable[Or], PropertyInfo(alias="$or")]]
+    or_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$or")]]
 
 
-from .eq_operation import EqOperation
-from .gt_operation import GtOperation
-from .in_operation import InOperation
-from .and_operation import AndOperation
-from .gte_operation import GteOperation
-from .not_operation import NotOperation
-from .convert_operation import ConvertOperation
-from .literal_operation import LiteralOperation
-from .contains_operation import ContainsOperation
+from .operation import Operation

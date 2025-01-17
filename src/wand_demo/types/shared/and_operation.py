@@ -2,45 +2,21 @@
 
 from __future__ import annotations
 
-from typing import List, Union
-from typing_extensions import TypeAlias
+from typing import List
 
 from pydantic import Field as FieldInfo
 
 from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
-from .get_field_operator import GetFieldOperator
 
-__all__ = ["AndOperation", "And"]
-
-And: TypeAlias = Union[
-    "LiteralOperation",
-    GetFieldOperator,
-    "ConvertOperation",
-    "AndOperation",
-    "OrOperation",
-    "NotOperation",
-    "EqOperation",
-    "GtOperation",
-    "GteOperation",
-    "InOperation",
-    "ContainsOperation",
-]
+__all__ = ["AndOperation"]
 
 
 class AndOperation(BaseModel):
-    and_: List[And] = FieldInfo(alias="$and")
+    and_: List["Operation"] = FieldInfo(alias="$and")
 
 
-from .eq_operation import EqOperation
-from .gt_operation import GtOperation
-from .in_operation import InOperation
-from .or_operation import OrOperation
-from .gte_operation import GteOperation
-from .not_operation import NotOperation
-from .convert_operation import ConvertOperation
-from .literal_operation import LiteralOperation
-from .contains_operation import ContainsOperation
+from .operation import Operation
 
 if PYDANTIC_V2:
     AndOperation.model_rebuild()
