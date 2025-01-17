@@ -238,7 +238,14 @@ def _transform_typeddict(
     expected_type: type,
 ) -> Mapping[str, object]:
     result: dict[str, object] = {}
-    annotations = get_type_hints(expected_type, include_extras=True)
+
+    from ..types import shared_params
+
+    annotations = get_type_hints(
+        expected_type,
+        include_extras=True,
+        localns=vars(shared_params),
+    )
     for key, value in data.items():
         type_ = annotations.get(key)
         if type_ is None:
