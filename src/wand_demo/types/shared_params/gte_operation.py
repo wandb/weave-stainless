@@ -11,4 +11,7 @@ __all__ = ["GteOperation"]
 
 
 class GteOperation(TypedDict, total=False):
-    gte: Required[Annotated[Iterable[object], PropertyInfo(alias="$gte")]]
+    gte: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$gte")]]
+
+
+from .operation import Operation

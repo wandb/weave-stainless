@@ -2,46 +2,21 @@
 
 from __future__ import annotations
 
-from typing import Union
-from typing_extensions import Literal, TypeAlias
+from typing_extensions import Literal
 
 from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
-from .eq_operation import EqOperation
-from .gt_operation import GtOperation
-from .in_operation import InOperation
-from .gte_operation import GteOperation
-from .not_operation import NotOperation
-from .get_field_operator import GetFieldOperator
 
-__all__ = ["ConvertSpec", "Input"]
-
-Input: TypeAlias = Union[
-    "LiteralOperation",
-    GetFieldOperator,
-    "ConvertOperation",
-    "AndOperation",
-    "OrOperation",
-    NotOperation,
-    EqOperation,
-    GtOperation,
-    GteOperation,
-    InOperation,
-    "ContainsOperation",
-]
+__all__ = ["ConvertSpec"]
 
 
 class ConvertSpec(BaseModel):
-    input: Input
+    input: "Operation"
 
     to: Literal["double", "string", "int", "bool", "exists"]
 
 
-from .or_operation import OrOperation
-from .and_operation import AndOperation
-from .convert_operation import ConvertOperation
-from .literal_operation import LiteralOperation
-from .contains_operation import ContainsOperation
+from .operation import Operation
 
 if PYDANTIC_V2:
     ConvertSpec.model_rebuild()

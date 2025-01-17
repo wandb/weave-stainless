@@ -11,4 +11,7 @@ __all__ = ["InOperation"]
 
 
 class InOperation(TypedDict, total=False):
-    in_: Required[Annotated[Iterable[object], PropertyInfo(alias="$in")]]
+    in_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$in")]]
+
+
+from .operation import Operation

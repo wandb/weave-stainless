@@ -14,6 +14,7 @@ from wand_demo.types import (
     InOperation,
     LiteralOperation,
     NotOperation,
+    Operation,
     OrOperation,
 )
 ```
