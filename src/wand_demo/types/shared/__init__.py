@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 # import last
+from wand_demo._compat import PYDANTIC_V2
 from .expr import Expr as Expr
 from .operation import Operation as Operation
 from .convert_spec import ConvertSpec as ConvertSpec
@@ -17,14 +18,27 @@ from .literal_operation import LiteralOperation as LiteralOperation
 from .contains_operation import ContainsOperation as ContainsOperation
 from .get_field_operator import GetFieldOperator as GetFieldOperator
 
-AndOperation.model_rebuild(_types_namespace=locals())
-ContainsOperation.model_rebuild(_types_namespace=locals())
-ContainsSpec.model_rebuild(_types_namespace=locals())
-ConvertOperation.model_rebuild(_types_namespace=locals())
-ConvertSpec.model_rebuild(_types_namespace=locals())
-EqOperation.model_rebuild(_types_namespace=locals())
-GtOperation.model_rebuild(_types_namespace=locals())
-GteOperation.model_rebuild(_types_namespace=locals())
-InOperation.model_rebuild(_types_namespace=locals())
-NotOperation.model_rebuild(_types_namespace=locals())
-OrOperation.model_rebuild(_types_namespace=locals())
+if PYDANTIC_V2:
+    AndOperation.model_rebuild(_types_namespace=locals())
+    ContainsOperation.model_rebuild(_types_namespace=locals())
+    ContainsSpec.model_rebuild(_types_namespace=locals())
+    ConvertOperation.model_rebuild(_types_namespace=locals())
+    ConvertSpec.model_rebuild(_types_namespace=locals())
+    EqOperation.model_rebuild(_types_namespace=locals())
+    GtOperation.model_rebuild(_types_namespace=locals())
+    GteOperation.model_rebuild(_types_namespace=locals())
+    InOperation.model_rebuild(_types_namespace=locals())
+    NotOperation.model_rebuild(_types_namespace=locals())
+    OrOperation.model_rebuild(_types_namespace=locals())
+else:
+    AndOperation.update_forward_refs()
+    ContainsOperation.update_forward_refs()
+    ContainsSpec.update_forward_refs()
+    ConvertOperation.update_forward_refs()
+    ConvertSpec.update_forward_refs()
+    EqOperation.update_forward_refs()
+    GtOperation.update_forward_refs()
+    GteOperation.update_forward_refs()
+    InOperation.update_forward_refs()
+    NotOperation.update_forward_refs()
+    OrOperation.update_forward_refs()
