@@ -2,6 +2,7 @@
 
 # import last
 from wand_demo._compat import PYDANTIC_V2
+
 from .expr import Expr as Expr
 from .operation import Operation as Operation
 from .convert_spec import ConvertSpec as ConvertSpec
@@ -31,14 +32,14 @@ if PYDANTIC_V2:
     NotOperation.model_rebuild(_types_namespace=locals())
     OrOperation.model_rebuild(_types_namespace=locals())
 else:
-    AndOperation.update_forward_refs()
-    ContainsOperation.update_forward_refs()
-    ContainsSpec.update_forward_refs()
-    ConvertOperation.update_forward_refs()
-    ConvertSpec.update_forward_refs()
-    EqOperation.update_forward_refs()
-    GtOperation.update_forward_refs()
-    GteOperation.update_forward_refs()
-    InOperation.update_forward_refs()
-    NotOperation.update_forward_refs()
-    OrOperation.update_forward_refs()
+    AndOperation.update_forward_refs()  # type: ignore
+    ContainsOperation.update_forward_refs()  # type: ignore
+    ContainsSpec.update_forward_refs()  # type: ignore
+    ConvertOperation.update_forward_refs()  # type: ignore
+    ConvertSpec.update_forward_refs()  # type: ignore
+    EqOperation.update_forward_refs()  # type: ignore
+    GtOperation.update_forward_refs()  # type: ignore
+    GteOperation.update_forward_refs()  # type: ignore
+    InOperation.update_forward_refs()  # type: ignore
+    NotOperation.update_forward_refs()  # type: ignore
+    OrOperation.update_forward_refs()  # type: ignore
