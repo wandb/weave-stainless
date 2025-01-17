@@ -20,7 +20,7 @@ or products provided by Weights And Biases please follow the respective company'
 
 ### Weights And Biases Terms and Policies
 
-Please contact dev-feedback@wand-demo.com for any questions or concerns regarding security of our services.
+Please contact dev-feedback-test@wand-demo.com for any questions or concerns regarding security of our services.
 
 ---
 
