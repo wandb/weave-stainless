@@ -92,7 +92,7 @@ class TestCosts:
     def test_method_purge(self, client: WeightsAndBiases) -> None:
         cost = client.costs.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(object, cost, path=["response"])
 
@@ -100,7 +100,7 @@ class TestCosts:
     def test_raw_response_purge(self, client: WeightsAndBiases) -> None:
         response = client.costs.with_raw_response.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
 
         assert response.is_closed is True
@@ -112,7 +112,7 @@ class TestCosts:
     def test_streaming_response_purge(self, client: WeightsAndBiases) -> None:
         with client.costs.with_streaming_response.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -145,7 +145,7 @@ class TestCosts:
             ],
             limit=10,
             offset=0,
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             sort_by=[
                 {
                     "direction": "asc",
@@ -254,7 +254,7 @@ class TestAsyncCosts:
     async def test_method_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         cost = await async_client.costs.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(object, cost, path=["response"])
 
@@ -262,7 +262,7 @@ class TestAsyncCosts:
     async def test_raw_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.costs.with_raw_response.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
 
         assert response.is_closed is True
@@ -274,7 +274,7 @@ class TestAsyncCosts:
     async def test_streaming_response_purge(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.costs.with_streaming_response.purge(
             project_id="entity/project",
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -307,7 +307,7 @@ class TestAsyncCosts:
             ],
             limit=10,
             offset=0,
-            query={"expr": {"and": [{"literal": "string"}]}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             sort_by=[
                 {
                     "direction": "asc",
