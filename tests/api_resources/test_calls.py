@@ -342,6 +342,7 @@ class TestCalls:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     def test_method_stream_query(self, client: WeightsAndBiases) -> None:
         call = client.calls.stream_query(
@@ -349,6 +350,7 @@ class TestCalls:
         )
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     def test_method_stream_query_with_all_params(self, client: WeightsAndBiases) -> None:
         call = client.calls.stream_query(
@@ -381,6 +383,7 @@ class TestCalls:
         )
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     def test_raw_response_stream_query(self, client: WeightsAndBiases) -> None:
         response = client.calls.with_raw_response.stream_query(
@@ -392,6 +395,7 @@ class TestCalls:
         call = response.parse()
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     def test_streaming_response_stream_query(self, client: WeightsAndBiases) -> None:
         with client.calls.with_streaming_response.stream_query(
@@ -795,6 +799,7 @@ class TestAsyncCalls:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_method_stream_query(self, async_client: AsyncWeightsAndBiases) -> None:
         call = await async_client.calls.stream_query(
@@ -802,6 +807,7 @@ class TestAsyncCalls:
         )
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_method_stream_query_with_all_params(self, async_client: AsyncWeightsAndBiases) -> None:
         call = await async_client.calls.stream_query(
@@ -834,6 +840,7 @@ class TestAsyncCalls:
         )
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_raw_response_stream_query(self, async_client: AsyncWeightsAndBiases) -> None:
         response = await async_client.calls.with_raw_response.stream_query(
@@ -845,6 +852,7 @@ class TestAsyncCalls:
         call = await response.parse()
         assert_matches_type(object, call, path=["response"])
 
+    @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_streaming_response_stream_query(self, async_client: AsyncWeightsAndBiases) -> None:
         async with async_client.calls.with_streaming_response.stream_query(
