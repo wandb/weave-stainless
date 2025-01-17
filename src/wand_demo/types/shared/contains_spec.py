@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["ContainsSpec"]
+
+if TYPE_CHECKING:
+    from .operation import Operation
 
 
 class ContainsSpec(BaseModel):
@@ -17,10 +19,4 @@ class ContainsSpec(BaseModel):
 
     case_insensitive: Optional[bool] = None
 
-
-from .operation import Operation
-
-if PYDANTIC_V2:
-    ContainsSpec.model_rebuild()
-else:
-    ContainsSpec.update_forward_refs()  # type: ignore
+    model_config = {"defer_build": True}

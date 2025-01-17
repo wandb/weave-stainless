@@ -2,23 +2,19 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import TYPE_CHECKING, List
 
 from pydantic import Field as FieldInfo
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["EqOperation"]
+
+if TYPE_CHECKING:
+    from .operation import Operation
 
 
 class EqOperation(BaseModel):
     eq: List["Operation"] = FieldInfo(alias="$eq")
 
-
-from .operation import Operation
-
-if PYDANTIC_V2:
-    EqOperation.model_rebuild()
-else:
-    EqOperation.update_forward_refs()  # type: ignore
+    model_config = {"defer_build": True}
