@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
-from typing_extensions import Required, Annotated, TypeAlias, TypedDict
+from typing import List, Optional
+from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["CallQueryStatsParams", "Filter", "Query", "QueryExpr"]
+__all__ = ["CallQueryStatsParams", "Filter", "Query"]
 
 
 class CallQueryStatsParams(TypedDict, total=False):
@@ -38,27 +38,8 @@ class Filter(TypedDict, total=False):
     wb_user_ids: Optional[List[str]]
 
 
-QueryExpr: TypeAlias = Union[
-    "AndOperation",
-    "OrOperation",
-    "NotOperation",
-    "EqOperation",
-    "GtOperation",
-    "GteOperation",
-    "InOperation",
-    "ContainsOperation",
-]
-
-
 class Query(TypedDict, total=False):
-    expr: Required[Annotated[QueryExpr, PropertyInfo(alias="$expr")]]
+    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
 
 
-from .shared_params.eq_operation import EqOperation
-from .shared_params.gt_operation import GtOperation
-from .shared_params.in_operation import InOperation
-from .shared_params.or_operation import OrOperation
-from .shared_params.and_operation import AndOperation
-from .shared_params.gte_operation import GteOperation
-from .shared_params.not_operation import NotOperation
-from .shared_params.contains_operation import ContainsOperation
+from .shared_params.expr import Expr
