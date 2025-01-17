@@ -41,7 +41,7 @@ class TestCosts:
                     "completion_token_cost": 0,
                     "prompt_token_cost": 0,
                     "completion_token_cost_unit": "completion_token_cost_unit",
-                    "effective_date": "2019-12-27T18:11:19.117Z",
+                    "effective_date": parse_datetime("2019-12-27T18:11:19.117Z"),
                     "prompt_token_cost_unit": "prompt_token_cost_unit",
                     "provider_id": "provider_id",
                 }
@@ -203,7 +203,7 @@ class TestAsyncCosts:
                     "completion_token_cost": 0,
                     "prompt_token_cost": 0,
                     "completion_token_cost_unit": "completion_token_cost_unit",
-                    "effective_date": "2019-12-27T18:11:19.117Z",
+                    "effective_date": parse_datetime("2019-12-27T18:11:19.117Z"),
                     "prompt_token_cost_unit": "prompt_token_cost_unit",
                     "provider_id": "provider_id",
                 }
