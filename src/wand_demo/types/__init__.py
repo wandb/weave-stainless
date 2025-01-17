@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .shared import (
     Expr as Expr,
+    Query as Query,
     Operation as Operation,
     ConvertSpec as ConvertSpec,
     EqOperation as EqOperation,

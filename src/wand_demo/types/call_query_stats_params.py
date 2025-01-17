@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 from typing import List, Optional
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Required, TypedDict
 
-from .._utils import PropertyInfo
-
-__all__ = ["CallQueryStatsParams", "Filter", "Query"]
+__all__ = ["CallQueryStatsParams", "Filter"]
 
 
 class CallQueryStatsParams(TypedDict, total=False):
@@ -15,7 +13,7 @@ class CallQueryStatsParams(TypedDict, total=False):
 
     filter: Optional[Filter]
 
-    query: Optional[Query]
+    query: Optional["Query"]
 
 
 class Filter(TypedDict, total=False):
@@ -38,8 +36,4 @@ class Filter(TypedDict, total=False):
     wb_user_ids: Optional[List[str]]
 
 
-class Query(TypedDict, total=False):
-    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
-
-
-from .shared_params.expr import Expr
+from .shared_params.query import Query

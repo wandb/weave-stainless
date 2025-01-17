@@ -33,6 +33,7 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
+from ..types.shared_params.query import Query
 from ..types.call_query_stats_response import CallQueryStatsResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
 
@@ -186,7 +187,7 @@ class CallsResource(SyncAPIResource):
         *,
         project_id: str,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -306,7 +307,7 @@ class CallsResource(SyncAPIResource):
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -541,7 +542,7 @@ class AsyncCallsResource(AsyncAPIResource):
         *,
         project_id: str,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -661,7 +662,7 @@ class AsyncCallsResource(AsyncAPIResource):
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.

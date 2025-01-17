@@ -24,7 +24,7 @@ from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases, APIResponseValida
 from wand_demo._types import Omit
 from wand_demo._models import BaseModel, FinalRequestOptions
 from wand_demo._constants import RAW_RESPONSE_HEADER
-from wand_demo._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from wand_demo._exceptions import APIStatusError, APITimeoutError, WeightsAndBiasesError, APIResponseValidationError
 from wand_demo._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -367,6 +367,25 @@ class TestWeightsAndBiases:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = WeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert "Basic" in request.headers.get("Authorization")
+
+        with pytest.raises(WeightsAndBiasesError):
+            with update_env(
+                **{
+                    "USERNAME": Omit(),
+                    "PASSWORD": Omit(),
+                }
+            ):
+                client2 = WeightsAndBiases(
+                    base_url=base_url, username=None, password=None, _strict_response_validation=True
+                )
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = WeightsAndBiases(
@@ -1236,6 +1255,25 @@ class TestAsyncWeightsAndBiases:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncWeightsAndBiases(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert "Basic" in request.headers.get("Authorization")
+
+        with pytest.raises(WeightsAndBiasesError):
+            with update_env(
+                **{
+                    "USERNAME": Omit(),
+                    "PASSWORD": Omit(),
+                }
+            ):
+                client2 = AsyncWeightsAndBiases(
+                    base_url=base_url, username=None, password=None, _strict_response_validation=True
+                )
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncWeightsAndBiases(

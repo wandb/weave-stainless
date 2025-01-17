@@ -3,11 +3,9 @@
 from __future__ import annotations
 
 from typing import List, Iterable, Optional
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
-from .._utils import PropertyInfo
-
-__all__ = ["CallStreamQueryParams", "Filter", "Query", "SortBy"]
+__all__ = ["CallStreamQueryParams", "Filter", "SortBy"]
 
 
 class CallStreamQueryParams(TypedDict, total=False):
@@ -36,7 +34,7 @@ class CallStreamQueryParams(TypedDict, total=False):
 
     offset: Optional[int]
 
-    query: Optional[Query]
+    query: Optional["Query"]
 
     sort_by: Optional[Iterable[SortBy]]
 
@@ -63,14 +61,10 @@ class Filter(TypedDict, total=False):
     wb_user_ids: Optional[List[str]]
 
 
-class Query(TypedDict, total=False):
-    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
-
-
 class SortBy(TypedDict, total=False):
     direction: Required[Literal["asc", "desc"]]
 
     field: Required[str]
 
 
-from .shared_params.expr import Expr
+from .shared_params.query import Query

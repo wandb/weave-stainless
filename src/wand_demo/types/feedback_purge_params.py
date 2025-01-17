@@ -2,21 +2,15 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Required, TypedDict
 
-from .._utils import PropertyInfo
-
-__all__ = ["FeedbackPurgeParams", "Query"]
+__all__ = ["FeedbackPurgeParams"]
 
 
 class FeedbackPurgeParams(TypedDict, total=False):
     project_id: Required[str]
 
-    query: Required[Query]
+    query: Required["Query"]
 
 
-class Query(TypedDict, total=False):
-    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
-
-
-from .shared_params.expr import Expr
+from .shared_params.query import Query

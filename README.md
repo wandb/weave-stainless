@@ -27,9 +27,13 @@ pip install git+ssh://git@github.com/stainless-sdks/wand-demo-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from wand_demo import WeightsAndBiases
 
-client = WeightsAndBiases()
+client = WeightsAndBiases(
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+)
 
 object = client.objects.create(
     obj={
@@ -51,10 +55,14 @@ so that your Username is not stored in source control.
 Simply import `AsyncWeightsAndBiases` instead of `WeightsAndBiases` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from wand_demo import AsyncWeightsAndBiases
 
-client = AsyncWeightsAndBiases()
+client = AsyncWeightsAndBiases(
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+)
 
 
 async def main() -> None:

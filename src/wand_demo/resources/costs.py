@@ -22,6 +22,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.cost_query_response import CostQueryResponse
+from ..types.shared_params.query import Query
 from ..types.cost_create_response import CostCreateResponse
 
 __all__ = ["CostsResource", "AsyncCostsResource"]
@@ -95,7 +96,7 @@ class CostsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        query: cost_purge_params.Query,
+        query: Query,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -137,7 +138,7 @@ class CostsResource(SyncAPIResource):
         fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[cost_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -246,7 +247,7 @@ class AsyncCostsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        query: cost_purge_params.Query,
+        query: Query,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -288,7 +289,7 @@ class AsyncCostsResource(AsyncAPIResource):
         fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[cost_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
