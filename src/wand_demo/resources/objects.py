@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Iterable, Optional
+
 import httpx
 
-from ..types import object_read_params, object_create_params
+from ..types import object_read_params, object_query_params, object_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -20,6 +22,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.object_read_response import ObjectReadResponse
+from ..types.object_query_response import ObjectQueryResponse
 from ..types.object_create_response import ObjectCreateResponse
 
 __all__ = ["ObjectsResource", "AsyncObjectsResource"]
@@ -75,6 +78,67 @@ class ObjectsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ObjectCreateResponse,
+        )
+
+    def query(
+        self,
+        *,
+        project_id: str,
+        filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
+        sort_by: Optional[Iterable[object_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ObjectQueryResponse:
+        """
+        Objs Query
+
+        Args:
+          project_id: The ID of the project to query
+
+          filter: Filter criteria for the query. See `ObjectVersionFilter`
+
+          limit: Maximum number of results to return
+
+          metadata_only: If true, the `val` column is not read from the database and is empty.All other
+              fields are returned.
+
+          offset: Number of results to skip before returning
+
+          sort_by: Sorting criteria for the query results. Currently only supports 'object_id' and
+              'created_at'.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/objs/query",
+            body=maybe_transform(
+                {
+                    "project_id": project_id,
+                    "filter": filter,
+                    "limit": limit,
+                    "metadata_only": metadata_only,
+                    "offset": offset,
+                    "sort_by": sort_by,
+                },
+                object_query_params.ObjectQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ObjectQueryResponse,
         )
 
     def read(
@@ -171,6 +235,67 @@ class AsyncObjectsResource(AsyncAPIResource):
             cast_to=ObjectCreateResponse,
         )
 
+    async def query(
+        self,
+        *,
+        project_id: str,
+        filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
+        sort_by: Optional[Iterable[object_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ObjectQueryResponse:
+        """
+        Objs Query
+
+        Args:
+          project_id: The ID of the project to query
+
+          filter: Filter criteria for the query. See `ObjectVersionFilter`
+
+          limit: Maximum number of results to return
+
+          metadata_only: If true, the `val` column is not read from the database and is empty.All other
+              fields are returned.
+
+          offset: Number of results to skip before returning
+
+          sort_by: Sorting criteria for the query results. Currently only supports 'object_id' and
+              'created_at'.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/objs/query",
+            body=await async_maybe_transform(
+                {
+                    "project_id": project_id,
+                    "filter": filter,
+                    "limit": limit,
+                    "metadata_only": metadata_only,
+                    "offset": offset,
+                    "sort_by": sort_by,
+                },
+                object_query_params.ObjectQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ObjectQueryResponse,
+        )
+
     async def read(
         self,
         *,
@@ -220,6 +345,9 @@ class ObjectsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             objects.create,
         )
+        self.query = to_raw_response_wrapper(
+            objects.query,
+        )
         self.read = to_raw_response_wrapper(
             objects.read,
         )
@@ -231,6 +359,9 @@ class AsyncObjectsResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             objects.create,
+        )
+        self.query = async_to_raw_response_wrapper(
+            objects.query,
         )
         self.read = async_to_raw_response_wrapper(
             objects.read,
@@ -244,6 +375,9 @@ class ObjectsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             objects.create,
         )
+        self.query = to_streamed_response_wrapper(
+            objects.query,
+        )
         self.read = to_streamed_response_wrapper(
             objects.read,
         )
@@ -255,6 +389,9 @@ class AsyncObjectsResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             objects.create,
+        )
+        self.query = async_to_streamed_response_wrapper(
+            objects.query,
         )
         self.read = async_to_streamed_response_wrapper(
             objects.read,
