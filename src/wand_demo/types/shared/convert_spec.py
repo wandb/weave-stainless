@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing_extensions import Literal
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["ConvertSpec"]
@@ -17,8 +16,3 @@ class ConvertSpec(BaseModel):
 
 
 from .operation import Operation
-
-if PYDANTIC_V2:
-    ConvertSpec.model_rebuild()
-else:
-    ConvertSpec.update_forward_refs()  # type: ignore
