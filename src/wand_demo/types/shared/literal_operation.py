@@ -6,7 +6,6 @@ from typing import Dict, List, Union
 
 from pydantic import Field as FieldInfo
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["LiteralOperation"]
@@ -17,8 +16,4 @@ class LiteralOperation(BaseModel):
         alias="$literal", default=None
     )
 
-
-if PYDANTIC_V2:
-    LiteralOperation.model_rebuild()
-else:
-    LiteralOperation.update_forward_refs()  # type: ignore
+    model_config = {"defer_build": True}

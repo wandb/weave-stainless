@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from typing_extensions import Literal
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["ConvertSpec"]
+
+if TYPE_CHECKING:
+    from .operation import Operation
 
 
 class ConvertSpec(BaseModel):
@@ -15,10 +18,4 @@ class ConvertSpec(BaseModel):
 
     to: Literal["double", "string", "int", "bool", "exists"]
 
-
-from .operation import Operation
-
-if PYDANTIC_V2:
-    ConvertSpec.model_rebuild()
-else:
-    ConvertSpec.update_forward_refs()  # type: ignore
+    model_config = {"defer_build": True}

@@ -2,21 +2,19 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from pydantic import Field as FieldInfo
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["ConvertOperation"]
+
+if TYPE_CHECKING:
+    from .convert_spec import ConvertSpec
 
 
 class ConvertOperation(BaseModel):
     convert: "ConvertSpec" = FieldInfo(alias="$convert")
 
-
-from .convert_spec import ConvertSpec
-
-if PYDANTIC_V2:
-    ConvertOperation.model_rebuild()
-else:
-    ConvertOperation.update_forward_refs()  # type: ignore
+    model_config = {"defer_build": True}

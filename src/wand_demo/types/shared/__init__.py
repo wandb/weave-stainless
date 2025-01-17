@@ -1,5 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+# import last
 from .expr import Expr as Expr
 from .operation import Operation as Operation
 from .convert_spec import ConvertSpec as ConvertSpec
@@ -15,3 +16,15 @@ from .convert_operation import ConvertOperation as ConvertOperation
 from .literal_operation import LiteralOperation as LiteralOperation
 from .contains_operation import ContainsOperation as ContainsOperation
 from .get_field_operator import GetFieldOperator as GetFieldOperator
+
+AndOperation.model_rebuild(_types_namespace={"Operation": Operation})
+ContainsOperation.model_rebuild(_types_namespace={"Operation": Operation})
+ContainsSpec.model_rebuild(_types_namespace={"Operation": Operation})
+ConvertOperation.model_rebuild(_types_namespace={"ConvertSpec": ConvertSpec})
+ConvertSpec.model_rebuild(_types_namespace={"Operation": Operation})
+EqOperation.model_rebuild(_types_namespace={"Operation": Operation})
+GtOperation.model_rebuild(_types_namespace={"Operation": Operation})
+GteOperation.model_rebuild(_types_namespace={"Operation": Operation})
+InOperation.model_rebuild(_types_namespace={"Operation": Operation})
+NotOperation.model_rebuild(_types_namespace={"Operation": Operation})
+OrOperation.model_rebuild(_types_namespace={"Operation": Operation})
