@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class WeightsAndBiasesError(Exception):
+class WeaveTraceError(Exception):
     pass
 
 
-class APIError(WeightsAndBiasesError):
+class APIError(WeaveTraceError):
     message: str
     request: httpx.Request
 

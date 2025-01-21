@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from wand_demo._types import Base64FileInput
-from wand_demo._utils import (
+from weave_trace._types import Base64FileInput
+from weave_trace._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from wand_demo._compat import PYDANTIC_V2
-from wand_demo._models import BaseModel
+from weave_trace._compat import PYDANTIC_V2
+from weave_trace._models import BaseModel
 
 _T = TypeVar("_T")
 

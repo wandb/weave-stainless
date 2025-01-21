@@ -2,7 +2,7 @@ import operator
 from typing import Any
 from typing_extensions import override
 
-from wand_demo._utils import LazyProxy
+from weave_trace._utils import LazyProxy
 
 
 class RecursiveLazyProxy(LazyProxy[Any]):

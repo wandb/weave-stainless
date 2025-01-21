@@ -1,8 +1,8 @@
-# Weights And Biases Python API library
+# Weave Trace Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/wand_demo.svg)](https://pypi.org/project/wand_demo/)
+[![PyPI version](https://img.shields.io/pypi/v/weave-trace.svg)](https://pypi.org/project/weave-trace/)
 
-The Weights And Biases Python library provides convenient access to the Weights And Biases REST API from any Python 3.8+
+The Weave Trace Python library provides convenient access to the Weave Trace REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.wand-demo.com](https://docs.wand-demo.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [weave-docs.wandb.ai](https://weave-docs.wandb.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -20,7 +20,7 @@ pip install git+ssh://git@github.com/stainless-sdks/wand-demo-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre wand_demo`
+> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre weave-trace`
 
 ## Usage
 
@@ -28,9 +28,9 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from wand_demo import WeightsAndBiases
+from weave_trace import WeaveTrace
 
-client = WeightsAndBiases(
+client = WeaveTrace(
     username=os.environ.get("USERNAME"),  # This is the default and can be omitted
     password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
@@ -52,14 +52,14 @@ so that your Username is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncWeightsAndBiases` instead of `WeightsAndBiases` and use `await` with each API call:
+Simply import `AsyncWeaveTrace` instead of `WeaveTrace` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from wand_demo import AsyncWeightsAndBiases
+from weave_trace import AsyncWeaveTrace
 
-client = AsyncWeightsAndBiases(
+client = AsyncWeaveTrace(
     username=os.environ.get("USERNAME"),  # This is the default and can be omitted
     password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
@@ -92,18 +92,18 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `wand_demo.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `weave_trace.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `wand_demo.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `weave_trace.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `wand_demo.APIError`.
+All errors inherit from `weave_trace.APIError`.
 
 ```python
-import wand_demo
-from wand_demo import WeightsAndBiases
+import weave_trace
+from weave_trace import WeaveTrace
 
-client = WeightsAndBiases()
+client = WeaveTrace()
 
 try:
     client.objects.create(
@@ -113,12 +113,12 @@ try:
             "val": {},
         },
     )
-except wand_demo.APIConnectionError as e:
+except weave_trace.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except wand_demo.RateLimitError as e:
+except weave_trace.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except wand_demo.APIStatusError as e:
+except weave_trace.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -146,10 +146,10 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from wand_demo import WeightsAndBiases
+from weave_trace import WeaveTrace
 
 # Configure the default for all requests:
-client = WeightsAndBiases(
+client = WeaveTrace(
     # default is 2
     max_retries=0,
 )
@@ -170,16 +170,16 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from wand_demo import WeightsAndBiases
+from weave_trace import WeaveTrace
 
 # Configure the default for all requests:
-client = WeightsAndBiases(
+client = WeaveTrace(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = WeightsAndBiases(
+client = WeaveTrace(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -203,10 +203,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `WEIGHTS_AND_BIASES_LOG` to `info`.
+You can enable logging by setting the environment variable `WEAVE_TRACE_LOG` to `info`.
 
 ```shell
-$ export WEIGHTS_AND_BIASES_LOG=info
+$ export WEAVE_TRACE_LOG=info
 ```
 
 Or to `debug` for more verbose logging.
@@ -228,9 +228,9 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from wand_demo import WeightsAndBiases
+from weave_trace import WeaveTrace
 
-client = WeightsAndBiases()
+client = WeaveTrace()
 response = client.objects.with_raw_response.create(
     obj={
         "object_id": "object_id",
@@ -244,9 +244,9 @@ object_ = response.parse()  # get the object that `objects.create()` would have 
 print(object_.digest)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/wand-demo-python/tree/main/src/wand_demo/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/wand-demo-python/tree/main/src/weave_trace/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/wand-demo-python/tree/main/src/wand_demo/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/wand-demo-python/tree/main/src/weave_trace/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -314,10 +314,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from wand_demo import WeightsAndBiases, DefaultHttpxClient
+from weave_trace import WeaveTrace, DefaultHttpxClient
 
-client = WeightsAndBiases(
-    # Or use the `WEIGHTS_AND_BIASES_BASE_URL` env var
+client = WeaveTrace(
+    # Or use the `WEAVE_TRACE_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
@@ -337,9 +337,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from wand_demo import WeightsAndBiases
+from weave_trace import WeaveTrace
 
-with WeightsAndBiases() as client:
+with WeaveTrace() as client:
   # make requests here
   ...
 
@@ -365,8 +365,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import wand_demo
-print(wand_demo.__version__)
+import weave_trace
+print(weave_trace.__version__)
 ```
 
 ## Requirements

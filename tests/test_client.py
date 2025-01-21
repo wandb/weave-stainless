@@ -21,12 +21,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases, APIResponseValidationError
-from wand_demo._types import Omit
-from wand_demo._models import BaseModel, FinalRequestOptions
-from wand_demo._constants import RAW_RESPONSE_HEADER
-from wand_demo._exceptions import APIStatusError, APITimeoutError, WeightsAndBiasesError, APIResponseValidationError
-from wand_demo._base_client import (
+from weave_trace import WeaveTrace, AsyncWeaveTrace, APIResponseValidationError
+from weave_trace._types import Omit
+from weave_trace._models import BaseModel, FinalRequestOptions
+from weave_trace._constants import RAW_RESPONSE_HEADER
+from weave_trace._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
+from weave_trace._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -50,7 +50,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: WeightsAndBiases | AsyncWeightsAndBiases) -> int:
+def _get_open_connections(client: WeaveTrace | AsyncWeaveTrace) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -58,8 +58,8 @@ def _get_open_connections(client: WeightsAndBiases | AsyncWeightsAndBiases) -> i
     return len(pool._requests)
 
 
-class TestWeightsAndBiases:
-    client = WeightsAndBiases(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+class TestWeaveTrace:
+    client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -110,7 +110,7 @@ class TestWeightsAndBiases:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -148,7 +148,7 @@ class TestWeightsAndBiases:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -243,10 +243,10 @@ class TestWeightsAndBiases:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "wand_demo/_legacy_response.py",
-                        "wand_demo/_response.py",
+                        "weave_trace/_legacy_response.py",
+                        "weave_trace/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "wand_demo/_compat.py",
+                        "weave_trace/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -277,7 +277,7 @@ class TestWeightsAndBiases:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -292,7 +292,7 @@ class TestWeightsAndBiases:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = WeightsAndBiases(
+            client = WeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -306,7 +306,7 @@ class TestWeightsAndBiases:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = WeightsAndBiases(
+            client = WeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -320,7 +320,7 @@ class TestWeightsAndBiases:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = WeightsAndBiases(
+            client = WeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -335,7 +335,7 @@ class TestWeightsAndBiases:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                WeightsAndBiases(
+                WeaveTrace(
                     base_url=base_url,
                     username=username,
                     password=password,
@@ -344,7 +344,7 @@ class TestWeightsAndBiases:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -355,7 +355,7 @@ class TestWeightsAndBiases:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = WeightsAndBiases(
+        client2 = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -370,26 +370,22 @@ class TestWeightsAndBiases:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = WeightsAndBiases(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
-        )
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with pytest.raises(WeightsAndBiasesError):
+        with pytest.raises(WeaveTraceError):
             with update_env(
                 **{
                     "USERNAME": Omit(),
                     "PASSWORD": Omit(),
                 }
             ):
-                client2 = WeightsAndBiases(
-                    base_url=base_url, username=None, password=None, _strict_response_validation=True
-                )
+                client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -507,7 +503,7 @@ class TestWeightsAndBiases:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: WeightsAndBiases) -> None:
+    def test_multipart_repeating_array(self, client: WeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -594,7 +590,7 @@ class TestWeightsAndBiases:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = WeightsAndBiases(
+        client = WeaveTrace(
             base_url="https://example.com/from_init",
             username=username,
             password=password,
@@ -607,20 +603,20 @@ class TestWeightsAndBiases:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(WEIGHTS_AND_BIASES_BASE_URL="http://localhost:5000/from/env"):
-            client = WeightsAndBiases(username=username, password=password, _strict_response_validation=True)
+        with update_env(WEAVE_TRACE_BASE_URL="http://localhost:5000/from/env"):
+            client = WeaveTrace(username=username, password=password, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -630,7 +626,7 @@ class TestWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: WeightsAndBiases) -> None:
+    def test_base_url_trailing_slash(self, client: WeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -643,13 +639,13 @@ class TestWeightsAndBiases:
     @pytest.mark.parametrize(
         "client",
         [
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -659,7 +655,7 @@ class TestWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: WeightsAndBiases) -> None:
+    def test_base_url_no_trailing_slash(self, client: WeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -672,13 +668,13 @@ class TestWeightsAndBiases:
     @pytest.mark.parametrize(
         "client",
         [
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -688,7 +684,7 @@ class TestWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: WeightsAndBiases) -> None:
+    def test_absolute_request_url(self, client: WeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -699,9 +695,7 @@ class TestWeightsAndBiases:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = WeightsAndBiases(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
-        )
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -712,9 +706,7 @@ class TestWeightsAndBiases:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = WeightsAndBiases(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
-        )
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -735,7 +727,7 @@ class TestWeightsAndBiases:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            WeightsAndBiases(
+            WeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -750,16 +742,14 @@ class TestWeightsAndBiases:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = WeightsAndBiases(
+        strict_client = WeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = WeightsAndBiases(
-            base_url=base_url, username=username, password=password, _strict_response_validation=False
-        )
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -787,16 +777,14 @@ class TestWeightsAndBiases:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = WeightsAndBiases(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
-        )
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/obj/create").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -820,7 +808,7 @@ class TestWeightsAndBiases:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/obj/create").mock(return_value=httpx.Response(500))
@@ -845,12 +833,12 @@ class TestWeightsAndBiases:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: WeightsAndBiases,
+        client: WeaveTrace,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -882,10 +870,10 @@ class TestWeightsAndBiases:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: WeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
+        self, client: WeaveTrace, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -912,10 +900,10 @@ class TestWeightsAndBiases:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: WeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
+        self, client: WeaveTrace, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -942,10 +930,8 @@ class TestWeightsAndBiases:
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
 
-class TestAsyncWeightsAndBiases:
-    client = AsyncWeightsAndBiases(
-        base_url=base_url, username=username, password=password, _strict_response_validation=True
-    )
+class TestAsyncWeaveTrace:
+    client = AsyncWeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -998,7 +984,7 @@ class TestAsyncWeightsAndBiases:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1036,7 +1022,7 @@ class TestAsyncWeightsAndBiases:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1131,10 +1117,10 @@ class TestAsyncWeightsAndBiases:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "wand_demo/_legacy_response.py",
-                        "wand_demo/_response.py",
+                        "weave_trace/_legacy_response.py",
+                        "weave_trace/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "wand_demo/_compat.py",
+                        "weave_trace/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1165,7 +1151,7 @@ class TestAsyncWeightsAndBiases:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1180,7 +1166,7 @@ class TestAsyncWeightsAndBiases:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncWeightsAndBiases(
+            client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1194,7 +1180,7 @@ class TestAsyncWeightsAndBiases:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncWeightsAndBiases(
+            client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1208,7 +1194,7 @@ class TestAsyncWeightsAndBiases:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncWeightsAndBiases(
+            client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1223,7 +1209,7 @@ class TestAsyncWeightsAndBiases:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncWeightsAndBiases(
+                AsyncWeaveTrace(
                     base_url=base_url,
                     username=username,
                     password=password,
@@ -1232,7 +1218,7 @@ class TestAsyncWeightsAndBiases:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1243,7 +1229,7 @@ class TestAsyncWeightsAndBiases:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncWeightsAndBiases(
+        client2 = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1258,26 +1244,26 @@ class TestAsyncWeightsAndBiases:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with pytest.raises(WeightsAndBiasesError):
+        with pytest.raises(WeaveTraceError):
             with update_env(
                 **{
                     "USERNAME": Omit(),
                     "PASSWORD": Omit(),
                 }
             ):
-                client2 = AsyncWeightsAndBiases(
+                client2 = AsyncWeaveTrace(
                     base_url=base_url, username=None, password=None, _strict_response_validation=True
                 )
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
             password=password,
@@ -1395,7 +1381,7 @@ class TestAsyncWeightsAndBiases:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncWeightsAndBiases) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncWeaveTrace) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -1482,7 +1468,7 @@ class TestAsyncWeightsAndBiases:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url="https://example.com/from_init",
             username=username,
             password=password,
@@ -1495,20 +1481,20 @@ class TestAsyncWeightsAndBiases:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(WEIGHTS_AND_BIASES_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncWeightsAndBiases(username=username, password=password, _strict_response_validation=True)
+        with update_env(WEAVE_TRACE_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncWeaveTrace(username=username, password=password, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1518,7 +1504,7 @@ class TestAsyncWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncWeightsAndBiases) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncWeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1531,13 +1517,13 @@ class TestAsyncWeightsAndBiases:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1547,7 +1533,7 @@ class TestAsyncWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncWeightsAndBiases) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncWeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1560,13 +1546,13 @@ class TestAsyncWeightsAndBiases:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
                 _strict_response_validation=True,
             ),
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
                 password=password,
@@ -1576,7 +1562,7 @@ class TestAsyncWeightsAndBiases:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncWeightsAndBiases) -> None:
+    def test_absolute_request_url(self, client: AsyncWeaveTrace) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1587,7 +1573,7 @@ class TestAsyncWeightsAndBiases:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
         assert not client.is_closed()
@@ -1601,7 +1587,7 @@ class TestAsyncWeightsAndBiases:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
         async with client as c2:
@@ -1625,7 +1611,7 @@ class TestAsyncWeightsAndBiases:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncWeightsAndBiases(
+            AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
                 password=password,
@@ -1641,14 +1627,14 @@ class TestAsyncWeightsAndBiases:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncWeightsAndBiases(
+        strict_client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=False
         )
 
@@ -1679,7 +1665,7 @@ class TestAsyncWeightsAndBiases:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncWeightsAndBiases(
+        client = AsyncWeaveTrace(
             base_url=base_url, username=username, password=password, _strict_response_validation=True
         )
 
@@ -1688,7 +1674,7 @@ class TestAsyncWeightsAndBiases:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/obj/create").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1712,7 +1698,7 @@ class TestAsyncWeightsAndBiases:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/obj/create").mock(return_value=httpx.Response(500))
@@ -1737,13 +1723,13 @@ class TestAsyncWeightsAndBiases:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncWeightsAndBiases,
+        async_client: AsyncWeaveTrace,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1775,11 +1761,11 @@ class TestAsyncWeightsAndBiases:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncWeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncWeaveTrace, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1806,11 +1792,11 @@ class TestAsyncWeightsAndBiases:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("wand_demo._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncWeightsAndBiases, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncWeaveTrace, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1847,8 +1833,8 @@ class TestAsyncWeightsAndBiases:
         import nest_asyncio
         import threading
 
-        from wand_demo._utils import asyncify
-        from wand_demo._base_client import get_platform 
+        from weave_trace._utils import asyncify
+        from weave_trace._base_client import get_platform 
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()

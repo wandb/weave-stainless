@@ -8,11 +8,11 @@ from ._client import (
     Stream,
     Timeout,
     Transport,
+    WeaveTrace,
     AsyncClient,
     AsyncStream,
     RequestOptions,
-    WeightsAndBiases,
-    AsyncWeightsAndBiases,
+    AsyncWeaveTrace,
 )
 from ._models import BaseModel
 from ._version import __title__, __version__
@@ -26,11 +26,11 @@ from ._exceptions import (
     RateLimitError,
     APITimeoutError,
     BadRequestError,
+    WeaveTraceError,
     APIConnectionError,
     AuthenticationError,
     InternalServerError,
     PermissionDeniedError,
-    WeightsAndBiasesError,
     UnprocessableEntityError,
     APIResponseValidationError,
 )
@@ -47,7 +47,7 @@ __all__ = [
     "NotGiven",
     "NOT_GIVEN",
     "Omit",
-    "WeightsAndBiasesError",
+    "WeaveTraceError",
     "APIError",
     "APIStatusError",
     "APITimeoutError",
@@ -67,8 +67,8 @@ __all__ = [
     "AsyncClient",
     "Stream",
     "AsyncStream",
-    "WeightsAndBiases",
-    "AsyncWeightsAndBiases",
+    "WeaveTrace",
+    "AsyncWeaveTrace",
     "file_from_path",
     "BaseModel",
     "DEFAULT_TIMEOUT",
@@ -83,12 +83,12 @@ _setup_logging()
 # Update the __module__ attribute for exported symbols so that
 # error messages point to this module instead of the module
 # it was originally defined in, e.g.
-# wand_demo._exceptions.NotFoundError -> wand_demo.NotFoundError
+# weave_trace._exceptions.NotFoundError -> weave_trace.NotFoundError
 __locals = locals()
 for __name in __all__:
     if not __name.startswith("__"):
         try:
-            __locals[__name].__module__ = "wand_demo"
+            __locals[__name].__module__ = "weave_trace"
         except (TypeError, AttributeError):
             # Some of our exported symbols are builtins which we can't set attributes for.
             pass

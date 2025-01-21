@@ -7,14 +7,14 @@ from typing import TYPE_CHECKING, Iterator, AsyncIterator
 import pytest
 from pytest_asyncio import is_async_test
 
-from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
+from weave_trace import WeaveTrace, AsyncWeaveTrace
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("wand_demo").setLevel(logging.DEBUG)
+logging.getLogger("weave_trace").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
@@ -33,24 +33,24 @@ password = "My Password"
 
 
 @pytest.fixture(scope="session")
-def client(request: FixtureRequest) -> Iterator[WeightsAndBiases]:
+def client(request: FixtureRequest) -> Iterator[WeaveTrace]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with WeightsAndBiases(
+    with WeaveTrace(
         base_url=base_url, username=username, password=password, _strict_response_validation=strict
     ) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncWeightsAndBiases]:
+async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncWeaveTrace]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncWeightsAndBiases(
+    async with AsyncWeaveTrace(
         base_url=base_url, username=username, password=password, _strict_response_validation=strict
     ) as client:
         yield client

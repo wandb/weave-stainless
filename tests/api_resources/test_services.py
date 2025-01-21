@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from wand_demo import WeightsAndBiases, AsyncWeightsAndBiases
 from tests.utils import assert_matches_type
-from wand_demo.types import ServerInfoRes
+from weave_trace import WeaveTrace, AsyncWeaveTrace
+from weave_trace.types import ServerInfoRes
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -18,12 +18,12 @@ class TestServices:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_health_check(self, client: WeightsAndBiases) -> None:
+    def test_method_health_check(self, client: WeaveTrace) -> None:
         service = client.services.health_check()
         assert_matches_type(object, service, path=["response"])
 
     @parametrize
-    def test_raw_response_health_check(self, client: WeightsAndBiases) -> None:
+    def test_raw_response_health_check(self, client: WeaveTrace) -> None:
         response = client.services.with_raw_response.health_check()
 
         assert response.is_closed is True
@@ -32,7 +32,7 @@ class TestServices:
         assert_matches_type(object, service, path=["response"])
 
     @parametrize
-    def test_streaming_response_health_check(self, client: WeightsAndBiases) -> None:
+    def test_streaming_response_health_check(self, client: WeaveTrace) -> None:
         with client.services.with_streaming_response.health_check() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -43,12 +43,12 @@ class TestServices:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_server_info(self, client: WeightsAndBiases) -> None:
+    def test_method_server_info(self, client: WeaveTrace) -> None:
         service = client.services.server_info()
         assert_matches_type(ServerInfoRes, service, path=["response"])
 
     @parametrize
-    def test_raw_response_server_info(self, client: WeightsAndBiases) -> None:
+    def test_raw_response_server_info(self, client: WeaveTrace) -> None:
         response = client.services.with_raw_response.server_info()
 
         assert response.is_closed is True
@@ -57,7 +57,7 @@ class TestServices:
         assert_matches_type(ServerInfoRes, service, path=["response"])
 
     @parametrize
-    def test_streaming_response_server_info(self, client: WeightsAndBiases) -> None:
+    def test_streaming_response_server_info(self, client: WeaveTrace) -> None:
         with client.services.with_streaming_response.server_info() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -72,12 +72,12 @@ class TestAsyncServices:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_health_check(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_method_health_check(self, async_client: AsyncWeaveTrace) -> None:
         service = await async_client.services.health_check()
         assert_matches_type(object, service, path=["response"])
 
     @parametrize
-    async def test_raw_response_health_check(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_raw_response_health_check(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.services.with_raw_response.health_check()
 
         assert response.is_closed is True
@@ -86,7 +86,7 @@ class TestAsyncServices:
         assert_matches_type(object, service, path=["response"])
 
     @parametrize
-    async def test_streaming_response_health_check(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_streaming_response_health_check(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.services.with_streaming_response.health_check() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -97,12 +97,12 @@ class TestAsyncServices:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_server_info(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_method_server_info(self, async_client: AsyncWeaveTrace) -> None:
         service = await async_client.services.server_info()
         assert_matches_type(ServerInfoRes, service, path=["response"])
 
     @parametrize
-    async def test_raw_response_server_info(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_raw_response_server_info(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.services.with_raw_response.server_info()
 
         assert response.is_closed is True
@@ -111,7 +111,7 @@ class TestAsyncServices:
         assert_matches_type(ServerInfoRes, service, path=["response"])
 
     @parametrize
-    async def test_streaming_response_server_info(self, async_client: AsyncWeightsAndBiases) -> None:
+    async def test_streaming_response_server_info(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.services.with_streaming_response.server_info() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

@@ -27,7 +27,7 @@ from ._utils import (
 from ._version import __version__
 from .resources import refs, calls, costs, files, tables, objects, feedback, services
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, WeightsAndBiasesError
+from ._exceptions import APIStatusError, WeaveTraceError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -39,14 +39,14 @@ __all__ = [
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "WeightsAndBiases",
-    "AsyncWeightsAndBiases",
+    "WeaveTrace",
+    "AsyncWeaveTrace",
     "Client",
     "AsyncClient",
 ]
 
 
-class WeightsAndBiases(SyncAPIClient):
+class WeaveTrace(SyncAPIClient):
     services: services.ServicesResource
     calls: calls.CallsResource
     objects: objects.ObjectsResource
@@ -55,8 +55,8 @@ class WeightsAndBiases(SyncAPIClient):
     files: files.FilesResource
     costs: costs.CostsResource
     feedback: feedback.FeedbackResource
-    with_raw_response: WeightsAndBiasesWithRawResponse
-    with_streaming_response: WeightsAndBiasesWithStreamedResponse
+    with_raw_response: WeaveTraceWithRawResponse
+    with_streaming_response: WeaveTraceWithStreamedResponse
 
     # client options
     username: str
@@ -86,7 +86,7 @@ class WeightsAndBiases(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous weights and biases client instance.
+        """Construct a new synchronous Weave Trace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -95,7 +95,7 @@ class WeightsAndBiases(SyncAPIClient):
         if username is None:
             username = os.environ.get("USERNAME")
         if username is None:
-            raise WeightsAndBiasesError(
+            raise WeaveTraceError(
                 "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
             )
         self.username = username
@@ -103,15 +103,15 @@ class WeightsAndBiases(SyncAPIClient):
         if password is None:
             password = os.environ.get("PASSWORD")
         if password is None:
-            raise WeightsAndBiasesError(
+            raise WeaveTraceError(
                 "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
         self.password = password
 
         if base_url is None:
-            base_url = os.environ.get("WEIGHTS_AND_BIASES_BASE_URL")
+            base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.wandb.ai"
+            base_url = f"https://trace.wandb.ai"
 
         super().__init__(
             version=__version__,
@@ -132,8 +132,8 @@ class WeightsAndBiases(SyncAPIClient):
         self.files = files.FilesResource(self)
         self.costs = costs.CostsResource(self)
         self.feedback = feedback.FeedbackResource(self)
-        self.with_raw_response = WeightsAndBiasesWithRawResponse(self)
-        self.with_streaming_response = WeightsAndBiasesWithStreamedResponse(self)
+        self.with_raw_response = WeaveTraceWithRawResponse(self)
+        self.with_streaming_response = WeaveTraceWithStreamedResponse(self)
 
     @property
     @override
@@ -243,7 +243,7 @@ class WeightsAndBiases(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncWeightsAndBiases(AsyncAPIClient):
+class AsyncWeaveTrace(AsyncAPIClient):
     services: services.AsyncServicesResource
     calls: calls.AsyncCallsResource
     objects: objects.AsyncObjectsResource
@@ -252,8 +252,8 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
     files: files.AsyncFilesResource
     costs: costs.AsyncCostsResource
     feedback: feedback.AsyncFeedbackResource
-    with_raw_response: AsyncWeightsAndBiasesWithRawResponse
-    with_streaming_response: AsyncWeightsAndBiasesWithStreamedResponse
+    with_raw_response: AsyncWeaveTraceWithRawResponse
+    with_streaming_response: AsyncWeaveTraceWithStreamedResponse
 
     # client options
     username: str
@@ -283,7 +283,7 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async weights and biases client instance.
+        """Construct a new async Weave Trace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -292,7 +292,7 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
         if username is None:
             username = os.environ.get("USERNAME")
         if username is None:
-            raise WeightsAndBiasesError(
+            raise WeaveTraceError(
                 "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
             )
         self.username = username
@@ -300,15 +300,15 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
         if password is None:
             password = os.environ.get("PASSWORD")
         if password is None:
-            raise WeightsAndBiasesError(
+            raise WeaveTraceError(
                 "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
         self.password = password
 
         if base_url is None:
-            base_url = os.environ.get("WEIGHTS_AND_BIASES_BASE_URL")
+            base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.wandb.ai"
+            base_url = f"https://trace.wandb.ai"
 
         super().__init__(
             version=__version__,
@@ -329,8 +329,8 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
         self.files = files.AsyncFilesResource(self)
         self.costs = costs.AsyncCostsResource(self)
         self.feedback = feedback.AsyncFeedbackResource(self)
-        self.with_raw_response = AsyncWeightsAndBiasesWithRawResponse(self)
-        self.with_streaming_response = AsyncWeightsAndBiasesWithStreamedResponse(self)
+        self.with_raw_response = AsyncWeaveTraceWithRawResponse(self)
+        self.with_streaming_response = AsyncWeaveTraceWithStreamedResponse(self)
 
     @property
     @override
@@ -440,8 +440,8 @@ class AsyncWeightsAndBiases(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class WeightsAndBiasesWithRawResponse:
-    def __init__(self, client: WeightsAndBiases) -> None:
+class WeaveTraceWithRawResponse:
+    def __init__(self, client: WeaveTrace) -> None:
         self.services = services.ServicesResourceWithRawResponse(client.services)
         self.calls = calls.CallsResourceWithRawResponse(client.calls)
         self.objects = objects.ObjectsResourceWithRawResponse(client.objects)
@@ -452,8 +452,8 @@ class WeightsAndBiasesWithRawResponse:
         self.feedback = feedback.FeedbackResourceWithRawResponse(client.feedback)
 
 
-class AsyncWeightsAndBiasesWithRawResponse:
-    def __init__(self, client: AsyncWeightsAndBiases) -> None:
+class AsyncWeaveTraceWithRawResponse:
+    def __init__(self, client: AsyncWeaveTrace) -> None:
         self.services = services.AsyncServicesResourceWithRawResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithRawResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithRawResponse(client.objects)
@@ -464,8 +464,8 @@ class AsyncWeightsAndBiasesWithRawResponse:
         self.feedback = feedback.AsyncFeedbackResourceWithRawResponse(client.feedback)
 
 
-class WeightsAndBiasesWithStreamedResponse:
-    def __init__(self, client: WeightsAndBiases) -> None:
+class WeaveTraceWithStreamedResponse:
+    def __init__(self, client: WeaveTrace) -> None:
         self.services = services.ServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.CallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.ObjectsResourceWithStreamingResponse(client.objects)
@@ -476,8 +476,8 @@ class WeightsAndBiasesWithStreamedResponse:
         self.feedback = feedback.FeedbackResourceWithStreamingResponse(client.feedback)
 
 
-class AsyncWeightsAndBiasesWithStreamedResponse:
-    def __init__(self, client: AsyncWeightsAndBiases) -> None:
+class AsyncWeaveTraceWithStreamedResponse:
+    def __init__(self, client: AsyncWeaveTrace) -> None:
         self.services = services.AsyncServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithStreamingResponse(client.objects)
@@ -488,6 +488,6 @@ class AsyncWeightsAndBiasesWithStreamedResponse:
         self.feedback = feedback.AsyncFeedbackResourceWithStreamingResponse(client.feedback)
 
 
-Client = WeightsAndBiases
+Client = WeaveTrace
 
-AsyncClient = AsyncWeightsAndBiases
+AsyncClient = AsyncWeaveTrace
