@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 # import last
-from wand_demo._compat import PYDANTIC_V2
+from weave_trace._compat import PYDANTIC_V2
 
 from .expr import Expr as Expr
 from .operation import Operation as Operation
