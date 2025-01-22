@@ -360,7 +360,7 @@ class CallsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=JSONLDecoder[object],
             stream=True,
         )
 
@@ -717,7 +717,7 @@ class AsyncCallsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=AsyncJSONLDecoder[object],
             stream=True,
         )
 
