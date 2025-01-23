@@ -39,9 +39,10 @@ Repository = "https://github.com/stainless-sdks/wand-demo-python"
 
 
 
-[tool.rye]
+[tool.uv]
 managed = true
-# version pins are in requirements-dev.lock
+required-version = ">=0.5.0"
+# version pins are in uv.lock
 dev-dependencies = [
     "pyright>=1.1.359",
     "mypy",
@@ -50,41 +51,11 @@ dev-dependencies = [
     "pytest-asyncio",
     "ruff",
     "time-machine",
-    "nox",
     "dirty-equals>=0.6.0",
     "importlib-metadata>=6.7.0",
     "rich>=13.7.1",
     "nest_asyncio==1.6.0",
 ]
-
-[tool.rye.scripts]
-format = { chain = [
-  "format:ruff",
-  "format:docs",
-  "fix:ruff",
-  # run formatting again to fix any inconsistencies when imports are stripped
-  "format:ruff",
-]}
-"format:docs" = "python scripts/utils/ruffen-docs.py README.md api.md"
-"format:ruff" = "ruff format"
-
-"lint" = { chain = [
-  "check:ruff",
-  "typecheck",
-  "check:importable",
-]}
-"check:ruff" = "ruff check ."
-"fix:ruff" = "ruff check --fix ."
-
-"check:importable" = "python -c 'import weave_trace'"
-
-typecheck = { chain = [
-  "typecheck:pyright",
-  "typecheck:mypy"
-]}
-"typecheck:pyright" = "pyright"
-"typecheck:verify-types" = "pyright --verifytypes weave_trace --ignoreexternal"
-"typecheck:mypy" = "mypy ."
 
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]
