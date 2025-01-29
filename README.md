@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [weave-docs.wandb.ai](https://weave-docs.wandb.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [weave-docs.wandb.ai](http://weave-docs.wandb.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
