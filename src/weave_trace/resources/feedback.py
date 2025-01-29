@@ -40,7 +40,7 @@ class FeedbackResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/wand-demo-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/weave-python#accessing-raw-response-data-eg-headers
         """
         return FeedbackResourceWithRawResponse(self)
 
@@ -49,7 +49,7 @@ class FeedbackResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/wand-demo-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/weave-python#with_streaming_response
         """
         return FeedbackResourceWithStreamingResponse(self)
 
@@ -265,7 +265,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/wand-demo-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/weave-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFeedbackResourceWithRawResponse(self)
 
@@ -274,7 +274,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/wand-demo-python#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/weave-python#with_streaming_response
         """
         return AsyncFeedbackResourceWithStreamingResponse(self)
 
