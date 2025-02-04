@@ -2,26 +2,45 @@
 
 from __future__ import annotations
 
-from typing import Union
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Union
+from typing_extensions import TypeAlias, TypeAliasType
 
+from ..._compat import PYDANTIC_V2
 from .get_field_operator import GetFieldOperator
 
 __all__ = ["Operation"]
 
-Operation: TypeAlias = Union[
-    "LiteralOperation",
-    GetFieldOperator,
-    "ConvertOperation",
-    "AndOperation",
-    "OrOperation",
-    "NotOperation",
-    "EqOperation",
-    "GtOperation",
-    "GteOperation",
-    "InOperation",
-    "ContainsOperation",
-]
+if TYPE_CHECKING or PYDANTIC_V2:
+    Operation = TypeAliasType(
+        "Operation",
+        Union[
+            "LiteralOperation",
+            GetFieldOperator,
+            "ConvertOperation",
+            "AndOperation",
+            "OrOperation",
+            "NotOperation",
+            "EqOperation",
+            "GtOperation",
+            "GteOperation",
+            "InOperation",
+            "ContainsOperation",
+        ],
+    )
+else:
+    Operation: TypeAlias = Union[
+        "LiteralOperation",
+        GetFieldOperator,
+        "ConvertOperation",
+        "AndOperation",
+        "OrOperation",
+        "NotOperation",
+        "EqOperation",
+        "GtOperation",
+        "GteOperation",
+        "InOperation",
+        "ContainsOperation",
+    ]
 
 from .eq_operation import EqOperation
 from .gt_operation import GtOperation
