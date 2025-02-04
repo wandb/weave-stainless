@@ -204,7 +204,7 @@ class TestCalls:
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
-            query={"expr": {"and_": [{"literal": "string"}]}},
+            query={"expr": {"and_": []}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
 
@@ -373,7 +373,7 @@ class TestCalls:
             include_feedback=True,
             limit=0,
             offset=0,
-            query={"expr": {"and_": [{"literal": "string"}]}},
+            query={"expr": {"and_": []}},
             sort_by=[
                 {
                     "direction": "asc",
@@ -661,7 +661,7 @@ class TestAsyncCalls:
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
-            query={"expr": {"and_": [{"literal": "string"}]}},
+            query={"expr": {"and_": []}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
 
@@ -830,7 +830,7 @@ class TestAsyncCalls:
             include_feedback=True,
             limit=0,
             offset=0,
-            query={"expr": {"and_": [{"literal": "string"}]}},
+            query={"expr": {"and_": []}},
             sort_by=[
                 {
                     "direction": "asc",
