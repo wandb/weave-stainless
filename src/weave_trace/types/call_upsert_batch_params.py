@@ -27,9 +27,9 @@ class CallUpsertBatchParams(TypedDict, total=False):
 
 
 class BatchCallBatchStartModeReqStart(TypedDict, total=False):
-    attributes: Required[Dict[str, object]]
+    attributes: Required[object]
 
-    inputs: Required[Dict[str, object]]
+    inputs: Required[object]
 
     op_name: Required[str]
 

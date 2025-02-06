@@ -67,7 +67,7 @@ class TestTables:
         table = client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -76,7 +76,7 @@ class TestTables:
         response = client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
 
         assert response.is_closed is True
@@ -89,7 +89,7 @@ class TestTables:
         with client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -238,7 +238,7 @@ class TestAsyncTables:
         table = await async_client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -247,7 +247,7 @@ class TestAsyncTables:
         response = await async_client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
 
         assert response.is_closed is True
@@ -260,7 +260,7 @@ class TestAsyncTables:
         async with async_client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

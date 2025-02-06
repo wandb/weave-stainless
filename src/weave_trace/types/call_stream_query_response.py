@@ -1,14 +1,15 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
+from typing_extensions import TypeAlias
 
 from .._models import BaseModel
 
-__all__ = ["CallReadResponse", "Call"]
+__all__ = ["CallStreamQueryResponse", "CallStreamQueryResponseItem"]
 
 
-class Call(BaseModel):
+class CallStreamQueryResponseItem(BaseModel):
     id: str
 
     attributes: object
@@ -42,5 +43,4 @@ class Call(BaseModel):
     wb_user_id: Optional[str] = None
 
 
-class CallReadResponse(BaseModel):
-    call: Optional[Call] = None
+CallStreamQueryResponse: TypeAlias = List[CallStreamQueryResponseItem]

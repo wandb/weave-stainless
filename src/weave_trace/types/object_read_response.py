@@ -29,6 +29,9 @@ class Obj(BaseModel):
 
     deleted_at: Optional[datetime] = None
 
+    wb_user_id: Optional[str] = None
+    """Do not set directly. Server will automatically populate this field."""
+
 
 class ObjectReadResponse(BaseModel):
     obj: Obj

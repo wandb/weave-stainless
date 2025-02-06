@@ -41,6 +41,7 @@ from .table_update_params import TableUpdateParams as TableUpdateParams
 from .cost_create_response import CostCreateResponse as CostCreateResponse
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .object_create_params import ObjectCreateParams as ObjectCreateParams
+from .object_delete_params import ObjectDeleteParams as ObjectDeleteParams
 from .object_read_response import ObjectReadResponse as ObjectReadResponse
 from .table_query_response import TableQueryResponse as TableQueryResponse
 from .feedback_purge_params import FeedbackPurgeParams as FeedbackPurgeParams
@@ -51,6 +52,7 @@ from .table_create_response import TableCreateResponse as TableCreateResponse
 from .table_update_response import TableUpdateResponse as TableUpdateResponse
 from .feedback_create_params import FeedbackCreateParams as FeedbackCreateParams
 from .object_create_response import ObjectCreateResponse as ObjectCreateResponse
+from .object_delete_response import ObjectDeleteResponse as ObjectDeleteResponse
 from .call_query_stats_params import CallQueryStatsParams as CallQueryStatsParams
 from .feedback_query_response import FeedbackQueryResponse as FeedbackQueryResponse
 from .feedback_replace_params import FeedbackReplaceParams as FeedbackReplaceParams
@@ -61,5 +63,6 @@ from .feedback_create_response import FeedbackCreateResponse as FeedbackCreateRe
 from .table_query_stats_params import TableQueryStatsParams as TableQueryStatsParams
 from .call_query_stats_response import CallQueryStatsResponse as CallQueryStatsResponse
 from .feedback_replace_response import FeedbackReplaceResponse as FeedbackReplaceResponse
+from .call_stream_query_response import CallStreamQueryResponse as CallStreamQueryResponse
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
 from .table_query_stats_response import TableQueryStatsResponse as TableQueryStatsResponse

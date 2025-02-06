@@ -13,6 +13,7 @@ from weave_trace.types import (
     CallReadResponse,
     CallStartResponse,
     CallQueryStatsResponse,
+    CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
 from weave_trace._utils import parse_datetime
@@ -279,8 +280,8 @@ class TestCalls:
     def test_method_start(self, client: WeaveTrace) -> None:
         call = client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -292,8 +293,8 @@ class TestCalls:
     def test_method_start_with_all_params(self, client: WeaveTrace) -> None:
         call = client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -311,8 +312,8 @@ class TestCalls:
     def test_raw_response_start(self, client: WeaveTrace) -> None:
         response = client.calls.with_raw_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -328,8 +329,8 @@ class TestCalls:
     def test_streaming_response_start(self, client: WeaveTrace) -> None:
         with client.calls.with_streaming_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -349,7 +350,7 @@ class TestCalls:
         call = client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -382,7 +383,7 @@ class TestCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -394,7 +395,7 @@ class TestCalls:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         call = response.parse()
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -406,7 +407,7 @@ class TestCalls:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             call = response.parse()
-            assert_matches_type(JSONLDecoder[object], call, path=["response"])
+            assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -417,8 +418,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -436,8 +437,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -459,8 +460,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -736,8 +737,8 @@ class TestAsyncCalls:
     async def test_method_start(self, async_client: AsyncWeaveTrace) -> None:
         call = await async_client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -749,8 +750,8 @@ class TestAsyncCalls:
     async def test_method_start_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
         call = await async_client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -768,8 +769,8 @@ class TestAsyncCalls:
     async def test_raw_response_start(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.calls.with_raw_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -785,8 +786,8 @@ class TestAsyncCalls:
     async def test_streaming_response_start(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.calls.with_streaming_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -806,7 +807,7 @@ class TestAsyncCalls:
         call = await async_client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -839,7 +840,7 @@ class TestAsyncCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -851,7 +852,7 @@ class TestAsyncCalls:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         call = await response.parse()
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -863,7 +864,7 @@ class TestAsyncCalls:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             call = await response.parse()
-            assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+            assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -874,8 +875,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -893,8 +894,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -916,8 +917,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),

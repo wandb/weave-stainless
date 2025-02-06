@@ -22,3 +22,6 @@ class Obj(TypedDict, total=False):
     builtin_object_class: Optional[str]
 
     set_base_object_class: Optional[str]
+
+    wb_user_id: Optional[str]
+    """Do not set directly. Server will automatically populate this field."""

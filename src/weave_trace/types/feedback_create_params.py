@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
 __all__ = ["FeedbackCreateParams"]
@@ -11,7 +11,7 @@ __all__ = ["FeedbackCreateParams"]
 class FeedbackCreateParams(TypedDict, total=False):
     feedback_type: Required[str]
 
-    payload: Required[Dict[str, object]]
+    payload: Required[object]
 
     project_id: Required[str]
 

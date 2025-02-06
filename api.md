@@ -58,7 +58,7 @@ Methods:
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_trace/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_trace/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_trace/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_trace/resources/calls.py">read</a>(\*\*<a href="src/weave_trace/types/call_read_params.py">params</a>) -> <a href="./src/weave_trace/types/call_read_response.py">CallReadResponse</a></code>
 - <code title="post /call/start">client.calls.<a href="./src/weave_trace/resources/calls.py">start</a>(\*\*<a href="src/weave_trace/types/call_start_params.py">params</a>) -> <a href="./src/weave_trace/types/call_start_response.py">CallStartResponse</a></code>
-- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_trace/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_trace/types/call_stream_query_params.py">params</a>) -> <a href="./src/weave_trace/types/call_stream_query_response.py">JSONLDecoder[object]</a></code>
+- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_trace/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_trace/types/call_stream_query_params.py">params</a>) -> <a href="./src/weave_trace/types/call_stream_query_response.py">JSONLDecoder[CallStreamQueryResponse]</a></code>
 - <code title="post /call/upsert_batch">client.calls.<a href="./src/weave_trace/resources/calls.py">upsert_batch</a>(\*\*<a href="src/weave_trace/types/call_upsert_batch_params.py">params</a>) -> <a href="./src/weave_trace/types/call_upsert_batch_response.py">CallUpsertBatchResponse</a></code>
 
 # Objects
@@ -66,12 +66,18 @@ Methods:
 Types:
 
 ```python
-from weave_trace.types import ObjectCreateResponse, ObjectQueryResponse, ObjectReadResponse
+from weave_trace.types import (
+    ObjectCreateResponse,
+    ObjectDeleteResponse,
+    ObjectQueryResponse,
+    ObjectReadResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /obj/create">client.objects.<a href="./src/weave_trace/resources/objects.py">create</a>(\*\*<a href="src/weave_trace/types/object_create_params.py">params</a>) -> <a href="./src/weave_trace/types/object_create_response.py">ObjectCreateResponse</a></code>
+- <code title="post /obj/delete">client.objects.<a href="./src/weave_trace/resources/objects.py">delete</a>(\*\*<a href="src/weave_trace/types/object_delete_params.py">params</a>) -> <a href="./src/weave_trace/types/object_delete_response.py">ObjectDeleteResponse</a></code>
 - <code title="post /objs/query">client.objects.<a href="./src/weave_trace/resources/objects.py">query</a>(\*\*<a href="src/weave_trace/types/object_query_params.py">params</a>) -> <a href="./src/weave_trace/types/object_query_response.py">ObjectQueryResponse</a></code>
 - <code title="post /obj/read">client.objects.<a href="./src/weave_trace/resources/objects.py">read</a>(\*\*<a href="src/weave_trace/types/object_read_params.py">params</a>) -> <a href="./src/weave_trace/types/object_read_response.py">ObjectReadResponse</a></code>
 
