@@ -5,4 +5,4 @@ USER vscode
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN echo "[[ -d .venv ]] && source .venv/bin/activate" >> /home/vscode/.bashrc
+RUN echo "[[ -d .venv ]] && source .venv/bin/activate || export PATH=\$PATH" >> /home/vscode/.bashrc
