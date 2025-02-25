@@ -8,8 +8,8 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace.types import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk.types import (
     TableQueryResponse,
     TableCreateResponse,
     TableUpdateResponse,

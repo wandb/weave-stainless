@@ -767,7 +767,7 @@ wheels = [
 ]
 
 [[package]]
-name = "weave-trace"
+name = "weave-server-sdk"
 version = "0.0.1a0"
 source = { editable = "." }
 dependencies = [

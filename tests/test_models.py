@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from weave_trace._utils import PropertyInfo
-from weave_trace._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
-from weave_trace._models import BaseModel, construct_type
+from weave_server_sdk._utils import PropertyInfo
+from weave_server_sdk._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
+from weave_server_sdk._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

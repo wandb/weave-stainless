@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace._streaming import Stream, AsyncStream, ServerSentEvent
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

@@ -240,7 +240,7 @@ class BaseAPIResponse(Generic[R]):
             and issubclass(origin, pydantic.BaseModel)
         ):
             raise TypeError(
-                "Pydantic models must subclass our base model type, e.g. `from weave_trace import BaseModel`"
+                "Pydantic models must subclass our base model type, e.g. `from weave_server_sdk import BaseModel`"
             )
 
         if (
@@ -307,7 +307,7 @@ class APIResponse(BaseAPIResponse[R]):
         the `to` argument, e.g.
 
         ```py
-        from weave_trace import BaseModel
+        from weave_server_sdk import BaseModel
 
 
         class MyModel(BaseModel):
@@ -409,7 +409,7 @@ class AsyncAPIResponse(BaseAPIResponse[R]):
         the `to` argument, e.g.
 
         ```py
-        from weave_trace import BaseModel
+        from weave_server_sdk import BaseModel
 
 
         class MyModel(BaseModel):
@@ -580,7 +580,7 @@ class AsyncStreamedBinaryAPIResponse(AsyncAPIResponse[bytes]):
 class MissingStreamClassError(TypeError):
     def __init__(self) -> None:
         super().__init__(
-            "The `stream` argument was set to `True` but the `stream_cls` argument was not given. See `weave_trace._streaming` for reference",
+            "The `stream` argument was set to `True` but the `stream_cls` argument was not given. See `weave_server_sdk._streaming` for reference",
         )
 
 

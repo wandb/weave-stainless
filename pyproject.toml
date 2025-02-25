@@ -1,5 +1,5 @@
 [project]
-name = "weave-trace"
+name = "weave_server_sdk"
 version = "0.0.1-alpha.0"
 description = "The official Python library for the Weave Trace API"
 dynamic = ["readme"]
@@ -67,7 +67,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/weave_trace"]
+packages = ["src/weave_server_sdk"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)
@@ -170,7 +170,7 @@ length-sort = true
 length-sort-straight = true
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
-known-first-party = ["weave_trace", "tests"]
+known-first-party = ["weave_server_sdk", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "bin/**.py" = ["T201", "T203"]

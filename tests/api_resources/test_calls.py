@@ -8,16 +8,16 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace.types import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk.types import (
     CallReadResponse,
     CallStartResponse,
     CallQueryStatsResponse,
     CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
-from weave_trace._utils import parse_datetime
-from weave_trace._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
+from weave_server_sdk._utils import parse_datetime
+from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

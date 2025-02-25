@@ -7,14 +7,14 @@ from typing import TYPE_CHECKING, Iterator, AsyncIterator
 import pytest
 from pytest_asyncio import is_async_test
 
-from weave_trace import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("weave_trace").setLevel(logging.DEBUG)
+logging.getLogger("weave_server_sdk").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
