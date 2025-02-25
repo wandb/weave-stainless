@@ -23,6 +23,7 @@ from pydantic import ValidationError
 
 from weave_trace import WeaveTrace, AsyncWeaveTrace, APIResponseValidationError
 from weave_trace._types import Omit
+from weave_trace._utils import maybe_transform
 from weave_trace._models import BaseModel, FinalRequestOptions
 from weave_trace._constants import RAW_RESPONSE_HEADER
 from weave_trace._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
@@ -32,6 +33,7 @@ from weave_trace._base_client import (
     BaseClient,
     make_request_options,
 )
+from weave_trace.types.object_create_params import ObjectCreateParams
 
 from .utils import update_env
 
@@ -794,12 +796,15 @@ class TestWeaveTrace:
                 "/obj/create",
                 body=cast(
                     object,
-                    dict(
-                        obj={
-                            "object_id": "object_id",
-                            "project_id": "project_id",
-                            "val": {},
-                        }
+                    maybe_transform(
+                        dict(
+                            obj={
+                                "object_id": "object_id",
+                                "project_id": "project_id",
+                                "val": {},
+                            }
+                        ),
+                        ObjectCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -818,12 +823,15 @@ class TestWeaveTrace:
                 "/obj/create",
                 body=cast(
                     object,
-                    dict(
-                        obj={
-                            "object_id": "object_id",
-                            "project_id": "project_id",
-                            "val": {},
-                        }
+                    maybe_transform(
+                        dict(
+                            obj={
+                                "object_id": "object_id",
+                                "project_id": "project_id",
+                                "val": {},
+                            }
+                        ),
+                        ObjectCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1684,12 +1692,15 @@ class TestAsyncWeaveTrace:
                 "/obj/create",
                 body=cast(
                     object,
-                    dict(
-                        obj={
-                            "object_id": "object_id",
-                            "project_id": "project_id",
-                            "val": {},
-                        }
+                    maybe_transform(
+                        dict(
+                            obj={
+                                "object_id": "object_id",
+                                "project_id": "project_id",
+                                "val": {},
+                            }
+                        ),
+                        ObjectCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1708,12 +1719,15 @@ class TestAsyncWeaveTrace:
                 "/obj/create",
                 body=cast(
                     object,
-                    dict(
-                        obj={
-                            "object_id": "object_id",
-                            "project_id": "project_id",
-                            "val": {},
-                        }
+                    maybe_transform(
+                        dict(
+                            obj={
+                                "object_id": "object_id",
+                                "project_id": "project_id",
+                                "val": {},
+                            }
+                        ),
+                        ObjectCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,

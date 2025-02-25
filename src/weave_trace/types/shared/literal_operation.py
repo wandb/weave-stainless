@@ -15,5 +15,3 @@ class LiteralOperation(BaseModel):
     literal: Union[str, float, bool, Dict[str, "LiteralOperation"], List["LiteralOperation"], None] = FieldInfo(
         alias="$literal", default=None
     )
-
-    model_config = {"defer_build": True}

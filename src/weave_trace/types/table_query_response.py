@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import List, Optional
 
 from .._models import BaseModel
 
@@ -11,6 +11,8 @@ class Row(BaseModel):
     digest: str
 
     val: object
+
+    original_index: Optional[int] = None
 
 
 class TableQueryResponse(BaseModel):

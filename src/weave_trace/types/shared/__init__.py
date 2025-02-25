@@ -1,8 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-# import last
-from weave_trace._compat import PYDANTIC_V2
-
 from .expr import Expr as Expr
 from .operation import Operation as Operation
 from .convert_spec import ConvertSpec as ConvertSpec
@@ -18,28 +15,3 @@ from .convert_operation import ConvertOperation as ConvertOperation
 from .literal_operation import LiteralOperation as LiteralOperation
 from .contains_operation import ContainsOperation as ContainsOperation
 from .get_field_operator import GetFieldOperator as GetFieldOperator
-
-if PYDANTIC_V2:
-    AndOperation.model_rebuild(_types_namespace=locals())
-    ContainsOperation.model_rebuild(_types_namespace=locals())
-    ContainsSpec.model_rebuild(_types_namespace=locals())
-    ConvertOperation.model_rebuild(_types_namespace=locals())
-    ConvertSpec.model_rebuild(_types_namespace=locals())
-    EqOperation.model_rebuild(_types_namespace=locals())
-    GtOperation.model_rebuild(_types_namespace=locals())
-    GteOperation.model_rebuild(_types_namespace=locals())
-    InOperation.model_rebuild(_types_namespace=locals())
-    NotOperation.model_rebuild(_types_namespace=locals())
-    OrOperation.model_rebuild(_types_namespace=locals())
-else:
-    AndOperation.update_forward_refs()  # type: ignore
-    ContainsOperation.update_forward_refs()  # type: ignore
-    ContainsSpec.update_forward_refs()  # type: ignore
-    ConvertOperation.update_forward_refs()  # type: ignore
-    ConvertSpec.update_forward_refs()  # type: ignore
-    EqOperation.update_forward_refs()  # type: ignore
-    GtOperation.update_forward_refs()  # type: ignore
-    GteOperation.update_forward_refs()  # type: ignore
-    InOperation.update_forward_refs()  # type: ignore
-    NotOperation.update_forward_refs()  # type: ignore
-    OrOperation.update_forward_refs()  # type: ignore
