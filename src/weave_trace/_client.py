@@ -86,7 +86,7 @@ class WeaveTrace(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous Weave Trace client instance.
+        """Construct a new synchronous WeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -283,7 +283,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async Weave Trace client instance.
+        """Construct a new async AsyncWeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
