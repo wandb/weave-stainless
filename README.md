@@ -6,7 +6,7 @@ The Weave Trace Python library provides convenient access to the Weave Trace RES
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
@@ -20,19 +20,18 @@ pip install git+ssh://git@github.com/stainless-sdks/weave-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre weave_server_sdk`
+> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre weave_server_sdk`
 
 ## Usage
 
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
-    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+    username="My Username",
+    password="My Password",
 )
 
 object = client.objects.create(
@@ -45,23 +44,17 @@ object = client.objects.create(
 print(object.digest)
 ```
 
-While you can provide a `username` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `USERNAME="My Username"` to your `.env` file
-so that your Username is not stored in source control.
-
 ## Async usage
 
 Simply import `AsyncWeaveTrace` instead of `WeaveTrace` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
-    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+    username="My Username",
+    password="My Password",
 )
 
 
@@ -98,7 +91,10 @@ Request parameters that correspond to file uploads can be passed as `bytes`, a [
 from pathlib import Path
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace()
+client = WeaveTrace(
+    username="My Username",
+    password="My Password",
+)
 
 client.files.create(
     file=Path("/path/to/file"),
@@ -121,7 +117,10 @@ All errors inherit from `weave_server_sdk.APIError`.
 import weave_server_sdk
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace()
+client = WeaveTrace(
+    username="My Username",
+    password="My Password",
+)
 
 try:
     client.objects.create(
@@ -170,6 +169,8 @@ from weave_server_sdk import WeaveTrace
 client = WeaveTrace(
     # default is 2
     max_retries=0,
+    username="My Username",
+    password="My Password",
 )
 
 # Or, configure per-request:
@@ -194,11 +195,15 @@ from weave_server_sdk import WeaveTrace
 client = WeaveTrace(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
+    username="My Username",
+    password="My Password",
 )
 
 # More granular control:
 client = WeaveTrace(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
+    username="My Username",
+    password="My Password",
 )
 
 # Override per-request:
@@ -248,7 +253,10 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace()
+client = WeaveTrace(
+    username="My Username",
+    password="My Password",
+)
 response = client.objects.with_raw_response.create(
     obj={
         "object_id": "object_id",
@@ -341,6 +349,8 @@ client = WeaveTrace(
         proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
+    username="My Username",
+    password="My Password",
 )
 ```
 
@@ -357,7 +367,10 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from weave_server_sdk import WeaveTrace
 
-with WeaveTrace() as client:
+with WeaveTrace(
+    username="My Username",
+    password="My Password",
+) as client:
   # make requests here
   ...
 

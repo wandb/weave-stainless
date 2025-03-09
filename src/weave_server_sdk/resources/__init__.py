@@ -56,22 +56,8 @@ from .feedback import (
     FeedbackResourceWithStreamingResponse,
     AsyncFeedbackResourceWithStreamingResponse,
 )
-from .services import (
-    ServicesResource,
-    AsyncServicesResource,
-    ServicesResourceWithRawResponse,
-    AsyncServicesResourceWithRawResponse,
-    ServicesResourceWithStreamingResponse,
-    AsyncServicesResourceWithStreamingResponse,
-)
 
 __all__ = [
-    "ServicesResource",
-    "AsyncServicesResource",
-    "ServicesResourceWithRawResponse",
-    "AsyncServicesResourceWithRawResponse",
-    "ServicesResourceWithStreamingResponse",
-    "AsyncServicesResourceWithStreamingResponse",
     "CallsResource",
     "AsyncCallsResource",
     "CallsResourceWithRawResponse",

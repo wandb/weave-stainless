@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-import base64
 from typing import Any, Union, Mapping
 from typing_extensions import Self, override
 
@@ -25,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import refs, calls, costs, files, tables, objects, feedback, services
+from .resources import refs, calls, costs, files, tables, objects, feedback
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, WeaveTraceError
 from ._base_client import (
@@ -47,7 +46,6 @@ __all__ = [
 
 
 class WeaveTrace(SyncAPIClient):
-    services: services.ServicesResource
     calls: calls.CallsResource
     objects: objects.ObjectsResource
     tables: tables.TablesResource
@@ -86,7 +84,7 @@ class WeaveTrace(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous Weave Trace client instance.
+        """Construct a new synchronous WeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -124,7 +122,6 @@ class WeaveTrace(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.services = services.ServicesResource(self)
         self.calls = calls.CallsResource(self)
         self.objects = objects.ObjectsResource(self)
         self.tables = tables.TablesResource(self)
@@ -139,13 +136,6 @@ class WeaveTrace(SyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.password}".encode("ascii")
-        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
-        return {"Authorization": header}
 
     @property
     @override
@@ -244,7 +234,6 @@ class WeaveTrace(SyncAPIClient):
 
 
 class AsyncWeaveTrace(AsyncAPIClient):
-    services: services.AsyncServicesResource
     calls: calls.AsyncCallsResource
     objects: objects.AsyncObjectsResource
     tables: tables.AsyncTablesResource
@@ -283,7 +272,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async Weave Trace client instance.
+        """Construct a new async AsyncWeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `USERNAME`
@@ -321,7 +310,6 @@ class AsyncWeaveTrace(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.services = services.AsyncServicesResource(self)
         self.calls = calls.AsyncCallsResource(self)
         self.objects = objects.AsyncObjectsResource(self)
         self.tables = tables.AsyncTablesResource(self)
@@ -336,13 +324,6 @@ class AsyncWeaveTrace(AsyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.password}".encode("ascii")
-        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
-        return {"Authorization": header}
 
     @property
     @override
@@ -442,7 +423,6 @@ class AsyncWeaveTrace(AsyncAPIClient):
 
 class WeaveTraceWithRawResponse:
     def __init__(self, client: WeaveTrace) -> None:
-        self.services = services.ServicesResourceWithRawResponse(client.services)
         self.calls = calls.CallsResourceWithRawResponse(client.calls)
         self.objects = objects.ObjectsResourceWithRawResponse(client.objects)
         self.tables = tables.TablesResourceWithRawResponse(client.tables)
@@ -454,7 +434,6 @@ class WeaveTraceWithRawResponse:
 
 class AsyncWeaveTraceWithRawResponse:
     def __init__(self, client: AsyncWeaveTrace) -> None:
-        self.services = services.AsyncServicesResourceWithRawResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithRawResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithRawResponse(client.objects)
         self.tables = tables.AsyncTablesResourceWithRawResponse(client.tables)
@@ -466,7 +445,6 @@ class AsyncWeaveTraceWithRawResponse:
 
 class WeaveTraceWithStreamedResponse:
     def __init__(self, client: WeaveTrace) -> None:
-        self.services = services.ServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.CallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.ObjectsResourceWithStreamingResponse(client.objects)
         self.tables = tables.TablesResourceWithStreamingResponse(client.tables)
@@ -478,7 +456,6 @@ class WeaveTraceWithStreamedResponse:
 
 class AsyncWeaveTraceWithStreamedResponse:
     def __init__(self, client: AsyncWeaveTrace) -> None:
-        self.services = services.AsyncServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithStreamingResponse(client.objects)
         self.tables = tables.AsyncTablesResourceWithStreamingResponse(client.tables)

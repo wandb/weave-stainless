@@ -20,19 +20,6 @@ from weave_server_sdk.types import (
 )
 ```
 
-# Services
-
-Types:
-
-```python
-from weave_server_sdk.types import ServerInfoRes, ServiceHealthCheckResponse
-```
-
-Methods:
-
-- <code title="get /health">client.services.<a href="./src/weave_server_sdk/resources/services.py">health_check</a>() -> <a href="./src/weave_server_sdk/types/service_health_check_response.py">object</a></code>
-- <code title="get /server_info">client.services.<a href="./src/weave_server_sdk/resources/services.py">server_info</a>() -> <a href="./src/weave_server_sdk/types/server_info_res.py">ServerInfoRes</a></code>
-
 # Calls
 
 Types:
@@ -45,7 +32,6 @@ from weave_server_sdk.types import (
     CallQueryStatsResponse,
     CallReadResponse,
     CallStartResponse,
-    CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
 ```
@@ -58,7 +44,6 @@ Methods:
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_server_sdk/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">read</a>(\*\*<a href="src/weave_server_sdk/types/call_read_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_read_response.py">CallReadResponse</a></code>
 - <code title="post /call/start">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">start</a>(\*\*<a href="src/weave_server_sdk/types/call_start_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_start_response.py">CallStartResponse</a></code>
-- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/call_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_stream_query_response.py">JSONLDecoder[CallStreamQueryResponse]</a></code>
 - <code title="post /call/upsert_batch">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">upsert_batch</a>(\*\*<a href="src/weave_server_sdk/types/call_upsert_batch_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_upsert_batch_response.py">CallUpsertBatchResponse</a></code>
 
 # Objects
