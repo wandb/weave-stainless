@@ -24,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import refs, calls, costs, files, tables, objects, feedback
+from .resources import refs, calls, costs, files, tables, objects, feedback, services
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, WeaveTraceError
 from ._base_client import (
@@ -46,6 +46,7 @@ __all__ = [
 
 
 class WeaveTrace(SyncAPIClient):
+    services: services.ServicesResource
     calls: calls.CallsResource
     objects: objects.ObjectsResource
     tables: tables.TablesResource
@@ -122,6 +123,7 @@ class WeaveTrace(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.services = services.ServicesResource(self)
         self.calls = calls.CallsResource(self)
         self.objects = objects.ObjectsResource(self)
         self.tables = tables.TablesResource(self)
@@ -234,6 +236,7 @@ class WeaveTrace(SyncAPIClient):
 
 
 class AsyncWeaveTrace(AsyncAPIClient):
+    services: services.AsyncServicesResource
     calls: calls.AsyncCallsResource
     objects: objects.AsyncObjectsResource
     tables: tables.AsyncTablesResource
@@ -310,6 +313,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
+        self.services = services.AsyncServicesResource(self)
         self.calls = calls.AsyncCallsResource(self)
         self.objects = objects.AsyncObjectsResource(self)
         self.tables = tables.AsyncTablesResource(self)
@@ -423,6 +427,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
 
 class WeaveTraceWithRawResponse:
     def __init__(self, client: WeaveTrace) -> None:
+        self.services = services.ServicesResourceWithRawResponse(client.services)
         self.calls = calls.CallsResourceWithRawResponse(client.calls)
         self.objects = objects.ObjectsResourceWithRawResponse(client.objects)
         self.tables = tables.TablesResourceWithRawResponse(client.tables)
@@ -434,6 +439,7 @@ class WeaveTraceWithRawResponse:
 
 class AsyncWeaveTraceWithRawResponse:
     def __init__(self, client: AsyncWeaveTrace) -> None:
+        self.services = services.AsyncServicesResourceWithRawResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithRawResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithRawResponse(client.objects)
         self.tables = tables.AsyncTablesResourceWithRawResponse(client.tables)
@@ -445,6 +451,7 @@ class AsyncWeaveTraceWithRawResponse:
 
 class WeaveTraceWithStreamedResponse:
     def __init__(self, client: WeaveTrace) -> None:
+        self.services = services.ServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.CallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.ObjectsResourceWithStreamingResponse(client.objects)
         self.tables = tables.TablesResourceWithStreamingResponse(client.tables)
@@ -456,6 +463,7 @@ class WeaveTraceWithStreamedResponse:
 
 class AsyncWeaveTraceWithStreamedResponse:
     def __init__(self, client: AsyncWeaveTrace) -> None:
+        self.services = services.AsyncServicesResourceWithStreamingResponse(client.services)
         self.calls = calls.AsyncCallsResourceWithStreamingResponse(client.calls)
         self.objects = objects.AsyncObjectsResourceWithStreamingResponse(client.objects)
         self.tables = tables.AsyncTablesResourceWithStreamingResponse(client.tables)

@@ -13,11 +13,13 @@ from ..types import (
     call_delete_params,
     call_update_params,
     call_query_stats_params,
+    call_stream_query_params,
     call_upsert_batch_params,
 )
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
+    strip_not_given,
     async_maybe_transform,
 )
 from .._compat import cached_property
@@ -29,9 +31,11 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
 from ..types.call_query_stats_response import CallQueryStatsResponse
+from ..types.call_stream_query_response import CallStreamQueryResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
 
 __all__ = ["CallsResource", "AsyncCallsResource"]
@@ -291,6 +295,74 @@ class CallsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CallStartResponse,
+        )
+
+    def stream_query(
+        self,
+        *,
+        project_id: str,
+        columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
+        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
+        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        accept: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> JSONLDecoder[CallStreamQueryResponse]:
+        """Calls Query Stream
+
+        Args:
+          expand_columns: Columns to expand, i.e.
+
+        refs to other objects
+
+          include_costs: Beta, subject to change. If true, the response will include any model costs for
+              each call.
+
+          include_feedback: Beta, subject to change. If true, the response will include feedback for each
+              call.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
+        return self._post(
+            "/calls/stream_query",
+            body=maybe_transform(
+                {
+                    "project_id": project_id,
+                    "columns": columns,
+                    "expand_columns": expand_columns,
+                    "filter": filter,
+                    "include_costs": include_costs,
+                    "include_feedback": include_feedback,
+                    "limit": limit,
+                    "offset": offset,
+                    "query": query,
+                    "sort_by": sort_by,
+                },
+                call_stream_query_params.CallStreamQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JSONLDecoder[CallStreamQueryResponse],
+            stream=True,
         )
 
     def upsert_batch(
@@ -582,6 +654,74 @@ class AsyncCallsResource(AsyncAPIResource):
             cast_to=CallStartResponse,
         )
 
+    async def stream_query(
+        self,
+        *,
+        project_id: str,
+        columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
+        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
+        offset: Optional[int] | NotGiven = NOT_GIVEN,
+        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        accept: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AsyncJSONLDecoder[CallStreamQueryResponse]:
+        """Calls Query Stream
+
+        Args:
+          expand_columns: Columns to expand, i.e.
+
+        refs to other objects
+
+          include_costs: Beta, subject to change. If true, the response will include any model costs for
+              each call.
+
+          include_feedback: Beta, subject to change. If true, the response will include feedback for each
+              call.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
+        return await self._post(
+            "/calls/stream_query",
+            body=await async_maybe_transform(
+                {
+                    "project_id": project_id,
+                    "columns": columns,
+                    "expand_columns": expand_columns,
+                    "filter": filter,
+                    "include_costs": include_costs,
+                    "include_feedback": include_feedback,
+                    "limit": limit,
+                    "offset": offset,
+                    "query": query,
+                    "sort_by": sort_by,
+                },
+                call_stream_query_params.CallStreamQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncJSONLDecoder[CallStreamQueryResponse],
+            stream=True,
+        )
+
     async def upsert_batch(
         self,
         *,
@@ -637,6 +777,9 @@ class CallsResourceWithRawResponse:
         self.start = to_raw_response_wrapper(
             calls.start,
         )
+        self.stream_query = to_raw_response_wrapper(
+            calls.stream_query,
+        )
         self.upsert_batch = to_raw_response_wrapper(
             calls.upsert_batch,
         )
@@ -663,6 +806,9 @@ class AsyncCallsResourceWithRawResponse:
         )
         self.start = async_to_raw_response_wrapper(
             calls.start,
+        )
+        self.stream_query = async_to_raw_response_wrapper(
+            calls.stream_query,
         )
         self.upsert_batch = async_to_raw_response_wrapper(
             calls.upsert_batch,
@@ -691,6 +837,9 @@ class CallsResourceWithStreamingResponse:
         self.start = to_streamed_response_wrapper(
             calls.start,
         )
+        self.stream_query = to_streamed_response_wrapper(
+            calls.stream_query,
+        )
         self.upsert_batch = to_streamed_response_wrapper(
             calls.upsert_batch,
         )
@@ -717,6 +866,9 @@ class AsyncCallsResourceWithStreamingResponse:
         )
         self.start = async_to_streamed_response_wrapper(
             calls.start,
+        )
+        self.stream_query = async_to_streamed_response_wrapper(
+            calls.stream_query,
         )
         self.upsert_batch = async_to_streamed_response_wrapper(
             calls.upsert_batch,

@@ -38,7 +38,6 @@ Homepage = "https://github.com/stainless-sdks/weave-python"
 Repository = "https://github.com/stainless-sdks/weave-python"
 
 
-
 [tool.uv]
 managed = true
 required-version = ">=0.5.0"
@@ -58,7 +57,7 @@ dev-dependencies = [
 ]
 
 [build-system]
-requires = ["hatchling", "hatch-fancy-pypi-readme"]
+requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
@@ -122,7 +121,6 @@ reportImplicitOverride = true
 
 reportImportCycles = false
 reportPrivateUsage = false
-
 
 [tool.ruff]
 line-length = 120

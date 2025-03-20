@@ -83,6 +83,44 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+from weave_server_sdk.\_utils import parse_datetime
+
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from weave_server_sdk import WeaveTrace
+
+client = WeaveTrace(
+    username="My Username",
+    password="My Password",
+)
+
+response = client.calls.end(
+    end={
+        "id": "id",
+        "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
+        "project_id": "project_id",
+        "summary": {
+            "usage": {
+                "foo": {
+                    "completion_tokens": 0,
+                    "input_tokens": 0,
+                    "output_tokens": 0,
+                    "prompt_tokens": 0,
+                    "requests": 0,
+                    "total_tokens": 0,
+                }
+            }
+        },
+        "exception": "exception",
+        "output": {},
+    },
+)
+print(response.end)
+```
+
 ## File uploads
 
 Request parameters that correspond to file uploads can be passed as `bytes`, a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
