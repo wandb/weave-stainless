@@ -50,7 +50,7 @@ class ServicesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ServiceHealthCheckResponse:
-        """Health"""
+        """Read Root"""
         return self._get(
             "/health",
             options=make_request_options(
@@ -109,7 +109,7 @@ class AsyncServicesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ServiceHealthCheckResponse:
-        """Health"""
+        """Read Root"""
         return await self._get(
             "/health",
             options=make_request_options(
