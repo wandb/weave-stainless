@@ -9,7 +9,8 @@ import pytest
 
 from tests.utils import assert_matches_type
 from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
-from weave_server_sdk.types import FileCreateResponse
+from weave_server_sdk.types import FileCreateResponse, FileContentResponse
+from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -51,14 +52,16 @@ class TestFiles:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_method_content(self, client: WeaveTrace) -> None:
         file = client.files.content(
             digest="digest",
             project_id="project_id",
         )
-        assert_matches_type(object, file, path=["response"])
+        assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_raw_response_content(self, client: WeaveTrace) -> None:
         response = client.files.with_raw_response.content(
@@ -69,8 +72,9 @@ class TestFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = response.parse()
-        assert_matches_type(object, file, path=["response"])
+        assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     def test_streaming_response_content(self, client: WeaveTrace) -> None:
         with client.files.with_streaming_response.content(
@@ -81,7 +85,7 @@ class TestFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = response.parse()
-            assert_matches_type(object, file, path=["response"])
+            assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -123,14 +127,16 @@ class TestAsyncFiles:
 
         assert cast(Any, response.is_closed) is True
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_method_content(self, async_client: AsyncWeaveTrace) -> None:
         file = await async_client.files.content(
             digest="digest",
             project_id="project_id",
         )
-        assert_matches_type(object, file, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_raw_response_content(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.files.with_raw_response.content(
@@ -141,8 +147,9 @@ class TestAsyncFiles:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         file = await response.parse()
-        assert_matches_type(object, file, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
 
+    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
     async def test_streaming_response_content(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.files.with_streaming_response.content(
@@ -153,6 +160,6 @@ class TestAsyncFiles:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             file = await response.parse()
-            assert_matches_type(object, file, path=["response"])
+            assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
 
         assert cast(Any, response.is_closed) is True

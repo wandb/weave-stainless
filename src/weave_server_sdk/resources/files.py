@@ -23,7 +23,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.file_create_response import FileCreateResponse
+from ..types.file_content_response import FileContentResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 
@@ -104,7 +106,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> JSONLDecoder[FileContentResponse]:
         """
         File Content
 
@@ -117,6 +119,7 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._post(
             "/file/content",
             body=maybe_transform(
@@ -129,7 +132,8 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=JSONLDecoder[FileContentResponse],
+            stream=True,
         )
 
 
@@ -209,7 +213,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> AsyncJSONLDecoder[FileContentResponse]:
         """
         File Content
 
@@ -222,6 +226,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._post(
             "/file/content",
             body=await async_maybe_transform(
@@ -234,7 +239,8 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=AsyncJSONLDecoder[FileContentResponse],
+            stream=True,
         )
 
 
