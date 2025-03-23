@@ -26,7 +26,7 @@ from weave_server_sdk._types import Omit
 from weave_server_sdk._utils import maybe_transform
 from weave_server_sdk._models import BaseModel, FinalRequestOptions
 from weave_server_sdk._constants import RAW_RESPONSE_HEADER
-from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
 from weave_server_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -370,6 +370,21 @@ class TestWeaveTrace:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert "Basic" in request.headers.get("Authorization")
+
+        with pytest.raises(WeaveTraceError):
+            with update_env(
+                **{
+                    "USERNAME": Omit(),
+                    "PASSWORD": Omit(),
+                }
+            ):
+                client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = WeaveTrace(
@@ -1235,6 +1250,25 @@ class TestAsyncWeaveTrace:
         request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+    def test_validate_headers(self) -> None:
+        client = AsyncWeaveTrace(
+            base_url=base_url, username=username, password=password, _strict_response_validation=True
+        )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        assert "Basic" in request.headers.get("Authorization")
+
+        with pytest.raises(WeaveTraceError):
+            with update_env(
+                **{
+                    "USERNAME": Omit(),
+                    "PASSWORD": Omit(),
+                }
+            ):
+                client2 = AsyncWeaveTrace(
+                    base_url=base_url, username=None, password=None, _strict_response_validation=True
+                )
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncWeaveTrace(

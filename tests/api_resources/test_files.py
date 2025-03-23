@@ -5,12 +5,19 @@ from __future__ import annotations
 import os
 from typing import Any, cast
 
+import httpx
 import pytest
+from respx import MockRouter
 
 from tests.utils import assert_matches_type
 from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
-from weave_server_sdk.types import FileCreateResponse, FileContentResponse
-from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
+from weave_server_sdk.types import FileCreateResponse
+from weave_server_sdk._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -52,42 +59,50 @@ class TestFiles:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    def test_method_content(self, client: WeaveTrace) -> None:
+    @pytest.mark.respx(base_url=base_url)
+    def test_method_content(self, client: WeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         file = client.files.content(
             digest="digest",
             project_id="project_id",
         )
-        assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
+        assert file.is_closed
+        assert file.json() == {"foo": "bar"}
+        assert cast(Any, file.is_closed) is True
+        assert isinstance(file, BinaryAPIResponse)
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    def test_raw_response_content(self, client: WeaveTrace) -> None:
-        response = client.files.with_raw_response.content(
+    @pytest.mark.respx(base_url=base_url)
+    def test_raw_response_content(self, client: WeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+
+        file = client.files.with_raw_response.content(
             digest="digest",
             project_id="project_id",
         )
 
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = response.parse()
-        assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
+        assert file.is_closed is True
+        assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert file.json() == {"foo": "bar"}
+        assert isinstance(file, BinaryAPIResponse)
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    def test_streaming_response_content(self, client: WeaveTrace) -> None:
+    @pytest.mark.respx(base_url=base_url)
+    def test_streaming_response_content(self, client: WeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         with client.files.with_streaming_response.content(
             digest="digest",
             project_id="project_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as file:
+            assert not file.is_closed
+            assert file.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            file = response.parse()
-            assert_matches_type(JSONLDecoder[FileContentResponse], file, path=["response"])
+            assert file.json() == {"foo": "bar"}
+            assert cast(Any, file.is_closed) is True
+            assert isinstance(file, StreamedBinaryAPIResponse)
 
-        assert cast(Any, response.is_closed) is True
+        assert cast(Any, file.is_closed) is True
 
 
 class TestAsyncFiles:
@@ -127,39 +142,47 @@ class TestAsyncFiles:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    async def test_method_content(self, async_client: AsyncWeaveTrace) -> None:
+    @pytest.mark.respx(base_url=base_url)
+    async def test_method_content(self, async_client: AsyncWeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         file = await async_client.files.content(
             digest="digest",
             project_id="project_id",
         )
-        assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
+        assert file.is_closed
+        assert await file.json() == {"foo": "bar"}
+        assert cast(Any, file.is_closed) is True
+        assert isinstance(file, AsyncBinaryAPIResponse)
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    async def test_raw_response_content(self, async_client: AsyncWeaveTrace) -> None:
-        response = await async_client.files.with_raw_response.content(
+    @pytest.mark.respx(base_url=base_url)
+    async def test_raw_response_content(self, async_client: AsyncWeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+
+        file = await async_client.files.with_raw_response.content(
             digest="digest",
             project_id="project_id",
         )
 
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        file = await response.parse()
-        assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
+        assert file.is_closed is True
+        assert file.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert await file.json() == {"foo": "bar"}
+        assert isinstance(file, AsyncBinaryAPIResponse)
 
-    @pytest.mark.skip(reason="Prism doesn't support JSONL responses yet")
     @parametrize
-    async def test_streaming_response_content(self, async_client: AsyncWeaveTrace) -> None:
+    @pytest.mark.respx(base_url=base_url)
+    async def test_streaming_response_content(self, async_client: AsyncWeaveTrace, respx_mock: MockRouter) -> None:
+        respx_mock.post("/file/content").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
         async with async_client.files.with_streaming_response.content(
             digest="digest",
             project_id="project_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as file:
+            assert not file.is_closed
+            assert file.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            file = await response.parse()
-            assert_matches_type(AsyncJSONLDecoder[FileContentResponse], file, path=["response"])
+            assert await file.json() == {"foo": "bar"}
+            assert cast(Any, file.is_closed) is True
+            assert isinstance(file, AsyncStreamedBinaryAPIResponse)
 
-        assert cast(Any, response.is_closed) is True
+        assert cast(Any, file.is_closed) is True

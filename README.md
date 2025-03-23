@@ -27,11 +27,12 @@ pip install git+ssh://git@github.com/stainless-sdks/weave-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
-    username="My Username",
-    password="My Password",
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
 
 object = client.objects.create(
@@ -44,17 +45,23 @@ object = client.objects.create(
 print(object.digest)
 ```
 
+While you can provide a `username` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `USERNAME="My Username"` to your `.env` file
+so that your Username is not stored in source control.
+
 ## Async usage
 
 Simply import `AsyncWeaveTrace` instead of `WeaveTrace` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
-    username="My Username",
-    password="My Password",
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
 
 
@@ -92,10 +99,7 @@ Nested parameters are dictionaries, typed using `TypedDict`, for example:
 ```python
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace(
-    username="My Username",
-    password="My Password",
-)
+client = WeaveTrace()
 
 response = client.calls.end(
     end={
@@ -129,10 +133,7 @@ Request parameters that correspond to file uploads can be passed as `bytes`, a [
 from pathlib import Path
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace(
-    username="My Username",
-    password="My Password",
-)
+client = WeaveTrace()
 
 client.files.create(
     file=Path("/path/to/file"),
@@ -155,10 +156,7 @@ All errors inherit from `weave_server_sdk.APIError`.
 import weave_server_sdk
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace(
-    username="My Username",
-    password="My Password",
-)
+client = WeaveTrace()
 
 try:
     client.objects.create(
@@ -207,8 +205,6 @@ from weave_server_sdk import WeaveTrace
 client = WeaveTrace(
     # default is 2
     max_retries=0,
-    username="My Username",
-    password="My Password",
 )
 
 # Or, configure per-request:
@@ -233,15 +229,11 @@ from weave_server_sdk import WeaveTrace
 client = WeaveTrace(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
-    username="My Username",
-    password="My Password",
 )
 
 # More granular control:
 client = WeaveTrace(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
-    username="My Username",
-    password="My Password",
 )
 
 # Override per-request:
@@ -291,10 +283,7 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 ```py
 from weave_server_sdk import WeaveTrace
 
-client = WeaveTrace(
-    username="My Username",
-    password="My Password",
-)
+client = WeaveTrace()
 response = client.objects.with_raw_response.create(
     obj={
         "object_id": "object_id",
@@ -387,8 +376,6 @@ client = WeaveTrace(
         proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
-    username="My Username",
-    password="My Password",
 )
 ```
 
@@ -405,10 +392,7 @@ By default the library closes underlying HTTP connections whenever the client is
 ```py
 from weave_server_sdk import WeaveTrace
 
-with WeaveTrace(
-    username="My Username",
-    password="My Password",
-) as client:
+with WeaveTrace() as client:
   # make requests here
   ...
 

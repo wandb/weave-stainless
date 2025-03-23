@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import base64
 from typing import Any, Union, Mapping
 from typing_extensions import Self, override
 
@@ -138,6 +139,13 @@ class WeaveTrace(SyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
+
+    @property
+    @override
+    def auth_headers(self) -> dict[str, str]:
+        credentials = f"{self.username}:{self.password}".encode("ascii")
+        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
+        return {"Authorization": header}
 
     @property
     @override
@@ -328,6 +336,13 @@ class AsyncWeaveTrace(AsyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
+
+    @property
+    @override
+    def auth_headers(self) -> dict[str, str]:
+        credentials = f"{self.username}:{self.password}".encode("ascii")
+        header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
+        return {"Authorization": header}
 
     @property
     @override

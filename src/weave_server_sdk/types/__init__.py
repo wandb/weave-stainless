@@ -46,7 +46,6 @@ from .object_read_response import ObjectReadResponse as ObjectReadResponse
 from .table_query_response import TableQueryResponse as TableQueryResponse
 from .feedback_purge_params import FeedbackPurgeParams as FeedbackPurgeParams
 from .feedback_query_params import FeedbackQueryParams as FeedbackQueryParams
-from .file_content_response import FileContentResponse as FileContentResponse
 from .object_query_response import ObjectQueryResponse as ObjectQueryResponse
 from .ref_read_batch_params import RefReadBatchParams as RefReadBatchParams
 from .table_create_response import TableCreateResponse as TableCreateResponse

@@ -118,13 +118,13 @@ Methods:
 Types:
 
 ```python
-from weave_server_sdk.types import FileCreateResponse, FileContentResponse
+from weave_server_sdk.types import FileCreateResponse
 ```
 
 Methods:
 
 - <code title="post /file/create">client.files.<a href="./src/weave_server_sdk/resources/files.py">create</a>(\*\*<a href="src/weave_server_sdk/types/file_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/file_create_response.py">FileCreateResponse</a></code>
-- <code title="post /file/content">client.files.<a href="./src/weave_server_sdk/resources/files.py">content</a>(\*\*<a href="src/weave_server_sdk/types/file_content_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/file_content_response.py">JSONLDecoder[FileContentResponse]</a></code>
+- <code title="post /file/content">client.files.<a href="./src/weave_server_sdk/resources/files.py">content</a>(\*\*<a href="src/weave_server_sdk/types/file_content_params.py">params</a>) -> BinaryAPIResponse</code>
 
 # Costs
 
