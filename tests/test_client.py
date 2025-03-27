@@ -26,7 +26,7 @@ from weave_server_sdk._types import Omit
 from weave_server_sdk._utils import maybe_transform
 from weave_server_sdk._models import BaseModel, FinalRequestOptions
 from weave_server_sdk._constants import RAW_RESPONSE_HEADER
-from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
+from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from weave_server_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -376,15 +376,24 @@ class TestWeaveTrace:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with pytest.raises(WeaveTraceError):
-            with update_env(
-                **{
-                    "USERNAME": Omit(),
-                    "PASSWORD": Omit(),
-                }
-            ):
-                client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
-            _ = client2
+        with update_env(
+            **{
+                "WANDB_USERNAME": Omit(),
+                "WANDB_API_KEY": Omit(),
+            }
+        ):
+            client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
+
+        with pytest.raises(
+            TypeError,
+            match="Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted",
+        ):
+            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(
+            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
+        )
+        assert request2.headers.get("Authorization") is None
 
     def test_default_query_option(self) -> None:
         client = WeaveTrace(
@@ -1258,17 +1267,24 @@ class TestAsyncWeaveTrace:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with pytest.raises(WeaveTraceError):
-            with update_env(
-                **{
-                    "USERNAME": Omit(),
-                    "PASSWORD": Omit(),
-                }
-            ):
-                client2 = AsyncWeaveTrace(
-                    base_url=base_url, username=None, password=None, _strict_response_validation=True
-                )
-            _ = client2
+        with update_env(
+            **{
+                "WANDB_USERNAME": Omit(),
+                "WANDB_API_KEY": Omit(),
+            }
+        ):
+            client2 = AsyncWeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
+
+        with pytest.raises(
+            TypeError,
+            match="Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted",
+        ):
+            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+
+        request2 = client2._build_request(
+            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
+        )
+        assert request2.headers.get("Authorization") is None
 
     def test_default_query_option(self) -> None:
         client = AsyncWeaveTrace(

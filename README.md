@@ -31,8 +31,8 @@ import os
 from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
-    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+    username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
 )
 
 object = client.objects.create(
@@ -47,7 +47,7 @@ print(object.digest)
 
 While you can provide a `username` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `USERNAME="My Username"` to your `.env` file
+to add `WANDB_USERNAME="My Username"` to your `.env` file
 so that your Username is not stored in source control.
 
 ## Async usage
@@ -60,8 +60,8 @@ import asyncio
 from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
-    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
+    username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
 )
 
 
