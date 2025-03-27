@@ -32,7 +32,7 @@ from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
     username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
 )
 
 object = client.objects.create(
@@ -61,7 +61,7 @@ from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
     username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
-    password=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
 )
 
 

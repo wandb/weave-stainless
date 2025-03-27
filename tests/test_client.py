@@ -26,7 +26,7 @@ from weave_server_sdk._types import Omit
 from weave_server_sdk._utils import maybe_transform
 from weave_server_sdk._models import BaseModel, FinalRequestOptions
 from weave_server_sdk._constants import RAW_RESPONSE_HEADER
-from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
 from weave_server_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -39,7 +39,7 @@ from .utils import update_env
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 username = "My Username"
-password = "My Password"
+api_key = "My API Key"
 
 
 def _get_params(client: BaseClient[Any, Any]) -> dict[str, str]:
@@ -61,7 +61,7 @@ def _get_open_connections(client: WeaveTrace | AsyncWeaveTrace) -> int:
 
 
 class TestWeaveTrace:
-    client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+    client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -91,9 +91,9 @@ class TestWeaveTrace:
         assert copied.username == "another My Username"
         assert self.client.username == "My Username"
 
-        copied = self.client.copy(password="another My Password")
-        assert copied.password == "another My Password"
-        assert self.client.password == "My Password"
+        copied = self.client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert self.client.api_key == "My API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -115,7 +115,7 @@ class TestWeaveTrace:
         client = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
@@ -153,7 +153,7 @@ class TestWeaveTrace:
         client = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_query={"foo": "bar"},
         )
@@ -282,7 +282,7 @@ class TestWeaveTrace:
         client = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             timeout=httpx.Timeout(0),
         )
@@ -297,7 +297,7 @@ class TestWeaveTrace:
             client = WeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -311,7 +311,7 @@ class TestWeaveTrace:
             client = WeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -325,7 +325,7 @@ class TestWeaveTrace:
             client = WeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -340,7 +340,7 @@ class TestWeaveTrace:
                 WeaveTrace(
                     base_url=base_url,
                     username=username,
-                    password=password,
+                    api_key=api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
@@ -349,7 +349,7 @@ class TestWeaveTrace:
         client = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
@@ -360,7 +360,7 @@ class TestWeaveTrace:
         client2 = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -372,34 +372,25 @@ class TestWeaveTrace:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with update_env(
-            **{
-                "WANDB_USERNAME": Omit(),
-                "WANDB_API_KEY": Omit(),
-            }
-        ):
-            client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
-
-        with pytest.raises(
-            TypeError,
-            match="Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted",
-        ):
-            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
-
-        request2 = client2._build_request(
-            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
-        )
-        assert request2.headers.get("Authorization") is None
+        with pytest.raises(WeaveTraceError):
+            with update_env(
+                **{
+                    "WANDB_USERNAME": Omit(),
+                    "WANDB_API_KEY": Omit(),
+                }
+            ):
+                client2 = WeaveTrace(base_url=base_url, username=None, api_key=None, _strict_response_validation=True)
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = WeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_query={"query_param": "bar"},
         )
@@ -604,7 +595,7 @@ class TestWeaveTrace:
         client = WeaveTrace(
             base_url="https://example.com/from_init",
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -615,7 +606,7 @@ class TestWeaveTrace:
 
     def test_base_url_env(self) -> None:
         with update_env(WEAVE_TRACE_BASE_URL="http://localhost:5000/from/env"):
-            client = WeaveTrace(username=username, password=password, _strict_response_validation=True)
+            client = WeaveTrace(username=username, api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
@@ -624,13 +615,13 @@ class TestWeaveTrace:
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -653,13 +644,13 @@ class TestWeaveTrace:
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -682,13 +673,13 @@ class TestWeaveTrace:
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             WeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -706,7 +697,7 @@ class TestWeaveTrace:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -717,7 +708,7 @@ class TestWeaveTrace:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -741,7 +732,7 @@ class TestWeaveTrace:
             WeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 max_retries=cast(Any, None),
             )
@@ -754,13 +745,13 @@ class TestWeaveTrace:
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = WeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=False)
+        client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -788,7 +779,7 @@ class TestWeaveTrace:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = WeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+        client = WeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -948,7 +939,7 @@ class TestWeaveTrace:
 
 
 class TestAsyncWeaveTrace:
-    client = AsyncWeaveTrace(base_url=base_url, username=username, password=password, _strict_response_validation=True)
+    client = AsyncWeaveTrace(base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -980,9 +971,9 @@ class TestAsyncWeaveTrace:
         assert copied.username == "another My Username"
         assert self.client.username == "My Username"
 
-        copied = self.client.copy(password="another My Password")
-        assert copied.password == "another My Password"
-        assert self.client.password == "My Password"
+        copied = self.client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert self.client.api_key == "My API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -1004,7 +995,7 @@ class TestAsyncWeaveTrace:
         client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
@@ -1042,7 +1033,7 @@ class TestAsyncWeaveTrace:
         client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_query={"foo": "bar"},
         )
@@ -1171,7 +1162,7 @@ class TestAsyncWeaveTrace:
         client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             timeout=httpx.Timeout(0),
         )
@@ -1186,7 +1177,7 @@ class TestAsyncWeaveTrace:
             client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -1200,7 +1191,7 @@ class TestAsyncWeaveTrace:
             client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -1214,7 +1205,7 @@ class TestAsyncWeaveTrace:
             client = AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=http_client,
             )
@@ -1229,7 +1220,7 @@ class TestAsyncWeaveTrace:
                 AsyncWeaveTrace(
                     base_url=base_url,
                     username=username,
-                    password=password,
+                    api_key=api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
@@ -1238,7 +1229,7 @@ class TestAsyncWeaveTrace:
         client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
@@ -1249,7 +1240,7 @@ class TestAsyncWeaveTrace:
         client2 = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -1262,35 +1253,28 @@ class TestAsyncWeaveTrace:
 
     def test_validate_headers(self) -> None:
         client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert "Basic" in request.headers.get("Authorization")
 
-        with update_env(
-            **{
-                "WANDB_USERNAME": Omit(),
-                "WANDB_API_KEY": Omit(),
-            }
-        ):
-            client2 = AsyncWeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
-
-        with pytest.raises(
-            TypeError,
-            match="Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted",
-        ):
-            client2._build_request(FinalRequestOptions(method="get", url="/foo"))
-
-        request2 = client2._build_request(
-            FinalRequestOptions(method="get", url="/foo", headers={"Authorization": Omit()})
-        )
-        assert request2.headers.get("Authorization") is None
+        with pytest.raises(WeaveTraceError):
+            with update_env(
+                **{
+                    "WANDB_USERNAME": Omit(),
+                    "WANDB_API_KEY": Omit(),
+                }
+            ):
+                client2 = AsyncWeaveTrace(
+                    base_url=base_url, username=None, api_key=None, _strict_response_validation=True
+                )
+            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncWeaveTrace(
             base_url=base_url,
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
             default_query={"query_param": "bar"},
         )
@@ -1495,7 +1479,7 @@ class TestAsyncWeaveTrace:
         client = AsyncWeaveTrace(
             base_url="https://example.com/from_init",
             username=username,
-            password=password,
+            api_key=api_key,
             _strict_response_validation=True,
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -1506,7 +1490,7 @@ class TestAsyncWeaveTrace:
 
     def test_base_url_env(self) -> None:
         with update_env(WEAVE_TRACE_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncWeaveTrace(username=username, password=password, _strict_response_validation=True)
+            client = AsyncWeaveTrace(username=username, api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
@@ -1515,13 +1499,13 @@ class TestAsyncWeaveTrace:
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1544,13 +1528,13 @@ class TestAsyncWeaveTrace:
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1573,13 +1557,13 @@ class TestAsyncWeaveTrace:
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
             ),
             AsyncWeaveTrace(
                 base_url="http://localhost:5000/custom/path/",
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1598,7 +1582,7 @@ class TestAsyncWeaveTrace:
 
     async def test_copied_client_does_not_close_http(self) -> None:
         client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
         assert not client.is_closed()
 
@@ -1612,7 +1596,7 @@ class TestAsyncWeaveTrace:
 
     async def test_client_context_manager(self) -> None:
         client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
         async with client as c2:
             assert c2 is client
@@ -1638,7 +1622,7 @@ class TestAsyncWeaveTrace:
             AsyncWeaveTrace(
                 base_url=base_url,
                 username=username,
-                password=password,
+                api_key=api_key,
                 _strict_response_validation=True,
                 max_retries=cast(Any, None),
             )
@@ -1652,14 +1636,14 @@ class TestAsyncWeaveTrace:
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
         client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=False
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=False
         )
 
         response = await client.get("/foo", cast_to=Model)
@@ -1690,7 +1674,7 @@ class TestAsyncWeaveTrace:
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
         client = AsyncWeaveTrace(
-            base_url=base_url, username=username, password=password, _strict_response_validation=True
+            base_url=base_url, username=username, api_key=api_key, _strict_response_validation=True
         )
 
         headers = httpx.Headers({"retry-after": retry_after})

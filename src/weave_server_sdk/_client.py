@@ -14,7 +14,6 @@ from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
     Omit,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -28,7 +27,7 @@ from ._utils import (
 from ._version import __version__
 from .resources import refs, calls, costs, files, tables, objects, feedback, services
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import APIStatusError, WeaveTraceError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -60,14 +59,14 @@ class WeaveTrace(SyncAPIClient):
     with_streaming_response: WeaveTraceWithStreamedResponse
 
     # client options
-    username: str | None
-    password: str | None
+    username: str
+    api_key: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -91,15 +90,19 @@ class WeaveTrace(SyncAPIClient):
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `WANDB_USERNAME`
-        - `password` from `WANDB_API_KEY`
+        - `api_key` from `WANDB_API_KEY`
         """
         if username is None:
-            username = os.environ.get("WANDB_USERNAME")
+            username = os.environ.get("WANDB_USERNAME") or "user"
         self.username = username
 
-        if password is None:
-            password = os.environ.get("WANDB_API_KEY")
-        self.password = password
+        if api_key is None:
+            api_key = os.environ.get("WANDB_API_KEY")
+        if api_key is None:
+            raise WeaveTraceError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_API_KEY environment variable"
+            )
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -136,11 +139,7 @@ class WeaveTrace(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        if self.username is None:
-            return {}
-        if self.password is None:
-            return {}
-        credentials = f"{self.username}:{self.password}".encode("ascii")
+        credentials = f"{self.username}:{self.api_key}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -153,22 +152,11 @@ class WeaveTrace(SyncAPIClient):
             **self._custom_headers,
         }
 
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.username and self.password and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
-
     def copy(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -203,7 +191,7 @@ class WeaveTrace(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            password=password or self.password,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -264,14 +252,14 @@ class AsyncWeaveTrace(AsyncAPIClient):
     with_streaming_response: AsyncWeaveTraceWithStreamedResponse
 
     # client options
-    username: str | None
-    password: str | None
+    username: str
+    api_key: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -295,15 +283,19 @@ class AsyncWeaveTrace(AsyncAPIClient):
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
         - `username` from `WANDB_USERNAME`
-        - `password` from `WANDB_API_KEY`
+        - `api_key` from `WANDB_API_KEY`
         """
         if username is None:
-            username = os.environ.get("WANDB_USERNAME")
+            username = os.environ.get("WANDB_USERNAME") or "user"
         self.username = username
 
-        if password is None:
-            password = os.environ.get("WANDB_API_KEY")
-        self.password = password
+        if api_key is None:
+            api_key = os.environ.get("WANDB_API_KEY")
+        if api_key is None:
+            raise WeaveTraceError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_API_KEY environment variable"
+            )
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -340,11 +332,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        if self.username is None:
-            return {}
-        if self.password is None:
-            return {}
-        credentials = f"{self.username}:{self.password}".encode("ascii")
+        credentials = f"{self.username}:{self.api_key}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -357,22 +345,11 @@ class AsyncWeaveTrace(AsyncAPIClient):
             **self._custom_headers,
         }
 
-    @override
-    def _validate_headers(self, headers: Headers, custom_headers: Headers) -> None:
-        if self.username and self.password and headers.get("Authorization"):
-            return
-        if isinstance(custom_headers.get("Authorization"), Omit):
-            return
-
-        raise TypeError(
-            '"Could not resolve authentication method. Expected the username or password to be set. Or for the `Authorization` headers to be explicitly omitted"'
-        )
-
     def copy(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -407,7 +384,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            password=password or self.password,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
