@@ -346,15 +346,15 @@ class TestCalls:
     @pytest.mark.skip(reason="prism")
     @parametrize
     def test_method_stream_query(self, client: WeaveTrace) -> None:
-        call = client.calls.stream_query(
+        call_stream = client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        assert_matches_type(JSONLDecoder[object], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
     def test_method_stream_query_with_all_params(self, client: WeaveTrace) -> None:
-        call = client.calls.stream_query(
+        call_stream = client.calls.stream_query(
             project_id="project_id",
             columns=["string"],
             expand_columns=["inputs.self.message", "inputs.model.prompt"],
@@ -382,7 +382,7 @@ class TestCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        assert_matches_type(JSONLDecoder[object], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -391,10 +391,9 @@ class TestCalls:
             project_id="project_id",
         )
 
-        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        call = response.parse()
-        assert_matches_type(JSONLDecoder[object], call, path=["response"])
+        stream = response.parse()
+        stream.close()
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -405,8 +404,8 @@ class TestCalls:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            call = response.parse()
-            assert_matches_type(JSONLDecoder[object], call, path=["response"])
+            stream = response.parse()
+            stream.close()
 
         assert cast(Any, response.is_closed) is True
 
@@ -803,15 +802,15 @@ class TestAsyncCalls:
     @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_method_stream_query(self, async_client: AsyncWeaveTrace) -> None:
-        call = await async_client.calls.stream_query(
+        call_stream = await async_client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[object], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
     async def test_method_stream_query_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
-        call = await async_client.calls.stream_query(
+        call_stream = await async_client.calls.stream_query(
             project_id="project_id",
             columns=["string"],
             expand_columns=["inputs.self.message", "inputs.model.prompt"],
@@ -839,7 +838,7 @@ class TestAsyncCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[object], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -848,10 +847,9 @@ class TestAsyncCalls:
             project_id="project_id",
         )
 
-        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        call = await response.parse()
-        assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+        stream = await response.parse()
+        await stream.close()
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -862,8 +860,8 @@ class TestAsyncCalls:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            call = await response.parse()
-            assert_matches_type(AsyncJSONLDecoder[object], call, path=["response"])
+            stream = await response.parse()
+            await stream.close()
 
         assert cast(Any, response.is_closed) is True
 
