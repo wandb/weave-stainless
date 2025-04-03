@@ -1848,7 +1848,7 @@ class TestAsyncWeaveTrace:
         import threading
 
         from weave_trace._utils import asyncify
-        from weave_trace._base_client import get_platform 
+        from weave_trace._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
