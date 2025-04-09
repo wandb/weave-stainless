@@ -99,7 +99,7 @@ class TestObjects:
             offset=0,
             sort_by=[
                 {
-                    "direction": "asc",
+                    "direction": "desc",
                     "field": "created_at",
                 }
             ],
@@ -249,7 +249,7 @@ class TestAsyncObjects:
             offset=0,
             sort_by=[
                 {
-                    "direction": "asc",
+                    "direction": "desc",
                     "field": "created_at",
                 }
             ],
