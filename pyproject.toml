@@ -43,7 +43,7 @@ managed = true
 required-version = ">=0.5.0"
 # version pins are in uv.lock
 dev-dependencies = [
-    "pyright>=1.1.359",
+    "pyright==1.1.399",
     "mypy",
     "respx",
     "pytest",
