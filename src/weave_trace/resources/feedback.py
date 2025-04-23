@@ -6,17 +6,9 @@ from typing import Dict, List, Iterable, Optional
 
 import httpx
 
-from ..types import (
-    feedback_purge_params,
-    feedback_query_params,
-    feedback_create_params,
-    feedback_replace_params,
-)
+from ..types import feedback_purge_params, feedback_query_params, feedback_create_params, feedback_replace_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
