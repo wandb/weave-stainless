@@ -46,7 +46,7 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 username = "My Username"
-password = "My Password"
+api_key = "My API Key"
 
 
 @pytest.fixture(scope="session")
@@ -56,7 +56,7 @@ def client(request: FixtureRequest) -> Iterator[WeaveTrace]:
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
     with WeaveTrace(
-        base_url=base_url, username=username, password=password, _strict_response_validation=strict
+        base_url=base_url, username=username, api_key=api_key, _strict_response_validation=strict
     ) as client:
         yield client
 
@@ -84,7 +84,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncWeaveTrace
     async with AsyncWeaveTrace(
         base_url=base_url,
         username=username,
-        password=password,
+        api_key=api_key,
         _strict_response_validation=strict,
         http_client=http_client,
     ) as client:

@@ -57,13 +57,13 @@ __all__ = [
 class WeaveTrace(SyncAPIClient):
     # client options
     username: str
-    password: str
+    api_key: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -86,24 +86,24 @@ class WeaveTrace(SyncAPIClient):
         """Construct a new synchronous WeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `USERNAME`
-        - `password` from `PASSWORD`
+        - `username` from `WANDB_USERNAME`
+        - `api_key` from `WANDB_PASSWORD`
         """
         if username is None:
-            username = os.environ.get("USERNAME")
+            username = os.environ.get("WANDB_USERNAME")
         if username is None:
             raise WeaveTraceError(
-                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+                "The username client option must be set either by passing username to the client or by setting the WANDB_USERNAME environment variable"
             )
         self.username = username
 
-        if password is None:
-            password = os.environ.get("PASSWORD")
-        if password is None:
+        if api_key is None:
+            api_key = os.environ.get("WANDB_PASSWORD")
+        if api_key is None:
             raise WeaveTraceError(
-                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_PASSWORD environment variable"
             )
-        self.password = password
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -185,7 +185,7 @@ class WeaveTrace(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.password}".encode("ascii")
+        credentials = f"{self.username}:{self.api_key}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -202,7 +202,7 @@ class WeaveTrace(SyncAPIClient):
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -237,7 +237,7 @@ class WeaveTrace(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            password=password or self.password,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -288,13 +288,13 @@ class WeaveTrace(SyncAPIClient):
 class AsyncWeaveTrace(AsyncAPIClient):
     # client options
     username: str
-    password: str
+    api_key: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -317,24 +317,24 @@ class AsyncWeaveTrace(AsyncAPIClient):
         """Construct a new async AsyncWeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `USERNAME`
-        - `password` from `PASSWORD`
+        - `username` from `WANDB_USERNAME`
+        - `api_key` from `WANDB_PASSWORD`
         """
         if username is None:
-            username = os.environ.get("USERNAME")
+            username = os.environ.get("WANDB_USERNAME")
         if username is None:
             raise WeaveTraceError(
-                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+                "The username client option must be set either by passing username to the client or by setting the WANDB_USERNAME environment variable"
             )
         self.username = username
 
-        if password is None:
-            password = os.environ.get("PASSWORD")
-        if password is None:
+        if api_key is None:
+            api_key = os.environ.get("WANDB_PASSWORD")
+        if api_key is None:
             raise WeaveTraceError(
-                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_PASSWORD environment variable"
             )
-        self.password = password
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -416,7 +416,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.password}".encode("ascii")
+        credentials = f"{self.username}:{self.api_key}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -433,7 +433,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         self,
         *,
         username: str | None = None,
-        password: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -468,7 +468,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            password=password or self.password,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
