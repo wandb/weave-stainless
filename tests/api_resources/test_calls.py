@@ -8,15 +8,15 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace.types import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk.types import (
     CallReadResponse,
     CallStartResponse,
     CallQueryStatsResponse,
     CallUpsertBatchResponse,
 )
-from weave_trace._utils import parse_datetime
-from weave_trace._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
+from weave_server_sdk._utils import parse_datetime
+from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -131,6 +131,7 @@ class TestCalls:
                 "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "project_id": "project_id",
                 "summary": {
+                    "status_counts": {"foo": 0},
                     "usage": {
                         "foo": {
                             "completion_tokens": 0,
@@ -140,7 +141,7 @@ class TestCalls:
                             "requests": 0,
                             "total_tokens": 0,
                         }
-                    }
+                    },
                 },
                 "exception": "exception",
                 "output": {},
@@ -193,17 +194,22 @@ class TestCalls:
     def test_method_query_stats_with_all_params(self, client: WeaveTrace) -> None:
         call = client.calls.query_stats(
             project_id="project_id",
+            expand_columns=["inputs.self.message", "inputs.model.prompt"],
             filter={
                 "call_ids": ["string"],
                 "input_refs": ["string"],
                 "op_names": ["string"],
                 "output_refs": ["string"],
                 "parent_ids": ["string"],
+                "thread_ids": ["string"],
                 "trace_ids": ["string"],
                 "trace_roots_only": True,
+                "turn_ids": ["string"],
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
+            include_total_storage_size=True,
+            limit=0,
             query={"expr": {"and_": []}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
@@ -246,6 +252,8 @@ class TestCalls:
             id="id",
             project_id="project_id",
             include_costs=True,
+            include_storage_size=True,
+            include_total_storage_size=True,
         )
         assert_matches_type(CallReadResponse, call, path=["response"])
 
@@ -279,8 +287,8 @@ class TestCalls:
     def test_method_start(self, client: WeaveTrace) -> None:
         call = client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -292,16 +300,19 @@ class TestCalls:
     def test_method_start_with_all_params(self, client: WeaveTrace) -> None:
         call = client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "id": "id",
                 "display_name": "display_name",
                 "parent_id": "parent_id",
+                "thread_id": "thread_id",
                 "trace_id": "trace_id",
+                "turn_id": "turn_id",
                 "wb_run_id": "wb_run_id",
+                "wb_run_step": 0,
                 "wb_user_id": "wb_user_id",
             },
         )
@@ -311,8 +322,8 @@ class TestCalls:
     def test_raw_response_start(self, client: WeaveTrace) -> None:
         response = client.calls.with_raw_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -328,8 +339,8 @@ class TestCalls:
     def test_streaming_response_start(self, client: WeaveTrace) -> None:
         with client.calls.with_streaming_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -364,16 +375,21 @@ class TestCalls:
                 "op_names": ["string"],
                 "output_refs": ["string"],
                 "parent_ids": ["string"],
+                "thread_ids": ["string"],
                 "trace_ids": ["string"],
                 "trace_roots_only": True,
+                "turn_ids": ["string"],
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
             include_costs=True,
             include_feedback=True,
+            include_storage_size=True,
+            include_total_storage_size=True,
             limit=0,
             offset=0,
             query={"expr": {"and_": []}},
+            return_expanded_column_values=True,
             sort_by=[
                 {
                     "direction": "asc",
@@ -416,8 +432,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -435,8 +451,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -458,8 +474,8 @@ class TestCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -589,6 +605,7 @@ class TestAsyncCalls:
                 "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "project_id": "project_id",
                 "summary": {
+                    "status_counts": {"foo": 0},
                     "usage": {
                         "foo": {
                             "completion_tokens": 0,
@@ -598,7 +615,7 @@ class TestAsyncCalls:
                             "requests": 0,
                             "total_tokens": 0,
                         }
-                    }
+                    },
                 },
                 "exception": "exception",
                 "output": {},
@@ -651,17 +668,22 @@ class TestAsyncCalls:
     async def test_method_query_stats_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
         call = await async_client.calls.query_stats(
             project_id="project_id",
+            expand_columns=["inputs.self.message", "inputs.model.prompt"],
             filter={
                 "call_ids": ["string"],
                 "input_refs": ["string"],
                 "op_names": ["string"],
                 "output_refs": ["string"],
                 "parent_ids": ["string"],
+                "thread_ids": ["string"],
                 "trace_ids": ["string"],
                 "trace_roots_only": True,
+                "turn_ids": ["string"],
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
+            include_total_storage_size=True,
+            limit=0,
             query={"expr": {"and_": []}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
@@ -704,6 +726,8 @@ class TestAsyncCalls:
             id="id",
             project_id="project_id",
             include_costs=True,
+            include_storage_size=True,
+            include_total_storage_size=True,
         )
         assert_matches_type(CallReadResponse, call, path=["response"])
 
@@ -737,8 +761,8 @@ class TestAsyncCalls:
     async def test_method_start(self, async_client: AsyncWeaveTrace) -> None:
         call = await async_client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -750,16 +774,19 @@ class TestAsyncCalls:
     async def test_method_start_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
         call = await async_client.calls.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "id": "id",
                 "display_name": "display_name",
                 "parent_id": "parent_id",
+                "thread_id": "thread_id",
                 "trace_id": "trace_id",
+                "turn_id": "turn_id",
                 "wb_run_id": "wb_run_id",
+                "wb_run_step": 0,
                 "wb_user_id": "wb_user_id",
             },
         )
@@ -769,8 +796,8 @@ class TestAsyncCalls:
     async def test_raw_response_start(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.calls.with_raw_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -786,8 +813,8 @@ class TestAsyncCalls:
     async def test_streaming_response_start(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.calls.with_streaming_response.start(
             start={
-                "attributes": {"foo": "bar"},
-                "inputs": {"foo": "bar"},
+                "attributes": {},
+                "inputs": {},
                 "op_name": "op_name",
                 "project_id": "project_id",
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -822,16 +849,21 @@ class TestAsyncCalls:
                 "op_names": ["string"],
                 "output_refs": ["string"],
                 "parent_ids": ["string"],
+                "thread_ids": ["string"],
                 "trace_ids": ["string"],
                 "trace_roots_only": True,
+                "turn_ids": ["string"],
                 "wb_run_ids": ["string"],
                 "wb_user_ids": ["string"],
             },
             include_costs=True,
             include_feedback=True,
+            include_storage_size=True,
+            include_total_storage_size=True,
             limit=0,
             offset=0,
             query={"expr": {"and_": []}},
+            return_expanded_column_values=True,
             sort_by=[
                 {
                     "direction": "asc",
@@ -874,8 +906,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -893,8 +925,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
@@ -916,8 +948,8 @@ class TestAsyncCalls:
                 {
                     "req": {
                         "start": {
-                            "attributes": {"foo": "bar"},
-                            "inputs": {"foo": "bar"},
+                            "attributes": {},
+                            "inputs": {},
                             "op_name": "op_name",
                             "project_id": "project_id",
                             "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),

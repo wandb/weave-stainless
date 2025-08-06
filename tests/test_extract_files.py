@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from weave_trace._types import FileTypes
-from weave_trace._utils import extract_files
+from weave_server_sdk._types import FileTypes
+from weave_server_sdk._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

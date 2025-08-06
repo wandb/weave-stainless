@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from weave_trace._qs import Querystring, stringify
+from weave_server_sdk._qs import Querystring, stringify
 
 
 def test_empty() -> None:

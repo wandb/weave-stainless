@@ -8,12 +8,12 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace.types import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk.types import (
     CostQueryResponse,
     CostCreateResponse,
 )
-from weave_trace._utils import parse_datetime
+from weave_server_sdk._utils import parse_datetime
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 

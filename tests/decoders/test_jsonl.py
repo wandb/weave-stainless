@@ -6,7 +6,7 @@ from typing_extensions import TypeVar
 import httpx
 import pytest
 
-from weave_trace._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
+from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 _T = TypeVar("_T")
 

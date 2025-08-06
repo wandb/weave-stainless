@@ -8,8 +8,8 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from weave_trace import WeaveTrace, AsyncWeaveTrace
-from weave_trace.types import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
+from weave_server_sdk.types import (
     TableQueryResponse,
     TableCreateResponse,
     TableUpdateResponse,
@@ -67,7 +67,7 @@ class TestTables:
         table = client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -76,7 +76,7 @@ class TestTables:
         response = client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
 
         assert response.is_closed is True
@@ -89,7 +89,7 @@ class TestTables:
         with client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -158,7 +158,7 @@ class TestTables:
     @parametrize
     def test_method_query_stats(self, client: WeaveTrace) -> None:
         table = client.tables.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         )
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
@@ -166,7 +166,7 @@ class TestTables:
     @parametrize
     def test_raw_response_query_stats(self, client: WeaveTrace) -> None:
         response = client.tables.with_raw_response.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         )
 
@@ -178,7 +178,7 @@ class TestTables:
     @parametrize
     def test_streaming_response_query_stats(self, client: WeaveTrace) -> None:
         with client.tables.with_streaming_response.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         ) as response:
             assert not response.is_closed
@@ -240,7 +240,7 @@ class TestAsyncTables:
         table = await async_client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -249,7 +249,7 @@ class TestAsyncTables:
         response = await async_client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         )
 
         assert response.is_closed is True
@@ -262,7 +262,7 @@ class TestAsyncTables:
         async with async_client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {"foo": "bar"}}}],
+            updates=[{"append": {"row": {}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -331,7 +331,7 @@ class TestAsyncTables:
     @parametrize
     async def test_method_query_stats(self, async_client: AsyncWeaveTrace) -> None:
         table = await async_client.tables.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         )
         assert_matches_type(TableQueryStatsResponse, table, path=["response"])
@@ -339,7 +339,7 @@ class TestAsyncTables:
     @parametrize
     async def test_raw_response_query_stats(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.tables.with_raw_response.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         )
 
@@ -351,7 +351,7 @@ class TestAsyncTables:
     @parametrize
     async def test_streaming_response_query_stats(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.tables.with_streaming_response.query_stats(
-            digest="aonareimsvtl13apimtalpa4435rpmgnaemrpgmarltarstaorsnte134avrims",
+            digest="digest",
             project_id="my_entity/my_project",
         ) as response:
             assert not response.is_closed

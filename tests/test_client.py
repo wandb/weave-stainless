@@ -21,11 +21,11 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from weave_trace import WeaveTrace, AsyncWeaveTrace, APIResponseValidationError
-from weave_trace._types import Omit
-from weave_trace._models import BaseModel, FinalRequestOptions
-from weave_trace._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
-from weave_trace._base_client import (
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace, APIResponseValidationError
+from weave_server_sdk._types import Omit
+from weave_server_sdk._models import BaseModel, FinalRequestOptions
+from weave_server_sdk._exceptions import APIStatusError, APITimeoutError, WeaveTraceError, APIResponseValidationError
+from weave_server_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -245,10 +245,10 @@ class TestWeaveTrace:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "weave_trace/_legacy_response.py",
-                        "weave_trace/_response.py",
+                        "weave_server_sdk/_legacy_response.py",
+                        "weave_server_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "weave_trace/_compat.py",
+                        "weave_server_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -786,7 +786,7 @@ class TestWeaveTrace:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: WeaveTrace) -> None:
         respx_mock.post("/obj/create").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -802,7 +802,7 @@ class TestWeaveTrace:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: WeaveTrace) -> None:
         respx_mock.post("/obj/create").mock(return_value=httpx.Response(500))
@@ -818,7 +818,7 @@ class TestWeaveTrace:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -855,7 +855,7 @@ class TestWeaveTrace:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: WeaveTrace, failures_before_success: int, respx_mock: MockRouter
@@ -885,7 +885,7 @@ class TestWeaveTrace:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: WeaveTrace, failures_before_success: int, respx_mock: MockRouter
@@ -1152,10 +1152,10 @@ class TestAsyncWeaveTrace:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "weave_trace/_legacy_response.py",
-                        "weave_trace/_response.py",
+                        "weave_server_sdk/_legacy_response.py",
+                        "weave_server_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "weave_trace/_compat.py",
+                        "weave_server_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1709,7 +1709,7 @@ class TestAsyncWeaveTrace:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncWeaveTrace
@@ -1727,7 +1727,7 @@ class TestAsyncWeaveTrace:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncWeaveTrace
@@ -1745,7 +1745,7 @@ class TestAsyncWeaveTrace:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1783,7 +1783,7 @@ class TestAsyncWeaveTrace:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1814,7 +1814,7 @@ class TestAsyncWeaveTrace:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("weave_trace._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("weave_server_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
@@ -1855,8 +1855,8 @@ class TestAsyncWeaveTrace:
         import nest_asyncio
         import threading
 
-        from weave_trace._utils import asyncify
-        from weave_trace._base_client import get_platform
+        from weave_server_sdk._utils import asyncify
+        from weave_server_sdk._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()

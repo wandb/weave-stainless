@@ -10,15 +10,15 @@ import httpx
 import pytest
 from pytest_asyncio import is_async_test
 
-from weave_trace import WeaveTrace, AsyncWeaveTrace, DefaultAioHttpClient
-from weave_trace._utils import is_dict
+from weave_server_sdk import WeaveTrace, AsyncWeaveTrace, DefaultAioHttpClient
+from weave_server_sdk._utils import is_dict
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("weave_trace").setLevel(logging.DEBUG)
+logging.getLogger("weave_server_sdk").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests

@@ -1,7 +1,7 @@
 # Weave Trace Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/weave-trace.svg?label=pypi%20(stable))](https://pypi.org/project/weave-trace/)
+[![PyPI version](https://img.shields.io/pypi/v/weave_server_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/weave_server_sdk/)
 
 The Weave Trace Python library provides convenient access to the Weave Trace REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [weave-docs.wandb.ai](http://weave-docs.wandb.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [weave-docs.wandb.ai](https://weave-docs.wandb.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -21,7 +21,7 @@ pip install git+ssh://git@github.com/stainless-sdks/weave-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre weave-trace`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre weave_server_sdk`
 
 ## Usage
 
@@ -29,7 +29,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
     username=os.environ.get("USERNAME"),  # This is the default and can be omitted
@@ -58,7 +58,7 @@ Simply import `AsyncWeaveTrace` instead of `WeaveTrace` and use `await` with eac
 ```python
 import os
 import asyncio
-from weave_trace import AsyncWeaveTrace
+from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
     username=os.environ.get("USERNAME"),  # This is the default and can be omitted
@@ -90,15 +90,15 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from this staging repo
-pip install 'weave-trace[aiohttp] @ git+ssh://git@github.com/stainless-sdks/weave-python.git'
+pip install 'weave_server_sdk[aiohttp] @ git+ssh://git@github.com/stainless-sdks/weave-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
 import asyncio
-from weave_trace import DefaultAioHttpClient
-from weave_trace import AsyncWeaveTrace
+from weave_server_sdk import DefaultAioHttpClient
+from weave_server_sdk import AsyncWeaveTrace
 
 
 async def main() -> None:
@@ -134,7 +134,7 @@ Typed requests and responses provide autocomplete and documentation within your 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace()
 
@@ -154,7 +154,7 @@ Request parameters that correspond to file uploads can be passed as `bytes`, or 
 
 ```python
 from pathlib import Path
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace()
 
@@ -168,16 +168,16 @@ The async client uses the exact same interface. If you pass a [`PathLike`](https
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `weave_trace.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `weave_server_sdk.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `weave_trace.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `weave_server_sdk.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `weave_trace.APIError`.
+All errors inherit from `weave_server_sdk.APIError`.
 
 ```python
-import weave_trace
-from weave_trace import WeaveTrace
+import weave_server_sdk
+from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace()
 
@@ -189,12 +189,12 @@ try:
             "val": {},
         },
     )
-except weave_trace.APIConnectionError as e:
+except weave_server_sdk.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except weave_trace.RateLimitError as e:
+except weave_server_sdk.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except weave_trace.APIStatusError as e:
+except weave_server_sdk.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -222,7 +222,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 # Configure the default for all requests:
 client = WeaveTrace(
@@ -246,7 +246,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 # Configure the default for all requests:
 client = WeaveTrace(
@@ -304,7 +304,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace()
 response = client.objects.with_raw_response.create(
@@ -320,9 +320,9 @@ object_ = response.parse()  # get the object that `objects.create()` would have 
 print(object_.digest)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/weave-python/tree/main/src/weave_trace/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/weave-python/tree/main/src/weave_server_sdk/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/weave-python/tree/main/src/weave_trace/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/weave-python/tree/main/src/weave_server_sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -390,7 +390,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from weave_trace import WeaveTrace, DefaultHttpxClient
+from weave_server_sdk import WeaveTrace, DefaultHttpxClient
 
 client = WeaveTrace(
     # Or use the `WEAVE_TRACE_BASE_URL` env var
@@ -413,7 +413,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from weave_trace import WeaveTrace
+from weave_server_sdk import WeaveTrace
 
 with WeaveTrace() as client:
   # make requests here
@@ -441,8 +441,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import weave_trace
-print(weave_trace.__version__)
+import weave_server_sdk
+print(weave_server_sdk.__version__)
 ```
 
 ## Requirements
