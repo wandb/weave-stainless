@@ -25,13 +25,15 @@ from weave_server_sdk.types import (
 Types:
 
 ```python
-from weave_server_sdk.types import ServerInfoRes
+from weave_server_sdk.types import ServerInfoRes, ServiceGeolocateResponse
 ```
 
 Methods:
 
+- <code title="get /geolocate">client.services.<a href="./src/weave_server_sdk/resources/services.py">geolocate</a>(\*\*<a href="src/weave_server_sdk/types/service_geolocate_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/service_geolocate_response.py">ServiceGeolocateResponse</a></code>
 - <code title="get /health">client.services.<a href="./src/weave_server_sdk/resources/services.py">health_check</a>() -> object</code>
 - <code title="get /server_info">client.services.<a href="./src/weave_server_sdk/resources/services.py">server_info</a>() -> <a href="./src/weave_server_sdk/types/server_info_res.py">ServerInfoRes</a></code>
+- <code title="get /version">client.services.<a href="./src/weave_server_sdk/resources/services.py">version</a>() -> object</code>
 
 # Calls
 
