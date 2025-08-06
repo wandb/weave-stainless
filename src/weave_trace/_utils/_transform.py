@@ -453,7 +453,8 @@ async def _async_transform_typeddict(
     return result
 
 
-@lru_cache(maxsize=8096)
+# TODO: lru cache temporary disabled to workaround the error "TypeError: unhashable type: 'dict'"
+# @lru_cache(maxsize=8096)
 def get_type_hints(
     obj: Any,
     globalns: dict[str, Any] | None = None,
