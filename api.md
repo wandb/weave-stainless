@@ -25,12 +25,12 @@ from weave_trace.types import (
 Types:
 
 ```python
-from weave_trace.types import ServerInfoRes, ServiceHealthCheckResponse
+from weave_trace.types import ServerInfoRes
 ```
 
 Methods:
 
-- <code title="get /health">client.services.<a href="./src/weave_trace/resources/services.py">health_check</a>() -> <a href="./src/weave_trace/types/service_health_check_response.py">object</a></code>
+- <code title="get /health">client.services.<a href="./src/weave_trace/resources/services.py">health_check</a>() -> object</code>
 - <code title="get /server_info">client.services.<a href="./src/weave_trace/resources/services.py">server_info</a>() -> <a href="./src/weave_trace/types/server_info_res.py">ServerInfoRes</a></code>
 
 # Calls
@@ -39,26 +39,22 @@ Types:
 
 ```python
 from weave_trace.types import (
-    CallUpdateResponse,
-    CallDeleteResponse,
-    CallEndResponse,
     CallQueryStatsResponse,
     CallReadResponse,
     CallStartResponse,
-    CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /call/update">client.calls.<a href="./src/weave_trace/resources/calls.py">update</a>(\*\*<a href="src/weave_trace/types/call_update_params.py">params</a>) -> <a href="./src/weave_trace/types/call_update_response.py">object</a></code>
-- <code title="post /calls/delete">client.calls.<a href="./src/weave_trace/resources/calls.py">delete</a>(\*\*<a href="src/weave_trace/types/call_delete_params.py">params</a>) -> <a href="./src/weave_trace/types/call_delete_response.py">object</a></code>
-- <code title="post /call/end">client.calls.<a href="./src/weave_trace/resources/calls.py">end</a>(\*\*<a href="src/weave_trace/types/call_end_params.py">params</a>) -> <a href="./src/weave_trace/types/call_end_response.py">object</a></code>
+- <code title="post /call/update">client.calls.<a href="./src/weave_trace/resources/calls.py">update</a>(\*\*<a href="src/weave_trace/types/call_update_params.py">params</a>) -> object</code>
+- <code title="post /calls/delete">client.calls.<a href="./src/weave_trace/resources/calls.py">delete</a>(\*\*<a href="src/weave_trace/types/call_delete_params.py">params</a>) -> object</code>
+- <code title="post /call/end">client.calls.<a href="./src/weave_trace/resources/calls.py">end</a>(\*\*<a href="src/weave_trace/types/call_end_params.py">params</a>) -> object</code>
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_trace/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_trace/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_trace/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_trace/resources/calls.py">read</a>(\*\*<a href="src/weave_trace/types/call_read_params.py">params</a>) -> <a href="./src/weave_trace/types/call_read_response.py">CallReadResponse</a></code>
 - <code title="post /call/start">client.calls.<a href="./src/weave_trace/resources/calls.py">start</a>(\*\*<a href="src/weave_trace/types/call_start_params.py">params</a>) -> <a href="./src/weave_trace/types/call_start_response.py">CallStartResponse</a></code>
-- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_trace/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_trace/types/call_stream_query_params.py">params</a>) -> <a href="./src/weave_trace/types/call_stream_query_response.py">JSONLDecoder[object]</a></code>
+- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_trace/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_trace/types/call_stream_query_params.py">params</a>) -> JSONLDecoder[object]</code>
 - <code title="post /call/upsert_batch">client.calls.<a href="./src/weave_trace/resources/calls.py">upsert_batch</a>(\*\*<a href="src/weave_trace/types/call_upsert_batch_params.py">params</a>) -> <a href="./src/weave_trace/types/call_upsert_batch_response.py">CallUpsertBatchResponse</a></code>
 
 # Objects
@@ -112,26 +108,26 @@ Methods:
 Types:
 
 ```python
-from weave_trace.types import FileCreateResponse, FileContentResponse
+from weave_trace.types import FileCreateResponse
 ```
 
 Methods:
 
 - <code title="post /file/create">client.files.<a href="./src/weave_trace/resources/files.py">create</a>(\*\*<a href="src/weave_trace/types/file_create_params.py">params</a>) -> <a href="./src/weave_trace/types/file_create_response.py">FileCreateResponse</a></code>
-- <code title="post /file/content">client.files.<a href="./src/weave_trace/resources/files.py">content</a>(\*\*<a href="src/weave_trace/types/file_content_params.py">params</a>) -> <a href="./src/weave_trace/types/file_content_response.py">object</a></code>
+- <code title="post /file/content">client.files.<a href="./src/weave_trace/resources/files.py">content</a>(\*\*<a href="src/weave_trace/types/file_content_params.py">params</a>) -> object</code>
 
 # Costs
 
 Types:
 
 ```python
-from weave_trace.types import CostCreateResponse, CostPurgeResponse, CostQueryResponse
+from weave_trace.types import CostCreateResponse, CostQueryResponse
 ```
 
 Methods:
 
 - <code title="post /cost/create">client.costs.<a href="./src/weave_trace/resources/costs.py">create</a>(\*\*<a href="src/weave_trace/types/cost_create_params.py">params</a>) -> <a href="./src/weave_trace/types/cost_create_response.py">CostCreateResponse</a></code>
-- <code title="post /cost/purge">client.costs.<a href="./src/weave_trace/resources/costs.py">purge</a>(\*\*<a href="src/weave_trace/types/cost_purge_params.py">params</a>) -> <a href="./src/weave_trace/types/cost_purge_response.py">object</a></code>
+- <code title="post /cost/purge">client.costs.<a href="./src/weave_trace/resources/costs.py">purge</a>(\*\*<a href="src/weave_trace/types/cost_purge_params.py">params</a>) -> object</code>
 - <code title="post /cost/query">client.costs.<a href="./src/weave_trace/resources/costs.py">query</a>(\*\*<a href="src/weave_trace/types/cost_query_params.py">params</a>) -> <a href="./src/weave_trace/types/cost_query_response.py">CostQueryResponse</a></code>
 
 # Feedback
@@ -139,17 +135,12 @@ Methods:
 Types:
 
 ```python
-from weave_trace.types import (
-    FeedbackCreateResponse,
-    FeedbackPurgeResponse,
-    FeedbackQueryResponse,
-    FeedbackReplaceResponse,
-)
+from weave_trace.types import FeedbackCreateResponse, FeedbackQueryResponse, FeedbackReplaceResponse
 ```
 
 Methods:
 
 - <code title="post /feedback/create">client.feedback.<a href="./src/weave_trace/resources/feedback.py">create</a>(\*\*<a href="src/weave_trace/types/feedback_create_params.py">params</a>) -> <a href="./src/weave_trace/types/feedback_create_response.py">FeedbackCreateResponse</a></code>
-- <code title="post /feedback/purge">client.feedback.<a href="./src/weave_trace/resources/feedback.py">purge</a>(\*\*<a href="src/weave_trace/types/feedback_purge_params.py">params</a>) -> <a href="./src/weave_trace/types/feedback_purge_response.py">object</a></code>
+- <code title="post /feedback/purge">client.feedback.<a href="./src/weave_trace/resources/feedback.py">purge</a>(\*\*<a href="src/weave_trace/types/feedback_purge_params.py">params</a>) -> object</code>
 - <code title="post /feedback/query">client.feedback.<a href="./src/weave_trace/resources/feedback.py">query</a>(\*\*<a href="src/weave_trace/types/feedback_query_params.py">params</a>) -> <a href="./src/weave_trace/types/feedback_query_response.py">FeedbackQueryResponse</a></code>
 - <code title="post /feedback/replace">client.feedback.<a href="./src/weave_trace/resources/feedback.py">replace</a>(\*\*<a href="src/weave_trace/types/feedback_replace_params.py">params</a>) -> <a href="./src/weave_trace/types/feedback_replace_response.py">FeedbackReplaceResponse</a></code>

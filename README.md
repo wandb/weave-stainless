@@ -1,6 +1,7 @@
 # Weave Trace Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/weave-trace.svg)](https://pypi.org/project/weave-trace/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/weave-trace.svg?label=pypi%20(stable))](https://pypi.org/project/weave-trace/)
 
 The Weave Trace Python library provides convenient access to the Weave Trace REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -20,7 +21,7 @@ pip install git+ssh://git@github.com/stainless-sdks/weave-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre weave-trace`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre weave-trace`
 
 ## Usage
 
@@ -81,6 +82,44 @@ asyncio.run(main())
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
 
+### With aiohttp
+
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+
+You can enable this by installing `aiohttp`:
+
+```sh
+# install from this staging repo
+pip install 'weave-trace[aiohttp] @ git+ssh://git@github.com/stainless-sdks/weave-python.git'
+```
+
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
+```python
+import asyncio
+from weave_trace import DefaultAioHttpClient
+from weave_trace import AsyncWeaveTrace
+
+
+async def main() -> None:
+    async with AsyncWeaveTrace(
+        username="My Username",
+        password="My Password",
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        object = await client.objects.create(
+            obj={
+                "object_id": "object_id",
+                "project_id": "project_id",
+                "val": {},
+            },
+        )
+        print(object.digest)
+
+
+asyncio.run(main())
+```
+
 ## Using types
 
 Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
@@ -104,8 +143,6 @@ object = client.objects.create(
         "object_id": "object_id",
         "project_id": "project_id",
         "val": {},
-        "builtin_object_class": "builtin_object_class",
-        "set_base_object_class": "set_base_object_class",
     },
 )
 print(object.obj)
@@ -206,7 +243,7 @@ client.with_options(max_retries=5).objects.create(
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
 from weave_trace import WeaveTrace
