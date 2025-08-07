@@ -31,7 +31,6 @@ from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
 from ..types.call_query_stats_response import CallQueryStatsResponse
-from ..types.call_stream_query_response import CallStreamQueryResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
 
 __all__ = ["CallsResource", "AsyncCallsResource"]
@@ -329,7 +328,7 @@ class CallsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> JSONLDecoder[CallStreamQueryResponse]:
+    ) -> JSONLDecoder[object]:
         """Calls Query Stream
 
         Args:
@@ -387,7 +386,7 @@ class CallsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JSONLDecoder[CallStreamQueryResponse],
+            cast_to=JSONLDecoder[object],
             stream=True,
         )
 
@@ -716,7 +715,7 @@ class AsyncCallsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncJSONLDecoder[CallStreamQueryResponse]:
+    ) -> AsyncJSONLDecoder[object]:
         """Calls Query Stream
 
         Args:
@@ -774,7 +773,7 @@ class AsyncCallsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncJSONLDecoder[CallStreamQueryResponse],
+            cast_to=AsyncJSONLDecoder[object],
             stream=True,
         )
 

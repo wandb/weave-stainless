@@ -65,7 +65,6 @@ from .feedback_create_response import FeedbackCreateResponse as FeedbackCreateRe
 from .table_query_stats_params import TableQueryStatsParams as TableQueryStatsParams
 from .call_query_stats_response import CallQueryStatsResponse as CallQueryStatsResponse
 from .feedback_replace_response import FeedbackReplaceResponse as FeedbackReplaceResponse
-from .call_stream_query_response import CallStreamQueryResponse as CallStreamQueryResponse
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
 from .table_query_stats_response import TableQueryStatsResponse as TableQueryStatsResponse
 from .service_health_check_response import ServiceHealthCheckResponse as ServiceHealthCheckResponse
