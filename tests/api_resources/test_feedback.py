@@ -25,7 +25,7 @@ class TestFeedback:
     def test_method_create(self, client: WeaveTrace) -> None:
         feedback = client.feedback.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -35,7 +35,7 @@ class TestFeedback:
     def test_method_create_with_all_params(self, client: WeaveTrace) -> None:
         feedback = client.feedback.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
             annotation_ref="weave:///entity/project/object/name:digest",
@@ -51,7 +51,7 @@ class TestFeedback:
     def test_raw_response_create(self, client: WeaveTrace) -> None:
         response = client.feedback.with_raw_response.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -65,7 +65,7 @@ class TestFeedback:
     def test_streaming_response_create(self, client: WeaveTrace) -> None:
         with client.feedback.with_streaming_response.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         ) as response:
@@ -164,7 +164,7 @@ class TestFeedback:
         feedback = client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -175,7 +175,7 @@ class TestFeedback:
         feedback = client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
             annotation_ref="weave:///entity/project/object/name:digest",
@@ -192,7 +192,7 @@ class TestFeedback:
         response = client.feedback.with_raw_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -207,7 +207,7 @@ class TestFeedback:
         with client.feedback.with_streaming_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         ) as response:
@@ -229,7 +229,7 @@ class TestAsyncFeedback:
     async def test_method_create(self, async_client: AsyncWeaveTrace) -> None:
         feedback = await async_client.feedback.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -239,7 +239,7 @@ class TestAsyncFeedback:
     async def test_method_create_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
         feedback = await async_client.feedback.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
             annotation_ref="weave:///entity/project/object/name:digest",
@@ -255,7 +255,7 @@ class TestAsyncFeedback:
     async def test_raw_response_create(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.feedback.with_raw_response.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -269,7 +269,7 @@ class TestAsyncFeedback:
     async def test_streaming_response_create(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.feedback.with_streaming_response.create(
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         ) as response:
@@ -368,7 +368,7 @@ class TestAsyncFeedback:
         feedback = await async_client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -379,7 +379,7 @@ class TestAsyncFeedback:
         feedback = await async_client.feedback.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
             annotation_ref="weave:///entity/project/object/name:digest",
@@ -396,7 +396,7 @@ class TestAsyncFeedback:
         response = await async_client.feedback.with_raw_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         )
@@ -411,7 +411,7 @@ class TestAsyncFeedback:
         async with async_client.feedback.with_streaming_response.replace(
             feedback_id="feedback_id",
             feedback_type="custom",
-            payload={"key": "value"},
+            payload={"key": "bar"},
             project_id="entity/project",
             weave_ref="weave:///entity/project/object/name:digest",
         ) as response:

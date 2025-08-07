@@ -12,10 +12,18 @@ from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_may
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
+    to_custom_raw_response_wrapper,
     async_to_streamed_response_wrapper,
+    to_custom_streamed_response_wrapper,
+    async_to_custom_raw_response_wrapper,
+    async_to_custom_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
 from ..types.file_create_response import FileCreateResponse
@@ -99,7 +107,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> BinaryAPIResponse:
         """
         File Content
 
@@ -112,6 +120,7 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         return self._post(
             "/file/content",
             body=maybe_transform(
@@ -124,7 +133,7 @@ class FilesResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=BinaryAPIResponse,
         )
 
 
@@ -204,7 +213,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> object:
+    ) -> AsyncBinaryAPIResponse:
         """
         File Content
 
@@ -217,6 +226,7 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"Accept": "application/octet-stream", **(extra_headers or {})}
         return await self._post(
             "/file/content",
             body=await async_maybe_transform(
@@ -229,7 +239,7 @@ class AsyncFilesResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=AsyncBinaryAPIResponse,
         )
 
 
@@ -240,8 +250,9 @@ class FilesResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             files.create,
         )
-        self.content = to_raw_response_wrapper(
+        self.content = to_custom_raw_response_wrapper(
             files.content,
+            BinaryAPIResponse,
         )
 
 
@@ -252,8 +263,9 @@ class AsyncFilesResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             files.create,
         )
-        self.content = async_to_raw_response_wrapper(
+        self.content = async_to_custom_raw_response_wrapper(
             files.content,
+            AsyncBinaryAPIResponse,
         )
 
 
@@ -264,8 +276,9 @@ class FilesResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             files.create,
         )
-        self.content = to_streamed_response_wrapper(
+        self.content = to_custom_streamed_response_wrapper(
             files.content,
+            StreamedBinaryAPIResponse,
         )
 
 
@@ -276,6 +289,7 @@ class AsyncFilesResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             files.create,
         )
-        self.content = async_to_streamed_response_wrapper(
+        self.content = async_to_custom_streamed_response_wrapper(
             files.content,
+            AsyncStreamedBinaryAPIResponse,
         )

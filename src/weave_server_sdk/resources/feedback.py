@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Dict, List, Iterable, Optional
 
 import httpx
 
@@ -49,7 +49,7 @@ class FeedbackResource(SyncAPIResource):
         self,
         *,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -194,7 +194,7 @@ class FeedbackResource(SyncAPIResource):
         *,
         feedback_id: str,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -274,7 +274,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         self,
         *,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -419,7 +419,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         *,
         feedback_id: str,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,

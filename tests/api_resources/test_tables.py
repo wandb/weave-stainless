@@ -27,7 +27,7 @@ class TestTables:
         table = client.tables.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         )
         assert_matches_type(TableCreateResponse, table, path=["response"])
@@ -37,7 +37,7 @@ class TestTables:
         response = client.tables.with_raw_response.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         )
 
@@ -51,7 +51,7 @@ class TestTables:
         with client.tables.with_streaming_response.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         ) as response:
             assert not response.is_closed
@@ -67,7 +67,7 @@ class TestTables:
         table = client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -76,7 +76,7 @@ class TestTables:
         response = client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         )
 
         assert response.is_closed is True
@@ -89,7 +89,7 @@ class TestTables:
         with client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -200,7 +200,7 @@ class TestAsyncTables:
         table = await async_client.tables.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         )
         assert_matches_type(TableCreateResponse, table, path=["response"])
@@ -210,7 +210,7 @@ class TestAsyncTables:
         response = await async_client.tables.with_raw_response.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         )
 
@@ -224,7 +224,7 @@ class TestAsyncTables:
         async with async_client.tables.with_streaming_response.create(
             table={
                 "project_id": "project_id",
-                "rows": [{}],
+                "rows": [{"foo": "bar"}],
             },
         ) as response:
             assert not response.is_closed
@@ -240,7 +240,7 @@ class TestAsyncTables:
         table = await async_client.tables.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         )
         assert_matches_type(TableUpdateResponse, table, path=["response"])
 
@@ -249,7 +249,7 @@ class TestAsyncTables:
         response = await async_client.tables.with_raw_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         )
 
         assert response.is_closed is True
@@ -262,7 +262,7 @@ class TestAsyncTables:
         async with async_client.tables.with_streaming_response.update(
             base_digest="base_digest",
             project_id="project_id",
-            updates=[{"append": {"row": {}}}],
+            updates=[{"append": {"row": {"foo": "bar"}}}],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

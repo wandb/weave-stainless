@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Dict, Union, Optional
 from datetime import datetime
 from typing_extensions import Required, Annotated, TypedDict
 
@@ -16,9 +16,9 @@ class CallStartParams(TypedDict, total=False):
 
 
 class Start(TypedDict, total=False):
-    attributes: Required[object]
+    attributes: Required[Dict[str, object]]
 
-    inputs: Required[object]
+    inputs: Required[Dict[str, object]]
 
     op_name: Required[str]
 

@@ -62,13 +62,13 @@ from .ref_read_batch_response import RefReadBatchResponse as RefReadBatchRespons
 from .call_stream_query_params import CallStreamQueryParams as CallStreamQueryParams
 from .call_upsert_batch_params import CallUpsertBatchParams as CallUpsertBatchParams
 from .feedback_create_response import FeedbackCreateResponse as FeedbackCreateResponse
-from .service_geolocate_params import ServiceGeolocateParams as ServiceGeolocateParams
 from .table_query_stats_params import TableQueryStatsParams as TableQueryStatsParams
 from .call_query_stats_response import CallQueryStatsResponse as CallQueryStatsResponse
 from .feedback_replace_response import FeedbackReplaceResponse as FeedbackReplaceResponse
+from .call_stream_query_response import CallStreamQueryResponse as CallStreamQueryResponse
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
-from .service_geolocate_response import ServiceGeolocateResponse as ServiceGeolocateResponse
 from .table_query_stats_response import TableQueryStatsResponse as TableQueryStatsResponse
+from .service_health_check_response import ServiceHealthCheckResponse as ServiceHealthCheckResponse
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,

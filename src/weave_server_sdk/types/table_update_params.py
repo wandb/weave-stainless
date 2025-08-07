@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Iterable
+from typing import Dict, Union, Iterable
 from typing_extensions import Required, TypeAlias, TypedDict
 
 __all__ = [
@@ -26,7 +26,7 @@ class TableUpdateParams(TypedDict, total=False):
 
 
 class UpdateTableAppendSpecAppend(TypedDict, total=False):
-    row: Required[object]
+    row: Required[Dict[str, object]]
 
 
 class UpdateTableAppendSpec(TypedDict, total=False):
@@ -44,7 +44,7 @@ class UpdateTablePopSpec(TypedDict, total=False):
 class UpdateTableInsertSpecInsert(TypedDict, total=False):
     index: Required[int]
 
-    row: Required[object]
+    row: Required[Dict[str, object]]
 
 
 class UpdateTableInsertSpec(TypedDict, total=False):
