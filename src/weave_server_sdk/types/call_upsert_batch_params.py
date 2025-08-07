@@ -27,9 +27,9 @@ class CallUpsertBatchParams(TypedDict, total=False):
 
 
 class BatchCallBatchStartModeReqStart(TypedDict, total=False):
-    attributes: Required[object]
+    attributes: Required[Dict[str, object]]
 
-    inputs: Required[object]
+    inputs: Required[Dict[str, object]]
 
     op_name: Required[str]
 
@@ -43,9 +43,15 @@ class BatchCallBatchStartModeReqStart(TypedDict, total=False):
 
     parent_id: Optional[str]
 
+    thread_id: Optional[str]
+
     trace_id: Optional[str]
 
+    turn_id: Optional[str]
+
     wb_run_id: Optional[str]
+
+    wb_run_step: Optional[int]
 
     wb_user_id: Optional[str]
     """Do not set directly. Server will automatically populate this field."""
@@ -76,6 +82,8 @@ class BatchCallBatchEndModeReqEndSummaryUsage(TypedDict, total=False):
 
 
 class BatchCallBatchEndModeReqEndSummaryTyped(TypedDict, total=False):
+    status_counts: Dict[str, int]
+
     usage: Dict[str, BatchCallBatchEndModeReqEndSummaryUsage]
 
 

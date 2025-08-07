@@ -8,10 +8,7 @@ import httpx
 
 from ..types import object_read_params, object_query_params, object_create_params, object_delete_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -131,6 +128,7 @@ class ObjectsResource(SyncAPIResource):
         *,
         project_id: str,
         filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
@@ -149,6 +147,8 @@ class ObjectsResource(SyncAPIResource):
           project_id: The ID of the project to query
 
           filter: Filter criteria for the query. See `ObjectVersionFilter`
+
+          include_storage_size: If true, the `size_bytes` column is returned.
 
           limit: Maximum number of results to return
 
@@ -174,6 +174,7 @@ class ObjectsResource(SyncAPIResource):
                 {
                     "project_id": project_id,
                     "filter": filter,
+                    "include_storage_size": include_storage_size,
                     "limit": limit,
                     "metadata_only": metadata_only,
                     "offset": offset,
@@ -336,6 +337,7 @@ class AsyncObjectsResource(AsyncAPIResource):
         *,
         project_id: str,
         filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
@@ -354,6 +356,8 @@ class AsyncObjectsResource(AsyncAPIResource):
           project_id: The ID of the project to query
 
           filter: Filter criteria for the query. See `ObjectVersionFilter`
+
+          include_storage_size: If true, the `size_bytes` column is returned.
 
           limit: Maximum number of results to return
 
@@ -379,6 +383,7 @@ class AsyncObjectsResource(AsyncAPIResource):
                 {
                     "project_id": project_id,
                     "filter": filter,
+                    "include_storage_size": include_storage_size,
                     "limit": limit,
                     "metadata_only": metadata_only,
                     "offset": offset,

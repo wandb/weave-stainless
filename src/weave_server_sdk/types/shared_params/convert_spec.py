@@ -9,6 +9,12 @@ __all__ = ["ConvertSpec"]
 
 class ConvertSpec(TypedDict, total=False):
     input: Required["Operation"]
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example: ` {"$literal": "predict"} `
+    """
 
     to: Required[Literal["double", "string", "int", "bool", "exists"]]
 

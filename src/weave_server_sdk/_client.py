@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import base64
-from typing import Any, Union, Mapping
+from typing import TYPE_CHECKING, Any, Union, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -20,12 +20,9 @@ from ._types import (
     ProxiesTypes,
     RequestOptions,
 )
-from ._utils import (
-    is_given,
-    get_async_library,
-)
+from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import refs, calls, costs, files, tables, objects, feedback, services
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError, WeaveTraceError
 from ._base_client import (
@@ -33,6 +30,17 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+
+if TYPE_CHECKING:
+    from .resources import refs, calls, costs, files, tables, objects, feedback, services
+    from .resources.refs import RefsResource, AsyncRefsResource
+    from .resources.calls import CallsResource, AsyncCallsResource
+    from .resources.costs import CostsResource, AsyncCostsResource
+    from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.tables import TablesResource, AsyncTablesResource
+    from .resources.objects import ObjectsResource, AsyncObjectsResource
+    from .resources.feedback import FeedbackResource, AsyncFeedbackResource
+    from .resources.services import ServicesResource, AsyncServicesResource
 
 __all__ = [
     "Timeout",
@@ -47,26 +55,15 @@ __all__ = [
 
 
 class WeaveTrace(SyncAPIClient):
-    services: services.ServicesResource
-    calls: calls.CallsResource
-    objects: objects.ObjectsResource
-    tables: tables.TablesResource
-    refs: refs.RefsResource
-    files: files.FilesResource
-    costs: costs.CostsResource
-    feedback: feedback.FeedbackResource
-    with_raw_response: WeaveTraceWithRawResponse
-    with_streaming_response: WeaveTraceWithStreamedResponse
-
     # client options
     username: str
-    api_key: str
+    password: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        api_key: str | None = None,
+        password: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -89,20 +86,24 @@ class WeaveTrace(SyncAPIClient):
         """Construct a new synchronous WeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `WANDB_USERNAME`
-        - `api_key` from `WANDB_API_KEY`
+        - `username` from `USERNAME`
+        - `password` from `PASSWORD`
         """
         if username is None:
-            username = os.environ.get("WANDB_USERNAME") or "user"
+            username = os.environ.get("USERNAME")
+        if username is None:
+            raise WeaveTraceError(
+                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+            )
         self.username = username
 
-        if api_key is None:
-            api_key = os.environ.get("WANDB_API_KEY")
-        if api_key is None:
+        if password is None:
+            password = os.environ.get("PASSWORD")
+        if password is None:
             raise WeaveTraceError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_API_KEY environment variable"
+                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
-        self.api_key = api_key
+        self.password = password
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -120,16 +121,61 @@ class WeaveTrace(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.services = services.ServicesResource(self)
-        self.calls = calls.CallsResource(self)
-        self.objects = objects.ObjectsResource(self)
-        self.tables = tables.TablesResource(self)
-        self.refs = refs.RefsResource(self)
-        self.files = files.FilesResource(self)
-        self.costs = costs.CostsResource(self)
-        self.feedback = feedback.FeedbackResource(self)
-        self.with_raw_response = WeaveTraceWithRawResponse(self)
-        self.with_streaming_response = WeaveTraceWithStreamedResponse(self)
+    @cached_property
+    def services(self) -> ServicesResource:
+        from .resources.services import ServicesResource
+
+        return ServicesResource(self)
+
+    @cached_property
+    def calls(self) -> CallsResource:
+        from .resources.calls import CallsResource
+
+        return CallsResource(self)
+
+    @cached_property
+    def objects(self) -> ObjectsResource:
+        from .resources.objects import ObjectsResource
+
+        return ObjectsResource(self)
+
+    @cached_property
+    def tables(self) -> TablesResource:
+        from .resources.tables import TablesResource
+
+        return TablesResource(self)
+
+    @cached_property
+    def refs(self) -> RefsResource:
+        from .resources.refs import RefsResource
+
+        return RefsResource(self)
+
+    @cached_property
+    def files(self) -> FilesResource:
+        from .resources.files import FilesResource
+
+        return FilesResource(self)
+
+    @cached_property
+    def costs(self) -> CostsResource:
+        from .resources.costs import CostsResource
+
+        return CostsResource(self)
+
+    @cached_property
+    def feedback(self) -> FeedbackResource:
+        from .resources.feedback import FeedbackResource
+
+        return FeedbackResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> WeaveTraceWithRawResponse:
+        return WeaveTraceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> WeaveTraceWithStreamedResponse:
+        return WeaveTraceWithStreamedResponse(self)
 
     @property
     @override
@@ -139,7 +185,7 @@ class WeaveTrace(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.api_key}".encode("ascii")
+        credentials = f"{self.username}:{self.password}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -156,7 +202,7 @@ class WeaveTrace(SyncAPIClient):
         self,
         *,
         username: str | None = None,
-        api_key: str | None = None,
+        password: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -191,7 +237,7 @@ class WeaveTrace(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            api_key=api_key or self.api_key,
+            password=password or self.password,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -240,26 +286,15 @@ class WeaveTrace(SyncAPIClient):
 
 
 class AsyncWeaveTrace(AsyncAPIClient):
-    services: services.AsyncServicesResource
-    calls: calls.AsyncCallsResource
-    objects: objects.AsyncObjectsResource
-    tables: tables.AsyncTablesResource
-    refs: refs.AsyncRefsResource
-    files: files.AsyncFilesResource
-    costs: costs.AsyncCostsResource
-    feedback: feedback.AsyncFeedbackResource
-    with_raw_response: AsyncWeaveTraceWithRawResponse
-    with_streaming_response: AsyncWeaveTraceWithStreamedResponse
-
     # client options
     username: str
-    api_key: str
+    password: str
 
     def __init__(
         self,
         *,
         username: str | None = None,
-        api_key: str | None = None,
+        password: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -282,20 +317,24 @@ class AsyncWeaveTrace(AsyncAPIClient):
         """Construct a new async AsyncWeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `WANDB_USERNAME`
-        - `api_key` from `WANDB_API_KEY`
+        - `username` from `USERNAME`
+        - `password` from `PASSWORD`
         """
         if username is None:
-            username = os.environ.get("WANDB_USERNAME") or "user"
+            username = os.environ.get("USERNAME")
+        if username is None:
+            raise WeaveTraceError(
+                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+            )
         self.username = username
 
-        if api_key is None:
-            api_key = os.environ.get("WANDB_API_KEY")
-        if api_key is None:
+        if password is None:
+            password = os.environ.get("PASSWORD")
+        if password is None:
             raise WeaveTraceError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the WANDB_API_KEY environment variable"
+                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
             )
-        self.api_key = api_key
+        self.password = password
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -313,16 +352,61 @@ class AsyncWeaveTrace(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.services = services.AsyncServicesResource(self)
-        self.calls = calls.AsyncCallsResource(self)
-        self.objects = objects.AsyncObjectsResource(self)
-        self.tables = tables.AsyncTablesResource(self)
-        self.refs = refs.AsyncRefsResource(self)
-        self.files = files.AsyncFilesResource(self)
-        self.costs = costs.AsyncCostsResource(self)
-        self.feedback = feedback.AsyncFeedbackResource(self)
-        self.with_raw_response = AsyncWeaveTraceWithRawResponse(self)
-        self.with_streaming_response = AsyncWeaveTraceWithStreamedResponse(self)
+    @cached_property
+    def services(self) -> AsyncServicesResource:
+        from .resources.services import AsyncServicesResource
+
+        return AsyncServicesResource(self)
+
+    @cached_property
+    def calls(self) -> AsyncCallsResource:
+        from .resources.calls import AsyncCallsResource
+
+        return AsyncCallsResource(self)
+
+    @cached_property
+    def objects(self) -> AsyncObjectsResource:
+        from .resources.objects import AsyncObjectsResource
+
+        return AsyncObjectsResource(self)
+
+    @cached_property
+    def tables(self) -> AsyncTablesResource:
+        from .resources.tables import AsyncTablesResource
+
+        return AsyncTablesResource(self)
+
+    @cached_property
+    def refs(self) -> AsyncRefsResource:
+        from .resources.refs import AsyncRefsResource
+
+        return AsyncRefsResource(self)
+
+    @cached_property
+    def files(self) -> AsyncFilesResource:
+        from .resources.files import AsyncFilesResource
+
+        return AsyncFilesResource(self)
+
+    @cached_property
+    def costs(self) -> AsyncCostsResource:
+        from .resources.costs import AsyncCostsResource
+
+        return AsyncCostsResource(self)
+
+    @cached_property
+    def feedback(self) -> AsyncFeedbackResource:
+        from .resources.feedback import AsyncFeedbackResource
+
+        return AsyncFeedbackResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncWeaveTraceWithRawResponse:
+        return AsyncWeaveTraceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncWeaveTraceWithStreamedResponse:
+        return AsyncWeaveTraceWithStreamedResponse(self)
 
     @property
     @override
@@ -332,7 +416,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        credentials = f"{self.username}:{self.api_key}".encode("ascii")
+        credentials = f"{self.username}:{self.password}".encode("ascii")
         header = f"Basic {base64.b64encode(credentials).decode('ascii')}"
         return {"Authorization": header}
 
@@ -349,7 +433,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         self,
         *,
         username: str | None = None,
-        api_key: str | None = None,
+        password: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -384,7 +468,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             username=username or self.username,
-            api_key=api_key or self.api_key,
+            password=password or self.password,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -433,51 +517,223 @@ class AsyncWeaveTrace(AsyncAPIClient):
 
 
 class WeaveTraceWithRawResponse:
+    _client: WeaveTrace
+
     def __init__(self, client: WeaveTrace) -> None:
-        self.services = services.ServicesResourceWithRawResponse(client.services)
-        self.calls = calls.CallsResourceWithRawResponse(client.calls)
-        self.objects = objects.ObjectsResourceWithRawResponse(client.objects)
-        self.tables = tables.TablesResourceWithRawResponse(client.tables)
-        self.refs = refs.RefsResourceWithRawResponse(client.refs)
-        self.files = files.FilesResourceWithRawResponse(client.files)
-        self.costs = costs.CostsResourceWithRawResponse(client.costs)
-        self.feedback = feedback.FeedbackResourceWithRawResponse(client.feedback)
+        self._client = client
+
+    @cached_property
+    def services(self) -> services.ServicesResourceWithRawResponse:
+        from .resources.services import ServicesResourceWithRawResponse
+
+        return ServicesResourceWithRawResponse(self._client.services)
+
+    @cached_property
+    def calls(self) -> calls.CallsResourceWithRawResponse:
+        from .resources.calls import CallsResourceWithRawResponse
+
+        return CallsResourceWithRawResponse(self._client.calls)
+
+    @cached_property
+    def objects(self) -> objects.ObjectsResourceWithRawResponse:
+        from .resources.objects import ObjectsResourceWithRawResponse
+
+        return ObjectsResourceWithRawResponse(self._client.objects)
+
+    @cached_property
+    def tables(self) -> tables.TablesResourceWithRawResponse:
+        from .resources.tables import TablesResourceWithRawResponse
+
+        return TablesResourceWithRawResponse(self._client.tables)
+
+    @cached_property
+    def refs(self) -> refs.RefsResourceWithRawResponse:
+        from .resources.refs import RefsResourceWithRawResponse
+
+        return RefsResourceWithRawResponse(self._client.refs)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithRawResponse:
+        from .resources.files import FilesResourceWithRawResponse
+
+        return FilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def costs(self) -> costs.CostsResourceWithRawResponse:
+        from .resources.costs import CostsResourceWithRawResponse
+
+        return CostsResourceWithRawResponse(self._client.costs)
+
+    @cached_property
+    def feedback(self) -> feedback.FeedbackResourceWithRawResponse:
+        from .resources.feedback import FeedbackResourceWithRawResponse
+
+        return FeedbackResourceWithRawResponse(self._client.feedback)
 
 
 class AsyncWeaveTraceWithRawResponse:
+    _client: AsyncWeaveTrace
+
     def __init__(self, client: AsyncWeaveTrace) -> None:
-        self.services = services.AsyncServicesResourceWithRawResponse(client.services)
-        self.calls = calls.AsyncCallsResourceWithRawResponse(client.calls)
-        self.objects = objects.AsyncObjectsResourceWithRawResponse(client.objects)
-        self.tables = tables.AsyncTablesResourceWithRawResponse(client.tables)
-        self.refs = refs.AsyncRefsResourceWithRawResponse(client.refs)
-        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.costs = costs.AsyncCostsResourceWithRawResponse(client.costs)
-        self.feedback = feedback.AsyncFeedbackResourceWithRawResponse(client.feedback)
+        self._client = client
+
+    @cached_property
+    def services(self) -> services.AsyncServicesResourceWithRawResponse:
+        from .resources.services import AsyncServicesResourceWithRawResponse
+
+        return AsyncServicesResourceWithRawResponse(self._client.services)
+
+    @cached_property
+    def calls(self) -> calls.AsyncCallsResourceWithRawResponse:
+        from .resources.calls import AsyncCallsResourceWithRawResponse
+
+        return AsyncCallsResourceWithRawResponse(self._client.calls)
+
+    @cached_property
+    def objects(self) -> objects.AsyncObjectsResourceWithRawResponse:
+        from .resources.objects import AsyncObjectsResourceWithRawResponse
+
+        return AsyncObjectsResourceWithRawResponse(self._client.objects)
+
+    @cached_property
+    def tables(self) -> tables.AsyncTablesResourceWithRawResponse:
+        from .resources.tables import AsyncTablesResourceWithRawResponse
+
+        return AsyncTablesResourceWithRawResponse(self._client.tables)
+
+    @cached_property
+    def refs(self) -> refs.AsyncRefsResourceWithRawResponse:
+        from .resources.refs import AsyncRefsResourceWithRawResponse
+
+        return AsyncRefsResourceWithRawResponse(self._client.refs)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithRawResponse:
+        from .resources.files import AsyncFilesResourceWithRawResponse
+
+        return AsyncFilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def costs(self) -> costs.AsyncCostsResourceWithRawResponse:
+        from .resources.costs import AsyncCostsResourceWithRawResponse
+
+        return AsyncCostsResourceWithRawResponse(self._client.costs)
+
+    @cached_property
+    def feedback(self) -> feedback.AsyncFeedbackResourceWithRawResponse:
+        from .resources.feedback import AsyncFeedbackResourceWithRawResponse
+
+        return AsyncFeedbackResourceWithRawResponse(self._client.feedback)
 
 
 class WeaveTraceWithStreamedResponse:
+    _client: WeaveTrace
+
     def __init__(self, client: WeaveTrace) -> None:
-        self.services = services.ServicesResourceWithStreamingResponse(client.services)
-        self.calls = calls.CallsResourceWithStreamingResponse(client.calls)
-        self.objects = objects.ObjectsResourceWithStreamingResponse(client.objects)
-        self.tables = tables.TablesResourceWithStreamingResponse(client.tables)
-        self.refs = refs.RefsResourceWithStreamingResponse(client.refs)
-        self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.costs = costs.CostsResourceWithStreamingResponse(client.costs)
-        self.feedback = feedback.FeedbackResourceWithStreamingResponse(client.feedback)
+        self._client = client
+
+    @cached_property
+    def services(self) -> services.ServicesResourceWithStreamingResponse:
+        from .resources.services import ServicesResourceWithStreamingResponse
+
+        return ServicesResourceWithStreamingResponse(self._client.services)
+
+    @cached_property
+    def calls(self) -> calls.CallsResourceWithStreamingResponse:
+        from .resources.calls import CallsResourceWithStreamingResponse
+
+        return CallsResourceWithStreamingResponse(self._client.calls)
+
+    @cached_property
+    def objects(self) -> objects.ObjectsResourceWithStreamingResponse:
+        from .resources.objects import ObjectsResourceWithStreamingResponse
+
+        return ObjectsResourceWithStreamingResponse(self._client.objects)
+
+    @cached_property
+    def tables(self) -> tables.TablesResourceWithStreamingResponse:
+        from .resources.tables import TablesResourceWithStreamingResponse
+
+        return TablesResourceWithStreamingResponse(self._client.tables)
+
+    @cached_property
+    def refs(self) -> refs.RefsResourceWithStreamingResponse:
+        from .resources.refs import RefsResourceWithStreamingResponse
+
+        return RefsResourceWithStreamingResponse(self._client.refs)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithStreamingResponse:
+        from .resources.files import FilesResourceWithStreamingResponse
+
+        return FilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def costs(self) -> costs.CostsResourceWithStreamingResponse:
+        from .resources.costs import CostsResourceWithStreamingResponse
+
+        return CostsResourceWithStreamingResponse(self._client.costs)
+
+    @cached_property
+    def feedback(self) -> feedback.FeedbackResourceWithStreamingResponse:
+        from .resources.feedback import FeedbackResourceWithStreamingResponse
+
+        return FeedbackResourceWithStreamingResponse(self._client.feedback)
 
 
 class AsyncWeaveTraceWithStreamedResponse:
+    _client: AsyncWeaveTrace
+
     def __init__(self, client: AsyncWeaveTrace) -> None:
-        self.services = services.AsyncServicesResourceWithStreamingResponse(client.services)
-        self.calls = calls.AsyncCallsResourceWithStreamingResponse(client.calls)
-        self.objects = objects.AsyncObjectsResourceWithStreamingResponse(client.objects)
-        self.tables = tables.AsyncTablesResourceWithStreamingResponse(client.tables)
-        self.refs = refs.AsyncRefsResourceWithStreamingResponse(client.refs)
-        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.costs = costs.AsyncCostsResourceWithStreamingResponse(client.costs)
-        self.feedback = feedback.AsyncFeedbackResourceWithStreamingResponse(client.feedback)
+        self._client = client
+
+    @cached_property
+    def services(self) -> services.AsyncServicesResourceWithStreamingResponse:
+        from .resources.services import AsyncServicesResourceWithStreamingResponse
+
+        return AsyncServicesResourceWithStreamingResponse(self._client.services)
+
+    @cached_property
+    def calls(self) -> calls.AsyncCallsResourceWithStreamingResponse:
+        from .resources.calls import AsyncCallsResourceWithStreamingResponse
+
+        return AsyncCallsResourceWithStreamingResponse(self._client.calls)
+
+    @cached_property
+    def objects(self) -> objects.AsyncObjectsResourceWithStreamingResponse:
+        from .resources.objects import AsyncObjectsResourceWithStreamingResponse
+
+        return AsyncObjectsResourceWithStreamingResponse(self._client.objects)
+
+    @cached_property
+    def tables(self) -> tables.AsyncTablesResourceWithStreamingResponse:
+        from .resources.tables import AsyncTablesResourceWithStreamingResponse
+
+        return AsyncTablesResourceWithStreamingResponse(self._client.tables)
+
+    @cached_property
+    def refs(self) -> refs.AsyncRefsResourceWithStreamingResponse:
+        from .resources.refs import AsyncRefsResourceWithStreamingResponse
+
+        return AsyncRefsResourceWithStreamingResponse(self._client.refs)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithStreamingResponse:
+        from .resources.files import AsyncFilesResourceWithStreamingResponse
+
+        return AsyncFilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def costs(self) -> costs.AsyncCostsResourceWithStreamingResponse:
+        from .resources.costs import AsyncCostsResourceWithStreamingResponse
+
+        return AsyncCostsResourceWithStreamingResponse(self._client.costs)
+
+    @cached_property
+    def feedback(self) -> feedback.AsyncFeedbackResourceWithStreamingResponse:
+        from .resources.feedback import AsyncFeedbackResourceWithStreamingResponse
+
+        return AsyncFeedbackResourceWithStreamingResponse(self._client.feedback)
 
 
 Client = WeaveTrace

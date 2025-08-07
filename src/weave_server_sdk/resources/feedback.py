@@ -2,21 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Dict, List, Iterable, Optional
 
 import httpx
 
-from ..types import (
-    feedback_purge_params,
-    feedback_query_params,
-    feedback_create_params,
-    feedback_replace_params,
-)
+from ..types import feedback_purge_params, feedback_query_params, feedback_create_params, feedback_replace_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -57,7 +49,7 @@ class FeedbackResource(SyncAPIResource):
         self,
         *,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -202,7 +194,7 @@ class FeedbackResource(SyncAPIResource):
         *,
         feedback_id: str,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -282,7 +274,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         self,
         *,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
@@ -427,7 +419,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         *,
         feedback_id: str,
         feedback_type: str,
-        payload: object,
+        payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,

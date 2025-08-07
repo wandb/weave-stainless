@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union, Optional
+from typing import Dict, Union, Optional
 from datetime import datetime
 from typing_extensions import Required, Annotated, TypedDict
 
@@ -16,9 +16,9 @@ class CallStartParams(TypedDict, total=False):
 
 
 class Start(TypedDict, total=False):
-    attributes: Required[object]
+    attributes: Required[Dict[str, object]]
 
-    inputs: Required[object]
+    inputs: Required[Dict[str, object]]
 
     op_name: Required[str]
 
@@ -32,9 +32,15 @@ class Start(TypedDict, total=False):
 
     parent_id: Optional[str]
 
+    thread_id: Optional[str]
+
     trace_id: Optional[str]
 
+    turn_id: Optional[str]
+
     wb_run_id: Optional[str]
+
+    wb_run_step: Optional[int]
 
     wb_user_id: Optional[str]
     """Do not set directly. Server will automatically populate this field."""

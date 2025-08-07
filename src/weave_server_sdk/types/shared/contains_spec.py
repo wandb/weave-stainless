@@ -11,8 +11,20 @@ __all__ = ["ContainsSpec"]
 
 class ContainsSpec(BaseModel):
     input: "Operation"
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example: ` {"$literal": "predict"} `
+    """
 
     substr: "Operation"
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example: ` {"$literal": "predict"} `
+    """
 
     case_insensitive: Optional[bool] = None
 

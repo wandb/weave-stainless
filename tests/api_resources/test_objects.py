@@ -137,14 +137,16 @@ class TestObjects:
                 "base_object_classes": ["Model"],
                 "is_op": True,
                 "latest_only": True,
+                "leaf_object_classes": ["Model"],
                 "object_ids": ["my_favorite_model"],
             },
+            include_storage_size=True,
             limit=100,
             metadata_only=True,
             offset=0,
             sort_by=[
                 {
-                    "direction": "asc",
+                    "direction": "desc",
                     "field": "created_at",
                 }
             ],
@@ -224,7 +226,9 @@ class TestObjects:
 
 
 class TestAsyncObjects:
-    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @parametrize
     async def test_method_create(self, async_client: AsyncWeaveTrace) -> None:
@@ -341,14 +345,16 @@ class TestAsyncObjects:
                 "base_object_classes": ["Model"],
                 "is_op": True,
                 "latest_only": True,
+                "leaf_object_classes": ["Model"],
                 "object_ids": ["my_favorite_model"],
             },
+            include_storage_size=True,
             limit=100,
             metadata_only=True,
             offset=0,
             sort_by=[
                 {
-                    "direction": "asc",
+                    "direction": "desc",
                     "field": "created_at",
                 }
             ],

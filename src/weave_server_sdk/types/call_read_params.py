@@ -14,3 +14,7 @@ class CallReadParams(TypedDict, total=False):
     project_id: Required[str]
 
     include_costs: Optional[bool]
+
+    include_storage_size: Optional[bool]
+
+    include_total_storage_size: Optional[bool]

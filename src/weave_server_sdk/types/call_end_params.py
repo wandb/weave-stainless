@@ -30,6 +30,8 @@ class EndSummaryUsage(TypedDict, total=False):
 
 
 class EndSummaryTyped(TypedDict, total=False):
+    status_counts: Dict[str, int]
+
     usage: Dict[str, EndSummaryUsage]
 
 

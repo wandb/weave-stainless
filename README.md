@@ -1,6 +1,7 @@
 # Weave Trace Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/weave_server_sdk.svg)](https://pypi.org/project/weave_server_sdk/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/weave_server_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/weave_server_sdk/)
 
 The Weave Trace Python library provides convenient access to the Weave Trace REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -20,7 +21,7 @@ pip install git+ssh://git@github.com/stainless-sdks/weave-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre weave_server_sdk`
+> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install --pre weave_server_sdk`
 
 ## Usage
 
@@ -31,8 +32,8 @@ import os
 from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace(
-    username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
-    api_key=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
 
 object = client.objects.create(
@@ -47,7 +48,7 @@ print(object.digest)
 
 While you can provide a `username` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `WANDB_USERNAME="My Username"` to your `.env` file
+to add `USERNAME="My Username"` to your `.env` file
 so that your Username is not stored in source control.
 
 ## Async usage
@@ -60,8 +61,8 @@ import asyncio
 from weave_server_sdk import AsyncWeaveTrace
 
 client = AsyncWeaveTrace(
-    username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
-    api_key=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
+    username=os.environ.get("USERNAME"),  # This is the default and can be omitted
+    password=os.environ.get("PASSWORD"),  # This is the default and can be omitted
 )
 
 
@@ -81,6 +82,44 @@ asyncio.run(main())
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
 
+### With aiohttp
+
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+
+You can enable this by installing `aiohttp`:
+
+```sh
+# install from this staging repo
+pip install 'weave_server_sdk[aiohttp] @ git+ssh://git@github.com/stainless-sdks/weave-python.git'
+```
+
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
+```python
+import asyncio
+from weave_server_sdk import DefaultAioHttpClient
+from weave_server_sdk import AsyncWeaveTrace
+
+
+async def main() -> None:
+    async with AsyncWeaveTrace(
+        username="My Username",
+        password="My Password",
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        object = await client.objects.create(
+            obj={
+                "object_id": "object_id",
+                "project_id": "project_id",
+                "val": {},
+            },
+        )
+        print(object.digest)
+
+
+asyncio.run(main())
+```
+
 ## Using types
 
 Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
@@ -89,8 +128,6 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
-
-from weave_server_sdk.\_utils import parse_datetime
 
 ## Nested params
 
@@ -101,33 +138,19 @@ from weave_server_sdk import WeaveTrace
 
 client = WeaveTrace()
 
-response = client.calls.end(
-    end={
-        "id": "id",
-        "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
+object = client.objects.create(
+    obj={
+        "object_id": "object_id",
         "project_id": "project_id",
-        "summary": {
-            "usage": {
-                "foo": {
-                    "completion_tokens": 0,
-                    "input_tokens": 0,
-                    "output_tokens": 0,
-                    "prompt_tokens": 0,
-                    "requests": 0,
-                    "total_tokens": 0,
-                }
-            }
-        },
-        "exception": "exception",
-        "output": {},
+        "val": {},
     },
 )
-print(response.end)
+print(object.obj)
 ```
 
 ## File uploads
 
-Request parameters that correspond to file uploads can be passed as `bytes`, a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
+Request parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
 
 ```python
 from pathlib import Path
@@ -220,7 +243,7 @@ client.with_options(max_retries=5).objects.create(
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
 from weave_server_sdk import WeaveTrace

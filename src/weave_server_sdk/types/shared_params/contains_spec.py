@@ -10,8 +10,20 @@ __all__ = ["ContainsSpec"]
 
 class ContainsSpec(TypedDict, total=False):
     input: Required["Operation"]
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example: ` {"$literal": "predict"} `
+    """
 
     substr: Required["Operation"]
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example: ` {"$literal": "predict"} `
+    """
 
     case_insensitive: Optional[bool]
 

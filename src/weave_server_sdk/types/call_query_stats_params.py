@@ -13,7 +13,17 @@ __all__ = ["CallQueryStatsParams", "Filter", "Query"]
 class CallQueryStatsParams(TypedDict, total=False):
     project_id: Required[str]
 
+    expand_columns: Optional[List[str]]
+    """
+    Columns with refs to objects or table rows that require expansion during
+    filtering or ordering.
+    """
+
     filter: Optional[Filter]
+
+    include_total_storage_size: Optional[bool]
+
+    limit: Optional[int]
 
     query: Optional[Query]
 
@@ -29,9 +39,13 @@ class Filter(TypedDict, total=False):
 
     parent_ids: Optional[List[str]]
 
+    thread_ids: Optional[List[str]]
+
     trace_ids: Optional[List[str]]
 
     trace_roots_only: Optional[bool]
+
+    turn_ids: Optional[List[str]]
 
     wb_run_ids: Optional[List[str]]
 
@@ -40,6 +54,11 @@ class Filter(TypedDict, total=False):
 
 class Query(TypedDict, total=False):
     expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
+    """Logical AND. All conditions must evaluate to true.
+
+    Example:
+    ` { "$and": [ {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]}, {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 1000}]} ] } `
+    """
 
 
 from .shared_params.expr import Expr

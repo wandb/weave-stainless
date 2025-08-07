@@ -39,9 +39,6 @@ Types:
 
 ```python
 from weave_server_sdk.types import (
-    CallUpdateResponse,
-    CallDeleteResponse,
-    CallEndResponse,
     CallQueryStatsResponse,
     CallReadResponse,
     CallStartResponse,
@@ -52,9 +49,9 @@ from weave_server_sdk.types import (
 
 Methods:
 
-- <code title="post /call/update">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">update</a>(\*\*<a href="src/weave_server_sdk/types/call_update_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_update_response.py">object</a></code>
-- <code title="post /calls/delete">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">delete</a>(\*\*<a href="src/weave_server_sdk/types/call_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_delete_response.py">object</a></code>
-- <code title="post /call/end">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">end</a>(\*\*<a href="src/weave_server_sdk/types/call_end_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_end_response.py">object</a></code>
+- <code title="post /call/update">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">update</a>(\*\*<a href="src/weave_server_sdk/types/call_update_params.py">params</a>) -> object</code>
+- <code title="post /calls/delete">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">delete</a>(\*\*<a href="src/weave_server_sdk/types/call_delete_params.py">params</a>) -> object</code>
+- <code title="post /call/end">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">end</a>(\*\*<a href="src/weave_server_sdk/types/call_end_params.py">params</a>) -> object</code>
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_server_sdk/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">read</a>(\*\*<a href="src/weave_server_sdk/types/call_read_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_read_response.py">CallReadResponse</a></code>
 - <code title="post /call/start">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">start</a>(\*\*<a href="src/weave_server_sdk/types/call_start_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_start_response.py">CallStartResponse</a></code>
@@ -131,13 +128,13 @@ Methods:
 Types:
 
 ```python
-from weave_server_sdk.types import CostCreateResponse, CostPurgeResponse, CostQueryResponse
+from weave_server_sdk.types import CostCreateResponse, CostQueryResponse
 ```
 
 Methods:
 
 - <code title="post /cost/create">client.costs.<a href="./src/weave_server_sdk/resources/costs.py">create</a>(\*\*<a href="src/weave_server_sdk/types/cost_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/cost_create_response.py">CostCreateResponse</a></code>
-- <code title="post /cost/purge">client.costs.<a href="./src/weave_server_sdk/resources/costs.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/cost_purge_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/cost_purge_response.py">object</a></code>
+- <code title="post /cost/purge">client.costs.<a href="./src/weave_server_sdk/resources/costs.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/cost_purge_params.py">params</a>) -> object</code>
 - <code title="post /cost/query">client.costs.<a href="./src/weave_server_sdk/resources/costs.py">query</a>(\*\*<a href="src/weave_server_sdk/types/cost_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/cost_query_response.py">CostQueryResponse</a></code>
 
 # Feedback
@@ -147,7 +144,6 @@ Types:
 ```python
 from weave_server_sdk.types import (
     FeedbackCreateResponse,
-    FeedbackPurgeResponse,
     FeedbackQueryResponse,
     FeedbackReplaceResponse,
 )
@@ -156,6 +152,6 @@ from weave_server_sdk.types import (
 Methods:
 
 - <code title="post /feedback/create">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">create</a>(\*\*<a href="src/weave_server_sdk/types/feedback_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_create_response.py">FeedbackCreateResponse</a></code>
-- <code title="post /feedback/purge">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/feedback_purge_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_purge_response.py">object</a></code>
+- <code title="post /feedback/purge">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/feedback_purge_params.py">params</a>) -> object</code>
 - <code title="post /feedback/query">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">query</a>(\*\*<a href="src/weave_server_sdk/types/feedback_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_query_response.py">FeedbackQueryResponse</a></code>
 - <code title="post /feedback/replace">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">replace</a>(\*\*<a href="src/weave_server_sdk/types/feedback_replace_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_replace_response.py">FeedbackReplaceResponse</a></code>

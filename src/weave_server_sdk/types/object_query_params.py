@@ -15,6 +15,9 @@ class ObjectQueryParams(TypedDict, total=False):
     filter: Optional[Filter]
     """Filter criteria for the query. See `ObjectVersionFilter`"""
 
+    include_storage_size: Optional[bool]
+    """If true, the `size_bytes` column is returned."""
+
     limit: Optional[int]
     """Maximum number of results to return"""
 
@@ -50,6 +53,9 @@ class Filter(TypedDict, total=False):
 
     `False` and `None` will return all versions
     """
+
+    leaf_object_classes: Optional[List[str]]
+    """Filter objects by their leaf classes"""
 
     object_ids: Optional[List[str]]
     """Filter objects by their IDs"""

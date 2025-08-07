@@ -17,6 +17,11 @@ class CostPurgeParams(TypedDict, total=False):
 
 class Query(TypedDict, total=False):
     expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
+    """Logical AND. All conditions must evaluate to true.
+
+    Example:
+    ` { "$and": [ {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]}, {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 1000}]} ] } `
+    """
 
 
 from .shared_params.expr import Expr

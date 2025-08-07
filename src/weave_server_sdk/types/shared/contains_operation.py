@@ -11,6 +11,12 @@ __all__ = ["ContainsOperation"]
 
 class ContainsOperation(BaseModel):
     contains: "ContainsSpec" = FieldInfo(alias="$contains")
+    """Specification for the `$contains` operation.
+
+    - `input`: The string to search.
+    - `substr`: The substring to search for.
+    - `case_insensitive`: If true, match is case-insensitive.
+    """
 
 
 from .contains_spec import ContainsSpec

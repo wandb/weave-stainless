@@ -17,11 +17,7 @@ from ..types import (
     call_upsert_batch_params,
 )
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    strip_not_given,
-    async_maybe_transform,
-)
+from .._utils import maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -187,7 +183,10 @@ class CallsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
+        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -200,6 +199,9 @@ class CallsResource(SyncAPIResource):
         Calls Query Stats
 
         Args:
+          expand_columns: Columns with refs to objects or table rows that require expansion during
+              filtering or ordering.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -213,7 +215,10 @@ class CallsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "project_id": project_id,
+                    "expand_columns": expand_columns,
                     "filter": filter,
+                    "include_total_storage_size": include_total_storage_size,
+                    "limit": limit,
                     "query": query,
                 },
                 call_query_stats_params.CallQueryStatsParams,
@@ -230,6 +235,8 @@ class CallsResource(SyncAPIResource):
         id: str,
         project_id: str,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -256,6 +263,8 @@ class CallsResource(SyncAPIResource):
                     "id": id,
                     "project_id": project_id,
                     "include_costs": include_costs,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
                 },
                 call_read_params.CallReadParams,
             ),
@@ -306,9 +315,12 @@ class CallsResource(SyncAPIResource):
         filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -331,6 +343,17 @@ class CallsResource(SyncAPIResource):
           include_feedback: Beta, subject to change. If true, the response will include feedback for each
               call.
 
+          include_storage_size: Beta, subject to change. If true, the response will include the storage size for
+              a call.
+
+          include_total_storage_size: Beta, subject to change. If true, the response will include the total storage
+              size for a trace.
+
+          return_expanded_column_values: If true, the response will include raw values for expanded columns. If false,
+              the response expand_columns will only be used for filtering and ordering. This
+              is useful for clients that want to resolve refs themselves, e.g. for performance
+              reasons.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -351,9 +374,12 @@ class CallsResource(SyncAPIResource):
                     "filter": filter,
                     "include_costs": include_costs,
                     "include_feedback": include_feedback,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
                     "limit": limit,
                     "offset": offset,
                     "query": query,
+                    "return_expanded_column_values": return_expanded_column_values,
                     "sort_by": sort_by,
                 },
                 call_stream_query_params.CallStreamQueryParams,
@@ -544,7 +570,10 @@ class AsyncCallsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
+        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        limit: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -557,6 +586,9 @@ class AsyncCallsResource(AsyncAPIResource):
         Calls Query Stats
 
         Args:
+          expand_columns: Columns with refs to objects or table rows that require expansion during
+              filtering or ordering.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -570,7 +602,10 @@ class AsyncCallsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "project_id": project_id,
+                    "expand_columns": expand_columns,
                     "filter": filter,
+                    "include_total_storage_size": include_total_storage_size,
+                    "limit": limit,
                     "query": query,
                 },
                 call_query_stats_params.CallQueryStatsParams,
@@ -587,6 +622,8 @@ class AsyncCallsResource(AsyncAPIResource):
         id: str,
         project_id: str,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -613,6 +650,8 @@ class AsyncCallsResource(AsyncAPIResource):
                     "id": id,
                     "project_id": project_id,
                     "include_costs": include_costs,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
                 },
                 call_read_params.CallReadParams,
             ),
@@ -663,9 +702,12 @@ class AsyncCallsResource(AsyncAPIResource):
         filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -688,6 +730,17 @@ class AsyncCallsResource(AsyncAPIResource):
           include_feedback: Beta, subject to change. If true, the response will include feedback for each
               call.
 
+          include_storage_size: Beta, subject to change. If true, the response will include the storage size for
+              a call.
+
+          include_total_storage_size: Beta, subject to change. If true, the response will include the total storage
+              size for a trace.
+
+          return_expanded_column_values: If true, the response will include raw values for expanded columns. If false,
+              the response expand_columns will only be used for filtering and ordering. This
+              is useful for clients that want to resolve refs themselves, e.g. for performance
+              reasons.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -708,9 +761,12 @@ class AsyncCallsResource(AsyncAPIResource):
                     "filter": filter,
                     "include_costs": include_costs,
                     "include_feedback": include_feedback,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
                     "limit": limit,
                     "offset": offset,
                     "query": query,
+                    "return_expanded_column_values": return_expanded_column_values,
                     "sort_by": sort_by,
                 },
                 call_stream_query_params.CallStreamQueryParams,
