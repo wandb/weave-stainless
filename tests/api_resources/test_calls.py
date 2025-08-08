@@ -13,6 +13,7 @@ from weave_server_sdk.types import (
     CallReadResponse,
     CallStartResponse,
     CallQueryStatsResponse,
+    CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
 from weave_server_sdk._utils import parse_datetime
@@ -360,7 +361,7 @@ class TestCalls:
         call_stream = client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(JSONLDecoder[object], call_stream, path=["response"])
+        assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -398,7 +399,7 @@ class TestCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(JSONLDecoder[object], call_stream, path=["response"])
+        assert_matches_type(JSONLDecoder[CallStreamQueryResponse], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -834,7 +835,7 @@ class TestAsyncCalls:
         call_stream = await async_client.calls.stream_query(
             project_id="project_id",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call_stream, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize
@@ -872,7 +873,7 @@ class TestAsyncCalls:
             ],
             accept="accept",
         )
-        assert_matches_type(AsyncJSONLDecoder[object], call_stream, path=["response"])
+        assert_matches_type(AsyncJSONLDecoder[CallStreamQueryResponse], call_stream, path=["response"])
 
     @pytest.mark.skip(reason="prism")
     @parametrize

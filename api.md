@@ -42,6 +42,7 @@ from weave_server_sdk.types import (
     CallQueryStatsResponse,
     CallReadResponse,
     CallStartResponse,
+    CallStreamQueryResponse,
     CallUpsertBatchResponse,
 )
 ```
@@ -54,7 +55,7 @@ Methods:
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_server_sdk/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">read</a>(\*\*<a href="src/weave_server_sdk/types/call_read_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_read_response.py">CallReadResponse</a></code>
 - <code title="post /call/start">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">start</a>(\*\*<a href="src/weave_server_sdk/types/call_start_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_start_response.py">CallStartResponse</a></code>
-- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/call_stream_query_params.py">params</a>) -> JSONLDecoder[object]</code>
+- <code title="post /calls/stream_query">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/call_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_stream_query_response.py">JSONLDecoder[CallStreamQueryResponse]</a></code>
 - <code title="post /call/upsert_batch">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">upsert_batch</a>(\*\*<a href="src/weave_server_sdk/types/call_upsert_batch_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_upsert_batch_response.py">CallUpsertBatchResponse</a></code>
 
 # Objects
@@ -154,3 +155,27 @@ Methods:
 - <code title="post /feedback/purge">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/feedback_purge_params.py">params</a>) -> object</code>
 - <code title="post /feedback/query">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">query</a>(\*\*<a href="src/weave_server_sdk/types/feedback_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_query_response.py">FeedbackQueryResponse</a></code>
 - <code title="post /feedback/replace">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">replace</a>(\*\*<a href="src/weave_server_sdk/types/feedback_replace_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_replace_response.py">FeedbackReplaceResponse</a></code>
+
+# Otel
+
+Types:
+
+```python
+from weave_server_sdk.types import OtelExportResponse
+```
+
+Methods:
+
+- <code title="post /otel/v1/trace">client.otel.<a href="./src/weave_server_sdk/resources/otel.py">export</a>(\*\*<a href="src/weave_server_sdk/types/otel_export_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/otel_export_response.py">OtelExportResponse</a></code>
+
+# Threads
+
+Types:
+
+```python
+from weave_server_sdk.types import ThreadStreamQueryResponse
+```
+
+Methods:
+
+- <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>
