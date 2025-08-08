@@ -80,6 +80,14 @@ from .services import (
     ServicesResourceWithStreamingResponse,
     AsyncServicesResourceWithStreamingResponse,
 )
+from .completions import (
+    CompletionsResource,
+    AsyncCompletionsResource,
+    CompletionsResourceWithRawResponse,
+    AsyncCompletionsResourceWithRawResponse,
+    CompletionsResourceWithStreamingResponse,
+    AsyncCompletionsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "ServicesResource",
@@ -136,6 +144,12 @@ __all__ = [
     "AsyncOtelResourceWithRawResponse",
     "OtelResourceWithStreamingResponse",
     "AsyncOtelResourceWithStreamingResponse",
+    "CompletionsResource",
+    "AsyncCompletionsResource",
+    "CompletionsResourceWithRawResponse",
+    "AsyncCompletionsResourceWithRawResponse",
+    "CompletionsResourceWithStreamingResponse",
+    "AsyncCompletionsResourceWithStreamingResponse",
     "ThreadsResource",
     "AsyncThreadsResource",
     "ThreadsResourceWithRawResponse",

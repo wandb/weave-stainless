@@ -168,6 +168,19 @@ Methods:
 
 - <code title="post /otel/v1/trace">client.otel.<a href="./src/weave_server_sdk/resources/otel.py">export</a>(\*\*<a href="src/weave_server_sdk/types/otel_export_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/otel_export_response.py">OtelExportResponse</a></code>
 
+# Completions
+
+Types:
+
+```python
+from weave_server_sdk.types import CompletionCreateResponse, CompletionCreateStreamResponse
+```
+
+Methods:
+
+- <code title="post /completions/create">client.completions.<a href="./src/weave_server_sdk/resources/completions.py">create</a>(\*\*<a href="src/weave_server_sdk/types/completion_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/completion_create_response.py">CompletionCreateResponse</a></code>
+- <code title="post /completions/create_stream">client.completions.<a href="./src/weave_server_sdk/resources/completions.py">create_stream</a>(\*\*<a href="src/weave_server_sdk/types/completion_create_stream_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/completion_create_stream_response.py">JSONLDecoder[CompletionCreateStreamResponse]</a></code>
+
 # Threads
 
 Types:
