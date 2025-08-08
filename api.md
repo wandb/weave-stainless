@@ -155,3 +155,27 @@ Methods:
 - <code title="post /feedback/purge">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">purge</a>(\*\*<a href="src/weave_server_sdk/types/feedback_purge_params.py">params</a>) -> object</code>
 - <code title="post /feedback/query">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">query</a>(\*\*<a href="src/weave_server_sdk/types/feedback_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_query_response.py">FeedbackQueryResponse</a></code>
 - <code title="post /feedback/replace">client.feedback.<a href="./src/weave_server_sdk/resources/feedback.py">replace</a>(\*\*<a href="src/weave_server_sdk/types/feedback_replace_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/feedback_replace_response.py">FeedbackReplaceResponse</a></code>
+
+# Otel
+
+Types:
+
+```python
+from weave_server_sdk.types import OtelExportResponse
+```
+
+Methods:
+
+- <code title="post /otel/v1/trace">client.otel.<a href="./src/weave_server_sdk/resources/otel.py">export</a>(\*\*<a href="src/weave_server_sdk/types/otel_export_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/otel_export_response.py">OtelExportResponse</a></code>
+
+# Threads
+
+Types:
+
+```python
+from weave_server_sdk.types import ThreadStreamQueryResponse
+```
+
+Methods:
+
+- <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>
