@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .otel import (
-    OtelResource,
-    AsyncOtelResource,
-    OtelResourceWithRawResponse,
-    AsyncOtelResourceWithRawResponse,
-    OtelResourceWithStreamingResponse,
-    AsyncOtelResourceWithStreamingResponse,
-)
 from .refs import (
     RefsResource,
     AsyncRefsResource,
@@ -56,14 +48,6 @@ from .objects import (
     ObjectsResourceWithStreamingResponse,
     AsyncObjectsResourceWithStreamingResponse,
 )
-from .threads import (
-    ThreadsResource,
-    AsyncThreadsResource,
-    ThreadsResourceWithRawResponse,
-    AsyncThreadsResourceWithRawResponse,
-    ThreadsResourceWithStreamingResponse,
-    AsyncThreadsResourceWithStreamingResponse,
-)
 from .feedback import (
     FeedbackResource,
     AsyncFeedbackResource,
@@ -79,14 +63,6 @@ from .services import (
     AsyncServicesResourceWithRawResponse,
     ServicesResourceWithStreamingResponse,
     AsyncServicesResourceWithStreamingResponse,
-)
-from .completions import (
-    CompletionsResource,
-    AsyncCompletionsResource,
-    CompletionsResourceWithRawResponse,
-    AsyncCompletionsResourceWithRawResponse,
-    CompletionsResourceWithStreamingResponse,
-    AsyncCompletionsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -138,22 +114,4 @@ __all__ = [
     "AsyncFeedbackResourceWithRawResponse",
     "FeedbackResourceWithStreamingResponse",
     "AsyncFeedbackResourceWithStreamingResponse",
-    "OtelResource",
-    "AsyncOtelResource",
-    "OtelResourceWithRawResponse",
-    "AsyncOtelResourceWithRawResponse",
-    "OtelResourceWithStreamingResponse",
-    "AsyncOtelResourceWithStreamingResponse",
-    "CompletionsResource",
-    "AsyncCompletionsResource",
-    "CompletionsResourceWithRawResponse",
-    "AsyncCompletionsResourceWithRawResponse",
-    "CompletionsResourceWithStreamingResponse",
-    "AsyncCompletionsResourceWithStreamingResponse",
-    "ThreadsResource",
-    "AsyncThreadsResource",
-    "ThreadsResourceWithRawResponse",
-    "AsyncThreadsResourceWithRawResponse",
-    "ThreadsResourceWithStreamingResponse",
-    "AsyncThreadsResourceWithStreamingResponse",
 ]
