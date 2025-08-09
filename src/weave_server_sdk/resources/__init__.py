@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .otel import (
-    OtelResource,
-    AsyncOtelResource,
-    OtelResourceWithRawResponse,
-    AsyncOtelResourceWithRawResponse,
-    OtelResourceWithStreamingResponse,
-    AsyncOtelResourceWithStreamingResponse,
-)
 from .refs import (
     RefsResource,
     AsyncRefsResource,
@@ -138,12 +130,6 @@ __all__ = [
     "AsyncFeedbackResourceWithRawResponse",
     "FeedbackResourceWithStreamingResponse",
     "AsyncFeedbackResourceWithStreamingResponse",
-    "OtelResource",
-    "AsyncOtelResource",
-    "OtelResourceWithRawResponse",
-    "AsyncOtelResourceWithRawResponse",
-    "OtelResourceWithStreamingResponse",
-    "AsyncOtelResourceWithStreamingResponse",
     "CompletionsResource",
     "AsyncCompletionsResource",
     "CompletionsResourceWithRawResponse",

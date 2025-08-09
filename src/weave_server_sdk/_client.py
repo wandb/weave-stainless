@@ -32,8 +32,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import otel, refs, calls, costs, files, tables, objects, threads, feedback, services, completions
-    from .resources.otel import OtelResource, AsyncOtelResource
+    from .resources import refs, calls, costs, files, tables, objects, threads, feedback, services, completions
     from .resources.refs import RefsResource, AsyncRefsResource
     from .resources.calls import CallsResource, AsyncCallsResource
     from .resources.costs import CostsResource, AsyncCostsResource
@@ -171,12 +170,6 @@ class WeaveTrace(SyncAPIClient):
         from .resources.feedback import FeedbackResource
 
         return FeedbackResource(self)
-
-    @cached_property
-    def otel(self) -> OtelResource:
-        from .resources.otel import OtelResource
-
-        return OtelResource(self)
 
     @cached_property
     def completions(self) -> CompletionsResource:
@@ -422,12 +415,6 @@ class AsyncWeaveTrace(AsyncAPIClient):
         return AsyncFeedbackResource(self)
 
     @cached_property
-    def otel(self) -> AsyncOtelResource:
-        from .resources.otel import AsyncOtelResource
-
-        return AsyncOtelResource(self)
-
-    @cached_property
     def completions(self) -> AsyncCompletionsResource:
         from .resources.completions import AsyncCompletionsResource
 
@@ -610,12 +597,6 @@ class WeaveTraceWithRawResponse:
         return FeedbackResourceWithRawResponse(self._client.feedback)
 
     @cached_property
-    def otel(self) -> otel.OtelResourceWithRawResponse:
-        from .resources.otel import OtelResourceWithRawResponse
-
-        return OtelResourceWithRawResponse(self._client.otel)
-
-    @cached_property
     def completions(self) -> completions.CompletionsResourceWithRawResponse:
         from .resources.completions import CompletionsResourceWithRawResponse
 
@@ -681,12 +662,6 @@ class AsyncWeaveTraceWithRawResponse:
         from .resources.feedback import AsyncFeedbackResourceWithRawResponse
 
         return AsyncFeedbackResourceWithRawResponse(self._client.feedback)
-
-    @cached_property
-    def otel(self) -> otel.AsyncOtelResourceWithRawResponse:
-        from .resources.otel import AsyncOtelResourceWithRawResponse
-
-        return AsyncOtelResourceWithRawResponse(self._client.otel)
 
     @cached_property
     def completions(self) -> completions.AsyncCompletionsResourceWithRawResponse:
@@ -756,12 +731,6 @@ class WeaveTraceWithStreamedResponse:
         return FeedbackResourceWithStreamingResponse(self._client.feedback)
 
     @cached_property
-    def otel(self) -> otel.OtelResourceWithStreamingResponse:
-        from .resources.otel import OtelResourceWithStreamingResponse
-
-        return OtelResourceWithStreamingResponse(self._client.otel)
-
-    @cached_property
     def completions(self) -> completions.CompletionsResourceWithStreamingResponse:
         from .resources.completions import CompletionsResourceWithStreamingResponse
 
@@ -827,12 +796,6 @@ class AsyncWeaveTraceWithStreamedResponse:
         from .resources.feedback import AsyncFeedbackResourceWithStreamingResponse
 
         return AsyncFeedbackResourceWithStreamingResponse(self._client.feedback)
-
-    @cached_property
-    def otel(self) -> otel.AsyncOtelResourceWithStreamingResponse:
-        from .resources.otel import AsyncOtelResourceWithStreamingResponse
-
-        return AsyncOtelResourceWithStreamingResponse(self._client.otel)
 
     @cached_property
     def completions(self) -> completions.AsyncCompletionsResourceWithStreamingResponse:

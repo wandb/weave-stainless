@@ -33,7 +33,6 @@ from .call_update_params import CallUpdateParams as CallUpdateParams
 from .cost_create_params import CostCreateParams as CostCreateParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .object_read_params import ObjectReadParams as ObjectReadParams
-from .otel_export_params import OtelExportParams as OtelExportParams
 from .table_query_params import TableQueryParams as TableQueryParams
 from .call_start_response import CallStartResponse as CallStartResponse
 from .cost_query_response import CostQueryResponse as CostQueryResponse
@@ -46,7 +45,6 @@ from .file_create_response import FileCreateResponse as FileCreateResponse
 from .object_create_params import ObjectCreateParams as ObjectCreateParams
 from .object_delete_params import ObjectDeleteParams as ObjectDeleteParams
 from .object_read_response import ObjectReadResponse as ObjectReadResponse
-from .otel_export_response import OtelExportResponse as OtelExportResponse
 from .table_query_response import TableQueryResponse as TableQueryResponse
 from .feedback_purge_params import FeedbackPurgeParams as FeedbackPurgeParams
 from .feedback_query_params import FeedbackQueryParams as FeedbackQueryParams
