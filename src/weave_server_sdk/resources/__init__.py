@@ -48,14 +48,6 @@ from .objects import (
     ObjectsResourceWithStreamingResponse,
     AsyncObjectsResourceWithStreamingResponse,
 )
-from .threads import (
-    ThreadsResource,
-    AsyncThreadsResource,
-    ThreadsResourceWithRawResponse,
-    AsyncThreadsResourceWithRawResponse,
-    ThreadsResourceWithStreamingResponse,
-    AsyncThreadsResourceWithStreamingResponse,
-)
 from .feedback import (
     FeedbackResource,
     AsyncFeedbackResource,
@@ -71,14 +63,6 @@ from .services import (
     AsyncServicesResourceWithRawResponse,
     ServicesResourceWithStreamingResponse,
     AsyncServicesResourceWithStreamingResponse,
-)
-from .completions import (
-    CompletionsResource,
-    AsyncCompletionsResource,
-    CompletionsResourceWithRawResponse,
-    AsyncCompletionsResourceWithRawResponse,
-    CompletionsResourceWithStreamingResponse,
-    AsyncCompletionsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -130,16 +114,4 @@ __all__ = [
     "AsyncFeedbackResourceWithRawResponse",
     "FeedbackResourceWithStreamingResponse",
     "AsyncFeedbackResourceWithStreamingResponse",
-    "CompletionsResource",
-    "AsyncCompletionsResource",
-    "CompletionsResourceWithRawResponse",
-    "AsyncCompletionsResourceWithRawResponse",
-    "CompletionsResourceWithStreamingResponse",
-    "AsyncCompletionsResourceWithStreamingResponse",
-    "ThreadsResource",
-    "AsyncThreadsResource",
-    "ThreadsResourceWithRawResponse",
-    "AsyncThreadsResourceWithRawResponse",
-    "ThreadsResourceWithStreamingResponse",
-    "AsyncThreadsResourceWithStreamingResponse",
 ]
