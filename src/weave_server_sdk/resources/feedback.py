@@ -6,7 +6,12 @@ from typing import Dict, List, Iterable, Optional
 
 import httpx
 
-from ..types import feedback_purge_params, feedback_query_params, feedback_create_params, feedback_replace_params
+from ..types import (
+    feedback_purge_params,
+    feedback_query_params,
+    feedback_create_params,
+    feedback_replace_params,
+)
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,6 +23,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.shared_params.query import Query
 from ..types.feedback_query_response import FeedbackQueryResponse
 from ..types.feedback_create_response import FeedbackCreateResponse
 from ..types.feedback_replace_response import FeedbackReplaceResponse
@@ -107,7 +113,7 @@ class FeedbackResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        query: feedback_purge_params.Query,
+        query: Query,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -149,7 +155,7 @@ class FeedbackResource(SyncAPIResource):
         fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[feedback_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[feedback_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -332,7 +338,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        query: feedback_purge_params.Query,
+        query: Query,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -374,7 +380,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[feedback_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[feedback_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

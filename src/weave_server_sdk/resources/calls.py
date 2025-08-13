@@ -30,6 +30,7 @@ from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
+from ..types.shared_params.query import Query
 from ..types.call_query_stats_response import CallQueryStatsResponse
 from ..types.call_stream_query_response import CallStreamQueryResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
@@ -187,7 +188,7 @@ class CallsResource(SyncAPIResource):
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -319,7 +320,7 @@ class CallsResource(SyncAPIResource):
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,
@@ -574,7 +575,7 @@ class AsyncCallsResource(AsyncAPIResource):
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -706,7 +707,7 @@ class AsyncCallsResource(AsyncAPIResource):
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
+        query: Optional[Query] | NotGiven = NOT_GIVEN,
         return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
         sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
         accept: str | NotGiven = NOT_GIVEN,

@@ -17,6 +17,7 @@ from weave_server_sdk.types import (
     NotOperation,
     Operation,
     OrOperation,
+    Query,
 )
 ```
 
