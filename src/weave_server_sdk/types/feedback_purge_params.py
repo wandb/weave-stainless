@@ -2,15 +2,26 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
-__all__ = ["FeedbackPurgeParams"]
+from .._utils import PropertyInfo
+
+__all__ = ["FeedbackPurgeParams", "Query"]
 
 
 class FeedbackPurgeParams(TypedDict, total=False):
     project_id: Required[str]
 
-    query: Required["Query"]
+    query: Required[Query]
 
 
-from .shared_params.query import Query
+class Query(TypedDict, total=False):
+    expr: Required[Annotated["Expr", PropertyInfo(alias="$expr")]]
+    """Logical AND. All conditions must evaluate to true.
+
+    Example:
+    ` { "$and": [ {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]}, {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 1000}]} ] } `
+    """
+
+
+from .shared_params.expr import Expr

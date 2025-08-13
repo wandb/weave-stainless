@@ -6,7 +6,6 @@ from . import shared
 from .. import _compat
 from .shared import (
     Expr as Expr,
-    Query as Query,
     Operation as Operation,
     ConvertSpec as ConvertSpec,
     EqOperation as EqOperation,
@@ -88,7 +87,6 @@ if _compat.PYDANTIC_V2:
     shared.literal_operation.LiteralOperation.model_rebuild(_parent_namespace_depth=0)
     shared.not_operation.NotOperation.model_rebuild(_parent_namespace_depth=0)
     shared.or_operation.OrOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.query.Query.model_rebuild(_parent_namespace_depth=0)
 else:
     shared.and_operation.AndOperation.update_forward_refs()  # type: ignore
     shared.contains_operation.ContainsOperation.update_forward_refs()  # type: ignore
@@ -102,4 +100,3 @@ else:
     shared.literal_operation.LiteralOperation.update_forward_refs()  # type: ignore
     shared.not_operation.NotOperation.update_forward_refs()  # type: ignore
     shared.or_operation.OrOperation.update_forward_refs()  # type: ignore
-    shared.query.Query.update_forward_refs()  # type: ignore
