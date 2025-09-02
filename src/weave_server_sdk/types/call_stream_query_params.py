@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["CallStreamQueryParams", "Filter", "Query", "SortBy"]
@@ -13,9 +14,9 @@ __all__ = ["CallStreamQueryParams", "Filter", "Query", "SortBy"]
 class CallStreamQueryParams(TypedDict, total=False):
     project_id: Required[str]
 
-    columns: Optional[List[str]]
+    columns: Optional[SequenceNotStr[str]]
 
-    expand_columns: Optional[List[str]]
+    expand_columns: Optional[SequenceNotStr[str]]
     """Columns to expand, i.e. refs to other objects"""
 
     filter: Optional[Filter]
@@ -64,27 +65,27 @@ class CallStreamQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
-    call_ids: Optional[List[str]]
+    call_ids: Optional[SequenceNotStr[str]]
 
-    input_refs: Optional[List[str]]
+    input_refs: Optional[SequenceNotStr[str]]
 
-    op_names: Optional[List[str]]
+    op_names: Optional[SequenceNotStr[str]]
 
-    output_refs: Optional[List[str]]
+    output_refs: Optional[SequenceNotStr[str]]
 
-    parent_ids: Optional[List[str]]
+    parent_ids: Optional[SequenceNotStr[str]]
 
-    thread_ids: Optional[List[str]]
+    thread_ids: Optional[SequenceNotStr[str]]
 
-    trace_ids: Optional[List[str]]
+    trace_ids: Optional[SequenceNotStr[str]]
 
     trace_roots_only: Optional[bool]
 
-    turn_ids: Optional[List[str]]
+    turn_ids: Optional[SequenceNotStr[str]]
 
-    wb_run_ids: Optional[List[str]]
+    wb_run_ids: Optional[SequenceNotStr[str]]
 
-    wb_user_ids: Optional[List[str]]
+    wb_user_ids: Optional[SequenceNotStr[str]]
 
 
 class Query(TypedDict, total=False):

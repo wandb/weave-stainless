@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["RefReadBatchParams"]
 
 
 class RefReadBatchParams(TypedDict, total=False):
-    refs: Required[List[str]]
+    refs: Required[SequenceNotStr[str]]

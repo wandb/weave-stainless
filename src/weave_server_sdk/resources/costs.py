@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Iterable, Optional
+from typing import Dict, Iterable, Optional
 
 import httpx
 
 from ..types import cost_purge_params, cost_query_params, cost_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -131,7 +131,7 @@ class CostsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,
@@ -282,7 +282,7 @@ class AsyncCostsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
         offset: Optional[int] | NotGiven = NOT_GIVEN,
         query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,

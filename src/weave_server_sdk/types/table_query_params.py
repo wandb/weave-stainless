@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["TableQueryParams", "Filter", "SortBy"]
 
@@ -33,7 +35,7 @@ class TableQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
-    row_digests: Optional[List[str]]
+    row_digests: Optional[SequenceNotStr[str]]
     """List of row digests to filter by"""
 
 

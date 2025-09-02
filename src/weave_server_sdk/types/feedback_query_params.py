@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["FeedbackQueryParams", "Query", "SortBy"]
@@ -13,7 +14,7 @@ __all__ = ["FeedbackQueryParams", "Query", "SortBy"]
 class FeedbackQueryParams(TypedDict, total=False):
     project_id: Required[str]
 
-    fields: Optional[List[str]]
+    fields: Optional[SequenceNotStr[str]]
 
     limit: Optional[int]
 

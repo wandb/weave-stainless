@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["CallDeleteParams"]
 
 
 class CallDeleteParams(TypedDict, total=False):
-    call_ids: Required[List[str]]
+    call_ids: Required[SequenceNotStr[str]]
 
     project_id: Required[str]
 

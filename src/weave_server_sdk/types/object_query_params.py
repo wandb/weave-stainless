@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["ObjectQueryParams", "Filter", "SortBy"]
 
@@ -38,7 +40,7 @@ class ObjectQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
-    base_object_classes: Optional[List[str]]
+    base_object_classes: Optional[SequenceNotStr[str]]
     """Filter objects by their base classes"""
 
     is_op: Optional[bool]
@@ -54,10 +56,10 @@ class Filter(TypedDict, total=False):
     `False` and `None` will return all versions
     """
 
-    leaf_object_classes: Optional[List[str]]
+    leaf_object_classes: Optional[SequenceNotStr[str]]
     """Filter objects by their leaf classes"""
 
-    object_ids: Optional[List[str]]
+    object_ids: Optional[SequenceNotStr[str]]
     """Filter objects by their IDs"""
 
 

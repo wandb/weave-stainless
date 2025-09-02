@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Iterable, Optional
+from typing import Iterable, Optional
 
 import httpx
 
@@ -16,7 +16,7 @@ from ..types import (
     call_stream_query_params,
     call_upsert_batch_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -106,7 +106,7 @@ class CallsResource(SyncAPIResource):
     def delete(
         self,
         *,
-        call_ids: List[str],
+        call_ids: SequenceNotStr[str],
         project_id: str,
         wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -183,7 +183,7 @@ class CallsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
@@ -310,8 +310,8 @@ class CallsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -493,7 +493,7 @@ class AsyncCallsResource(AsyncAPIResource):
     async def delete(
         self,
         *,
-        call_ids: List[str],
+        call_ids: SequenceNotStr[str],
         project_id: str,
         wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -570,7 +570,7 @@ class AsyncCallsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
         include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
         limit: Optional[int] | NotGiven = NOT_GIVEN,
@@ -697,8 +697,8 @@ class AsyncCallsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        expand_columns: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
         include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
         include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
