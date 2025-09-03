@@ -5,12 +5,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Union
 from typing_extensions import TypeAlias, TypeAliasType
 
-from ..._compat import PYDANTIC_V2
+from ..._compat import PYDANTIC_V1
 from .get_field_operator import GetFieldOperator
 
 __all__ = ["Operation"]
 
-if TYPE_CHECKING or PYDANTIC_V2:
+if TYPE_CHECKING or not PYDANTIC_V1:
     Operation = TypeAliasType(
         "Operation",
         Union[

@@ -74,20 +74,7 @@ from .service_health_check_response import ServiceHealthCheckResponse as Service
 # This ensures that, when building the deferred (due to cyclical references) model schema,
 # Pydantic can resolve the necessary references.
 # See: https://github.com/pydantic/pydantic/issues/11250 for more context.
-if _compat.PYDANTIC_V2:
-    shared.and_operation.AndOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.contains_operation.ContainsOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.contains_spec.ContainsSpec.model_rebuild(_parent_namespace_depth=0)
-    shared.convert_operation.ConvertOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.convert_spec.ConvertSpec.model_rebuild(_parent_namespace_depth=0)
-    shared.eq_operation.EqOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.gt_operation.GtOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.gte_operation.GteOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.in_operation.InOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.literal_operation.LiteralOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.not_operation.NotOperation.model_rebuild(_parent_namespace_depth=0)
-    shared.or_operation.OrOperation.model_rebuild(_parent_namespace_depth=0)
-else:
+if _compat.PYDANTIC_V1:
     shared.and_operation.AndOperation.update_forward_refs()  # type: ignore
     shared.contains_operation.ContainsOperation.update_forward_refs()  # type: ignore
     shared.contains_spec.ContainsSpec.update_forward_refs()  # type: ignore
@@ -100,3 +87,16 @@ else:
     shared.literal_operation.LiteralOperation.update_forward_refs()  # type: ignore
     shared.not_operation.NotOperation.update_forward_refs()  # type: ignore
     shared.or_operation.OrOperation.update_forward_refs()  # type: ignore
+else:
+    shared.and_operation.AndOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.contains_operation.ContainsOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.contains_spec.ContainsSpec.model_rebuild(_parent_namespace_depth=0)
+    shared.convert_operation.ConvertOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.convert_spec.ConvertSpec.model_rebuild(_parent_namespace_depth=0)
+    shared.eq_operation.EqOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.gt_operation.GtOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.gte_operation.GteOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.in_operation.InOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.literal_operation.LiteralOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.not_operation.NotOperation.model_rebuild(_parent_namespace_depth=0)
+    shared.or_operation.OrOperation.model_rebuild(_parent_namespace_depth=0)
