@@ -52,6 +52,7 @@ class FeedbackResource(SyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
+        id: Optional[str] | NotGiven = NOT_GIVEN,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
         call_ref: Optional[str] | NotGiven = NOT_GIVEN,
         creator: Optional[str] | NotGiven = NOT_GIVEN,
@@ -65,12 +66,14 @@ class FeedbackResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> FeedbackCreateResponse:
-        """Add feedback to a call or object.
+        """
+        Add feedback to a call or object.
 
         Args:
-          wb_user_id: Do not set directly.
+          id: If provided by the client, this ID will be used for the feedback row instead of
+              a server-generated one.
 
-        Server will automatically populate this field.
+          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -88,6 +91,7 @@ class FeedbackResource(SyncAPIResource):
                     "payload": payload,
                     "project_id": project_id,
                     "weave_ref": weave_ref,
+                    "id": id,
                     "annotation_ref": annotation_ref,
                     "call_ref": call_ref,
                     "creator": creator,
@@ -197,6 +201,7 @@ class FeedbackResource(SyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
+        id: Optional[str] | NotGiven = NOT_GIVEN,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
         call_ref: Optional[str] | NotGiven = NOT_GIVEN,
         creator: Optional[str] | NotGiven = NOT_GIVEN,
@@ -210,12 +215,14 @@ class FeedbackResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> FeedbackReplaceResponse:
-        """Feedback Replace
+        """
+        Feedback Replace
 
         Args:
-          wb_user_id: Do not set directly.
+          id: If provided by the client, this ID will be used for the feedback row instead of
+              a server-generated one.
 
-        Server will automatically populate this field.
+          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -234,6 +241,7 @@ class FeedbackResource(SyncAPIResource):
                     "payload": payload,
                     "project_id": project_id,
                     "weave_ref": weave_ref,
+                    "id": id,
                     "annotation_ref": annotation_ref,
                     "call_ref": call_ref,
                     "creator": creator,
@@ -277,6 +285,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
+        id: Optional[str] | NotGiven = NOT_GIVEN,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
         call_ref: Optional[str] | NotGiven = NOT_GIVEN,
         creator: Optional[str] | NotGiven = NOT_GIVEN,
@@ -290,12 +299,14 @@ class AsyncFeedbackResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> FeedbackCreateResponse:
-        """Add feedback to a call or object.
+        """
+        Add feedback to a call or object.
 
         Args:
-          wb_user_id: Do not set directly.
+          id: If provided by the client, this ID will be used for the feedback row instead of
+              a server-generated one.
 
-        Server will automatically populate this field.
+          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -313,6 +324,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
                     "payload": payload,
                     "project_id": project_id,
                     "weave_ref": weave_ref,
+                    "id": id,
                     "annotation_ref": annotation_ref,
                     "call_ref": call_ref,
                     "creator": creator,
@@ -422,6 +434,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
+        id: Optional[str] | NotGiven = NOT_GIVEN,
         annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
         call_ref: Optional[str] | NotGiven = NOT_GIVEN,
         creator: Optional[str] | NotGiven = NOT_GIVEN,
@@ -435,12 +448,14 @@ class AsyncFeedbackResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> FeedbackReplaceResponse:
-        """Feedback Replace
+        """
+        Feedback Replace
 
         Args:
-          wb_user_id: Do not set directly.
+          id: If provided by the client, this ID will be used for the feedback row instead of
+              a server-generated one.
 
-        Server will automatically populate this field.
+          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -459,6 +474,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
                     "payload": payload,
                     "project_id": project_id,
                     "weave_ref": weave_ref,
+                    "id": id,
                     "annotation_ref": annotation_ref,
                     "call_ref": call_ref,
                     "creator": creator,

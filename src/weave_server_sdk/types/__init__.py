@@ -33,6 +33,7 @@ from .call_update_params import CallUpdateParams as CallUpdateParams
 from .cost_create_params import CostCreateParams as CostCreateParams
 from .file_create_params import FileCreateParams as FileCreateParams
 from .object_read_params import ObjectReadParams as ObjectReadParams
+from .otel_export_params import OtelExportParams as OtelExportParams
 from .table_query_params import TableQueryParams as TableQueryParams
 from .call_start_response import CallStartResponse as CallStartResponse
 from .cost_query_response import CostQueryResponse as CostQueryResponse
@@ -45,6 +46,7 @@ from .file_create_response import FileCreateResponse as FileCreateResponse
 from .object_create_params import ObjectCreateParams as ObjectCreateParams
 from .object_delete_params import ObjectDeleteParams as ObjectDeleteParams
 from .object_read_response import ObjectReadResponse as ObjectReadResponse
+from .otel_export_response import OtelExportResponse as OtelExportResponse
 from .table_query_response import TableQueryResponse as TableQueryResponse
 from .feedback_purge_params import FeedbackPurgeParams as FeedbackPurgeParams
 from .feedback_query_params import FeedbackQueryParams as FeedbackQueryParams
@@ -61,14 +63,20 @@ from .feedback_replace_params import FeedbackReplaceParams as FeedbackReplacePar
 from .ref_read_batch_response import RefReadBatchResponse as RefReadBatchResponse
 from .call_stream_query_params import CallStreamQueryParams as CallStreamQueryParams
 from .call_upsert_batch_params import CallUpsertBatchParams as CallUpsertBatchParams
+from .completion_create_params import CompletionCreateParams as CompletionCreateParams
 from .feedback_create_response import FeedbackCreateResponse as FeedbackCreateResponse
 from .table_query_stats_params import TableQueryStatsParams as TableQueryStatsParams
 from .call_query_stats_response import CallQueryStatsResponse as CallQueryStatsResponse
 from .feedback_replace_response import FeedbackReplaceResponse as FeedbackReplaceResponse
 from .call_stream_query_response import CallStreamQueryResponse as CallStreamQueryResponse
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
+from .completion_create_response import CompletionCreateResponse as CompletionCreateResponse
 from .table_query_stats_response import TableQueryStatsResponse as TableQueryStatsResponse
+from .thread_stream_query_params import ThreadStreamQueryParams as ThreadStreamQueryParams
+from .thread_stream_query_response import ThreadStreamQueryResponse as ThreadStreamQueryResponse
 from .service_health_check_response import ServiceHealthCheckResponse as ServiceHealthCheckResponse
+from .completion_create_stream_params import CompletionCreateStreamParams as CompletionCreateStreamParams
+from .completion_create_stream_response import CompletionCreateStreamResponse as CompletionCreateStreamResponse
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,

@@ -19,6 +19,12 @@ class FeedbackReplaceParams(TypedDict, total=False):
 
     weave_ref: Required[str]
 
+    id: Optional[str]
+    """
+    If provided by the client, this ID will be used for the feedback row instead of
+    a server-generated one.
+    """
+
     annotation_ref: Optional[str]
 
     call_ref: Optional[str]
