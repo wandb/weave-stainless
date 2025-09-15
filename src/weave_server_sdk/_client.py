@@ -89,22 +89,22 @@ class WeaveTrace(SyncAPIClient):
         """Construct a new synchronous WeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `USERNAME`
-        - `password` from `PASSWORD`
+        - `username` from `WANDB_USERNAME`
+        - `password` from `WANDB_API_KEY`
         """
         if username is None:
-            username = os.environ.get("USERNAME")
+            username = os.environ.get("WANDB_USERNAME")
         if username is None:
             raise WeaveTraceError(
-                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+                "The username client option must be set either by passing username to the client or by setting the WANDB_USERNAME environment variable"
             )
         self.username = username
 
         if password is None:
-            password = os.environ.get("PASSWORD")
+            password = os.environ.get("WANDB_API_KEY")
         if password is None:
             raise WeaveTraceError(
-                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
+                "The password client option must be set either by passing password to the client or by setting the WANDB_API_KEY environment variable"
             )
         self.password = password
 
@@ -338,22 +338,22 @@ class AsyncWeaveTrace(AsyncAPIClient):
         """Construct a new async AsyncWeaveTrace client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `username` from `USERNAME`
-        - `password` from `PASSWORD`
+        - `username` from `WANDB_USERNAME`
+        - `password` from `WANDB_API_KEY`
         """
         if username is None:
-            username = os.environ.get("USERNAME")
+            username = os.environ.get("WANDB_USERNAME")
         if username is None:
             raise WeaveTraceError(
-                "The username client option must be set either by passing username to the client or by setting the USERNAME environment variable"
+                "The username client option must be set either by passing username to the client or by setting the WANDB_USERNAME environment variable"
             )
         self.username = username
 
         if password is None:
-            password = os.environ.get("PASSWORD")
+            password = os.environ.get("WANDB_API_KEY")
         if password is None:
             raise WeaveTraceError(
-                "The password client option must be set either by passing password to the client or by setting the PASSWORD environment variable"
+                "The password client option must be set either by passing password to the client or by setting the WANDB_API_KEY environment variable"
             )
         self.password = password
 
