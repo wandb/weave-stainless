@@ -7,7 +7,7 @@ from typing import Dict, Iterable, Optional
 import httpx
 
 from ..types import feedback_purge_params, feedback_query_params, feedback_create_params, feedback_replace_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -52,19 +52,19 @@ class FeedbackResource(SyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        call_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        creator: Optional[str] | NotGiven = NOT_GIVEN,
-        runnable_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        trigger_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        id: Optional[str] | Omit = omit,
+        annotation_ref: Optional[str] | Omit = omit,
+        call_ref: Optional[str] | Omit = omit,
+        creator: Optional[str] | Omit = omit,
+        runnable_ref: Optional[str] | Omit = omit,
+        trigger_ref: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackCreateResponse:
         """
         Add feedback to a call or object.
@@ -117,7 +117,7 @@ class FeedbackResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Permanently delete feedback.
@@ -150,17 +150,17 @@ class FeedbackResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[feedback_query_params.Query] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[feedback_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[feedback_query_params.Query] | Omit = omit,
+        sort_by: Optional[Iterable[feedback_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackQueryResponse:
         """
         Query for feedback.
@@ -201,19 +201,19 @@ class FeedbackResource(SyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        call_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        creator: Optional[str] | NotGiven = NOT_GIVEN,
-        runnable_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        trigger_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        id: Optional[str] | Omit = omit,
+        annotation_ref: Optional[str] | Omit = omit,
+        call_ref: Optional[str] | Omit = omit,
+        creator: Optional[str] | Omit = omit,
+        runnable_ref: Optional[str] | Omit = omit,
+        trigger_ref: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackReplaceResponse:
         """
         Feedback Replace
@@ -285,19 +285,19 @@ class AsyncFeedbackResource(AsyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        call_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        creator: Optional[str] | NotGiven = NOT_GIVEN,
-        runnable_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        trigger_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        id: Optional[str] | Omit = omit,
+        annotation_ref: Optional[str] | Omit = omit,
+        call_ref: Optional[str] | Omit = omit,
+        creator: Optional[str] | Omit = omit,
+        runnable_ref: Optional[str] | Omit = omit,
+        trigger_ref: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackCreateResponse:
         """
         Add feedback to a call or object.
@@ -350,7 +350,7 @@ class AsyncFeedbackResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Permanently delete feedback.
@@ -383,17 +383,17 @@ class AsyncFeedbackResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[feedback_query_params.Query] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[feedback_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[feedback_query_params.Query] | Omit = omit,
+        sort_by: Optional[Iterable[feedback_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackQueryResponse:
         """
         Query for feedback.
@@ -434,19 +434,19 @@ class AsyncFeedbackResource(AsyncAPIResource):
         payload: Dict[str, object],
         project_id: str,
         weave_ref: str,
-        id: Optional[str] | NotGiven = NOT_GIVEN,
-        annotation_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        call_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        creator: Optional[str] | NotGiven = NOT_GIVEN,
-        runnable_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        trigger_ref: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        id: Optional[str] | Omit = omit,
+        annotation_ref: Optional[str] | Omit = omit,
+        call_ref: Optional[str] | Omit = omit,
+        creator: Optional[str] | Omit = omit,
+        runnable_ref: Optional[str] | Omit = omit,
+        trigger_ref: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> FeedbackReplaceResponse:
         """
         Feedback Replace

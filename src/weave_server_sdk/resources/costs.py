@@ -7,7 +7,7 @@ from typing import Dict, Iterable, Optional
 import httpx
 
 from ..types import cost_purge_params, cost_query_params, cost_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -49,13 +49,13 @@ class CostsResource(SyncAPIResource):
         *,
         costs: Dict[str, cost_create_params.Costs],
         project_id: str,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CostCreateResponse:
         """Cost Create
 
@@ -98,7 +98,7 @@ class CostsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Cost Purge
@@ -131,17 +131,17 @@ class CostsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[cost_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[cost_query_params.Query] | Omit = omit,
+        sort_by: Optional[Iterable[cost_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CostQueryResponse:
         """
         Cost Query
@@ -200,13 +200,13 @@ class AsyncCostsResource(AsyncAPIResource):
         *,
         costs: Dict[str, cost_create_params.Costs],
         project_id: str,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CostCreateResponse:
         """Cost Create
 
@@ -249,7 +249,7 @@ class AsyncCostsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Cost Purge
@@ -282,17 +282,17 @@ class AsyncCostsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        fields: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[cost_query_params.Query] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[cost_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        fields: Optional[SequenceNotStr[str]] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[cost_query_params.Query] | Omit = omit,
+        sort_by: Optional[Iterable[cost_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CostQueryResponse:
         """
         Cost Query

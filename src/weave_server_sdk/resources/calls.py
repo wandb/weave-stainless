@@ -16,7 +16,7 @@ from ..types import (
     call_stream_query_params,
     call_upsert_batch_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -62,14 +62,14 @@ class CallsResource(SyncAPIResource):
         *,
         call_id: str,
         project_id: str,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        display_name: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Call Update
 
@@ -108,13 +108,13 @@ class CallsResource(SyncAPIResource):
         *,
         call_ids: SequenceNotStr[str],
         project_id: str,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Calls Delete
 
@@ -156,7 +156,7 @@ class CallsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Call End
@@ -183,17 +183,17 @@ class CallsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_query_stats_params.Filter] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        query: Optional[call_query_stats_params.Query] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallQueryStatsResponse:
         """
         Calls Query Stats
@@ -234,15 +234,15 @@ class CallsResource(SyncAPIResource):
         *,
         id: str,
         project_id: str,
-        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_costs: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallReadResponse:
         """
         Call Read
@@ -283,7 +283,7 @@ class CallsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallStartResponse:
         """
         Call Start
@@ -310,25 +310,25 @@ class CallsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
-        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
-        return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
-        accept: str | NotGiven = NOT_GIVEN,
+        columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_stream_query_params.Filter] | Omit = omit,
+        include_costs: Optional[bool] | Omit = omit,
+        include_feedback: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[call_stream_query_params.Query] | Omit = omit,
+        return_expanded_column_values: Optional[bool] | Omit = omit,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | Omit = omit,
+        accept: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> JSONLDecoder[CallStreamQueryResponse]:
         """Calls Query Stream
 
@@ -400,7 +400,7 @@ class CallsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallUpsertBatchResponse:
         """
         Call Start Batch
@@ -449,14 +449,14 @@ class AsyncCallsResource(AsyncAPIResource):
         *,
         call_id: str,
         project_id: str,
-        display_name: Optional[str] | NotGiven = NOT_GIVEN,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        display_name: Optional[str] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Call Update
 
@@ -495,13 +495,13 @@ class AsyncCallsResource(AsyncAPIResource):
         *,
         call_ids: SequenceNotStr[str],
         project_id: str,
-        wb_user_id: Optional[str] | NotGiven = NOT_GIVEN,
+        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Calls Delete
 
@@ -543,7 +543,7 @@ class AsyncCallsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Call End
@@ -570,17 +570,17 @@ class AsyncCallsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        filter: Optional[call_query_stats_params.Filter] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_query_stats_params.Query] | NotGiven = NOT_GIVEN,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_query_stats_params.Filter] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        query: Optional[call_query_stats_params.Query] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallQueryStatsResponse:
         """
         Calls Query Stats
@@ -621,15 +621,15 @@ class AsyncCallsResource(AsyncAPIResource):
         *,
         id: str,
         project_id: str,
-        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
+        include_costs: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallReadResponse:
         """
         Call Read
@@ -670,7 +670,7 @@ class AsyncCallsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallStartResponse:
         """
         Call Start
@@ -697,25 +697,25 @@ class AsyncCallsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        expand_columns: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
-        filter: Optional[call_stream_query_params.Filter] | NotGiven = NOT_GIVEN,
-        include_costs: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_feedback: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        include_total_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[call_stream_query_params.Query] | NotGiven = NOT_GIVEN,
-        return_expanded_column_values: Optional[bool] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | NotGiven = NOT_GIVEN,
-        accept: str | NotGiven = NOT_GIVEN,
+        columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_stream_query_params.Filter] | Omit = omit,
+        include_costs: Optional[bool] | Omit = omit,
+        include_feedback: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[call_stream_query_params.Query] | Omit = omit,
+        return_expanded_column_values: Optional[bool] | Omit = omit,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | Omit = omit,
+        accept: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncJSONLDecoder[CallStreamQueryResponse]:
         """Calls Query Stream
 
@@ -787,7 +787,7 @@ class AsyncCallsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CallUpsertBatchResponse:
         """
         Call Start Batch

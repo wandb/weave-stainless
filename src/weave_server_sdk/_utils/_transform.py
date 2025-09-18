@@ -276,7 +276,7 @@ def _transform_typeddict(
 
     for key, value in data.items():
         if not is_given(value):
-            # we don't need to include `NotGiven` values here as they'll
+            # we don't need to include omitted values here as they'll
             # be stripped out before the request is sent anyway
             continue
 
@@ -450,7 +450,7 @@ async def _async_transform_typeddict(
 
     for key, value in data.items():
         if not is_given(value):
-            # we don't need to include `NotGiven` values here as they'll
+            # we don't need to include omitted values here as they'll
             # be stripped out before the request is sent anyway
             continue
 

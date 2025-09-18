@@ -7,7 +7,7 @@ from typing import Iterable, Optional
 import httpx
 
 from ..types import object_read_params, object_query_params, object_create_params, object_delete_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -55,7 +55,7 @@ class ObjectsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectCreateResponse:
         """
         Obj Create
@@ -83,13 +83,13 @@ class ObjectsResource(SyncAPIResource):
         *,
         object_id: str,
         project_id: str,
-        digests: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectDeleteResponse:
         """Obj Delete
 
@@ -127,18 +127,18 @@ class ObjectsResource(SyncAPIResource):
         self,
         *,
         project_id: str,
-        filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[object_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        filter: Optional[object_query_params.Filter] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        metadata_only: Optional[bool] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        sort_by: Optional[Iterable[object_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectQueryResponse:
         """
         Objs Query
@@ -194,13 +194,13 @@ class ObjectsResource(SyncAPIResource):
         digest: str,
         object_id: str,
         project_id: str,
-        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
+        metadata_only: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectReadResponse:
         """
         Obj Read
@@ -264,7 +264,7 @@ class AsyncObjectsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectCreateResponse:
         """
         Obj Create
@@ -292,13 +292,13 @@ class AsyncObjectsResource(AsyncAPIResource):
         *,
         object_id: str,
         project_id: str,
-        digests: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectDeleteResponse:
         """Obj Delete
 
@@ -336,18 +336,18 @@ class AsyncObjectsResource(AsyncAPIResource):
         self,
         *,
         project_id: str,
-        filter: Optional[object_query_params.Filter] | NotGiven = NOT_GIVEN,
-        include_storage_size: Optional[bool] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
-        offset: Optional[int] | NotGiven = NOT_GIVEN,
-        sort_by: Optional[Iterable[object_query_params.SortBy]] | NotGiven = NOT_GIVEN,
+        filter: Optional[object_query_params.Filter] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        metadata_only: Optional[bool] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        sort_by: Optional[Iterable[object_query_params.SortBy]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectQueryResponse:
         """
         Objs Query
@@ -403,13 +403,13 @@ class AsyncObjectsResource(AsyncAPIResource):
         digest: str,
         object_id: str,
         project_id: str,
-        metadata_only: Optional[bool] | NotGiven = NOT_GIVEN,
+        metadata_only: Optional[bool] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ObjectReadResponse:
         """
         Obj Read
