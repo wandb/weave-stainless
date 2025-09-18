@@ -79,18 +79,7 @@ from .service_health_check_response import ServiceHealthCheckResponse as Service
 # Pydantic can resolve the necessary references.
 # See: https://github.com/pydantic/pydantic/issues/11250 for more context.
 if _compat.PYDANTIC_V1:
-    shared.and_operation.AndOperation.update_forward_refs()  # type: ignore
-    shared.contains_operation.ContainsOperation.update_forward_refs()  # type: ignore
-    shared.contains_spec.ContainsSpec.update_forward_refs()  # type: ignore
-    shared.convert_operation.ConvertOperation.update_forward_refs()  # type: ignore
-    shared.convert_spec.ConvertSpec.update_forward_refs()  # type: ignore
-    shared.eq_operation.EqOperation.update_forward_refs()  # type: ignore
-    shared.gt_operation.GtOperation.update_forward_refs()  # type: ignore
-    shared.gte_operation.GteOperation.update_forward_refs()  # type: ignore
-    shared.in_operation.InOperation.update_forward_refs()  # type: ignore
-    shared.literal_operation.LiteralOperation.update_forward_refs()  # type: ignore
-    shared.not_operation.NotOperation.update_forward_refs()  # type: ignore
-    shared.or_operation.OrOperation.update_forward_refs()  # type: ignore
+    pass
 else:
     shared.and_operation.AndOperation.model_rebuild(_parent_namespace_depth=0)
     shared.contains_operation.ContainsOperation.model_rebuild(_parent_namespace_depth=0)
