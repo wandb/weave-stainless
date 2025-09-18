@@ -132,7 +132,7 @@ class TestCalls:
                 "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "project_id": "project_id",
                 "summary": {
-                    "status_counts": {"foo": 0},
+                    "status_counts": {"running": 0},
                     "usage": {
                         "foo": {
                             "completion_tokens": 0,
@@ -606,7 +606,7 @@ class TestAsyncCalls:
                 "ended_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "project_id": "project_id",
                 "summary": {
-                    "status_counts": {"foo": 0},
+                    "status_counts": {"running": 0},
                     "usage": {
                         "foo": {
                             "completion_tokens": 0,
