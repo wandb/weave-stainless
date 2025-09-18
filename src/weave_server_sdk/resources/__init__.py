@@ -56,14 +56,6 @@ from .objects import (
     ObjectsResourceWithStreamingResponse,
     AsyncObjectsResourceWithStreamingResponse,
 )
-from .threads import (
-    ThreadsResource,
-    AsyncThreadsResource,
-    ThreadsResourceWithRawResponse,
-    AsyncThreadsResourceWithRawResponse,
-    ThreadsResourceWithStreamingResponse,
-    AsyncThreadsResourceWithStreamingResponse,
-)
 from .feedback import (
     FeedbackResource,
     AsyncFeedbackResource,
@@ -150,10 +142,4 @@ __all__ = [
     "AsyncCompletionsResourceWithRawResponse",
     "CompletionsResourceWithStreamingResponse",
     "AsyncCompletionsResourceWithStreamingResponse",
-    "ThreadsResource",
-    "AsyncThreadsResource",
-    "ThreadsResourceWithRawResponse",
-    "AsyncThreadsResourceWithRawResponse",
-    "ThreadsResourceWithStreamingResponse",
-    "AsyncThreadsResourceWithStreamingResponse",
 ]

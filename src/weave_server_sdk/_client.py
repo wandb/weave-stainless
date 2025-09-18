@@ -32,7 +32,7 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import otel, refs, calls, costs, files, tables, objects, threads, feedback, services, completions
+    from .resources import otel, refs, calls, costs, files, tables, objects, feedback, services, completions
     from .resources.otel import OtelResource, AsyncOtelResource
     from .resources.refs import RefsResource, AsyncRefsResource
     from .resources.calls import CallsResource, AsyncCallsResource
@@ -40,7 +40,6 @@ if TYPE_CHECKING:
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.tables import TablesResource, AsyncTablesResource
     from .resources.objects import ObjectsResource, AsyncObjectsResource
-    from .resources.threads import ThreadsResource, AsyncThreadsResource
     from .resources.feedback import FeedbackResource, AsyncFeedbackResource
     from .resources.services import ServicesResource, AsyncServicesResource
     from .resources.completions import CompletionsResource, AsyncCompletionsResource
@@ -183,12 +182,6 @@ class WeaveTrace(SyncAPIClient):
         from .resources.completions import CompletionsResource
 
         return CompletionsResource(self)
-
-    @cached_property
-    def threads(self) -> ThreadsResource:
-        from .resources.threads import ThreadsResource
-
-        return ThreadsResource(self)
 
     @cached_property
     def with_raw_response(self) -> WeaveTraceWithRawResponse:
@@ -434,12 +427,6 @@ class AsyncWeaveTrace(AsyncAPIClient):
         return AsyncCompletionsResource(self)
 
     @cached_property
-    def threads(self) -> AsyncThreadsResource:
-        from .resources.threads import AsyncThreadsResource
-
-        return AsyncThreadsResource(self)
-
-    @cached_property
     def with_raw_response(self) -> AsyncWeaveTraceWithRawResponse:
         return AsyncWeaveTraceWithRawResponse(self)
 
@@ -621,12 +608,6 @@ class WeaveTraceWithRawResponse:
 
         return CompletionsResourceWithRawResponse(self._client.completions)
 
-    @cached_property
-    def threads(self) -> threads.ThreadsResourceWithRawResponse:
-        from .resources.threads import ThreadsResourceWithRawResponse
-
-        return ThreadsResourceWithRawResponse(self._client.threads)
-
 
 class AsyncWeaveTraceWithRawResponse:
     _client: AsyncWeaveTrace
@@ -693,12 +674,6 @@ class AsyncWeaveTraceWithRawResponse:
         from .resources.completions import AsyncCompletionsResourceWithRawResponse
 
         return AsyncCompletionsResourceWithRawResponse(self._client.completions)
-
-    @cached_property
-    def threads(self) -> threads.AsyncThreadsResourceWithRawResponse:
-        from .resources.threads import AsyncThreadsResourceWithRawResponse
-
-        return AsyncThreadsResourceWithRawResponse(self._client.threads)
 
 
 class WeaveTraceWithStreamedResponse:
@@ -767,12 +742,6 @@ class WeaveTraceWithStreamedResponse:
 
         return CompletionsResourceWithStreamingResponse(self._client.completions)
 
-    @cached_property
-    def threads(self) -> threads.ThreadsResourceWithStreamingResponse:
-        from .resources.threads import ThreadsResourceWithStreamingResponse
-
-        return ThreadsResourceWithStreamingResponse(self._client.threads)
-
 
 class AsyncWeaveTraceWithStreamedResponse:
     _client: AsyncWeaveTrace
@@ -839,12 +808,6 @@ class AsyncWeaveTraceWithStreamedResponse:
         from .resources.completions import AsyncCompletionsResourceWithStreamingResponse
 
         return AsyncCompletionsResourceWithStreamingResponse(self._client.completions)
-
-    @cached_property
-    def threads(self) -> threads.AsyncThreadsResourceWithStreamingResponse:
-        from .resources.threads import AsyncThreadsResourceWithStreamingResponse
-
-        return AsyncThreadsResourceWithStreamingResponse(self._client.threads)
 
 
 Client = WeaveTrace
