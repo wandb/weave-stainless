@@ -13,10 +13,11 @@ from ..types import (
     call_delete_params,
     call_update_params,
     call_query_stats_params,
+    call_stream_query_params,
     call_upsert_batch_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -26,9 +27,11 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
 from ..types.call_query_stats_response import CallQueryStatsResponse
+from ..types.call_stream_query_response import CallStreamQueryResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
 
 __all__ = ["CallsResource", "AsyncCallsResource"]
@@ -301,6 +304,91 @@ class CallsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CallStartResponse,
+        )
+
+    def stream_query(
+        self,
+        *,
+        project_id: str,
+        columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_stream_query_params.Filter] | Omit = omit,
+        include_costs: Optional[bool] | Omit = omit,
+        include_feedback: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[call_stream_query_params.Query] | Omit = omit,
+        return_expanded_column_values: Optional[bool] | Omit = omit,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | Omit = omit,
+        accept: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> JSONLDecoder[CallStreamQueryResponse]:
+        """Calls Query Stream
+
+        Args:
+          expand_columns: Columns to expand, i.e.
+
+        refs to other objects
+
+          include_costs: Beta, subject to change. If true, the response will include any model costs for
+              each call.
+
+          include_feedback: Beta, subject to change. If true, the response will include feedback for each
+              call.
+
+          include_storage_size: Beta, subject to change. If true, the response will include the storage size for
+              a call.
+
+          include_total_storage_size: Beta, subject to change. If true, the response will include the total storage
+              size for a trace.
+
+          return_expanded_column_values: If true, the response will include raw values for expanded columns. If false,
+              the response expand_columns will only be used for filtering and ordering. This
+              is useful for clients that want to resolve refs themselves, e.g. for performance
+              reasons.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
+        return self._post(
+            "/calls/stream_query",
+            body=maybe_transform(
+                {
+                    "project_id": project_id,
+                    "columns": columns,
+                    "expand_columns": expand_columns,
+                    "filter": filter,
+                    "include_costs": include_costs,
+                    "include_feedback": include_feedback,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
+                    "limit": limit,
+                    "offset": offset,
+                    "query": query,
+                    "return_expanded_column_values": return_expanded_column_values,
+                    "sort_by": sort_by,
+                },
+                call_stream_query_params.CallStreamQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JSONLDecoder[CallStreamQueryResponse],
+            stream=True,
         )
 
     def upsert_batch(
@@ -605,6 +693,91 @@ class AsyncCallsResource(AsyncAPIResource):
             cast_to=CallStartResponse,
         )
 
+    async def stream_query(
+        self,
+        *,
+        project_id: str,
+        columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        expand_columns: Optional[SequenceNotStr[str]] | Omit = omit,
+        filter: Optional[call_stream_query_params.Filter] | Omit = omit,
+        include_costs: Optional[bool] | Omit = omit,
+        include_feedback: Optional[bool] | Omit = omit,
+        include_storage_size: Optional[bool] | Omit = omit,
+        include_total_storage_size: Optional[bool] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        offset: Optional[int] | Omit = omit,
+        query: Optional[call_stream_query_params.Query] | Omit = omit,
+        return_expanded_column_values: Optional[bool] | Omit = omit,
+        sort_by: Optional[Iterable[call_stream_query_params.SortBy]] | Omit = omit,
+        accept: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncJSONLDecoder[CallStreamQueryResponse]:
+        """Calls Query Stream
+
+        Args:
+          expand_columns: Columns to expand, i.e.
+
+        refs to other objects
+
+          include_costs: Beta, subject to change. If true, the response will include any model costs for
+              each call.
+
+          include_feedback: Beta, subject to change. If true, the response will include feedback for each
+              call.
+
+          include_storage_size: Beta, subject to change. If true, the response will include the storage size for
+              a call.
+
+          include_total_storage_size: Beta, subject to change. If true, the response will include the total storage
+              size for a trace.
+
+          return_expanded_column_values: If true, the response will include raw values for expanded columns. If false,
+              the response expand_columns will only be used for filtering and ordering. This
+              is useful for clients that want to resolve refs themselves, e.g. for performance
+              reasons.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
+        return await self._post(
+            "/calls/stream_query",
+            body=await async_maybe_transform(
+                {
+                    "project_id": project_id,
+                    "columns": columns,
+                    "expand_columns": expand_columns,
+                    "filter": filter,
+                    "include_costs": include_costs,
+                    "include_feedback": include_feedback,
+                    "include_storage_size": include_storage_size,
+                    "include_total_storage_size": include_total_storage_size,
+                    "limit": limit,
+                    "offset": offset,
+                    "query": query,
+                    "return_expanded_column_values": return_expanded_column_values,
+                    "sort_by": sort_by,
+                },
+                call_stream_query_params.CallStreamQueryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncJSONLDecoder[CallStreamQueryResponse],
+            stream=True,
+        )
+
     async def upsert_batch(
         self,
         *,
@@ -660,6 +833,9 @@ class CallsResourceWithRawResponse:
         self.start = to_raw_response_wrapper(
             calls.start,
         )
+        self.stream_query = to_raw_response_wrapper(
+            calls.stream_query,
+        )
         self.upsert_batch = to_raw_response_wrapper(
             calls.upsert_batch,
         )
@@ -686,6 +862,9 @@ class AsyncCallsResourceWithRawResponse:
         )
         self.start = async_to_raw_response_wrapper(
             calls.start,
+        )
+        self.stream_query = async_to_raw_response_wrapper(
+            calls.stream_query,
         )
         self.upsert_batch = async_to_raw_response_wrapper(
             calls.upsert_batch,
@@ -714,6 +893,9 @@ class CallsResourceWithStreamingResponse:
         self.start = to_streamed_response_wrapper(
             calls.start,
         )
+        self.stream_query = to_streamed_response_wrapper(
+            calls.stream_query,
+        )
         self.upsert_batch = to_streamed_response_wrapper(
             calls.upsert_batch,
         )
@@ -740,6 +922,9 @@ class AsyncCallsResourceWithStreamingResponse:
         )
         self.start = async_to_streamed_response_wrapper(
             calls.start,
+        )
+        self.stream_query = async_to_streamed_response_wrapper(
+            calls.stream_query,
         )
         self.upsert_batch = async_to_streamed_response_wrapper(
             calls.upsert_batch,
