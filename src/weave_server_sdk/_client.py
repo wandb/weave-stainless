@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import os
 import base64
-from typing import TYPE_CHECKING, Any, Mapping
-from typing_extensions import Self, override
+import asyncio
+from typing import TYPE_CHECKING, Any, List, Mapping
+from typing_extensions import Self, TypedDict, override
 
 import httpx
 
@@ -30,6 +31,8 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+from .lib.async_batch_processor import AsyncBatchProcessor
+from .types.call_upsert_batch_params import Batch
 
 if TYPE_CHECKING:
     from .resources import otel, refs, calls, costs, files, tables, objects, feedback, services, completions
@@ -53,7 +56,16 @@ __all__ = [
     "AsyncWeaveTrace",
     "Client",
     "AsyncClient",
+    "BatchSettings",
 ]
+
+
+class BatchSettings(TypedDict, total=False):
+    max_batch_size: int
+    min_batch_interval: float
+    max_queue_size: int
+    enable_disk_fallback: bool
+    disk_fallback_path: str
 
 
 class WeaveTrace(SyncAPIClient):
@@ -75,6 +87,10 @@ class WeaveTrace(SyncAPIClient):
         # We provide a `DefaultHttpxClient` class that you can pass to retain the default values we use for `limits`, `timeout` & `follow_redirects`.
         # See the [httpx documentation](https://www.python-httpx.org/api/#client) for more details.
         http_client: httpx.Client | None = None,
+        # Enable batching of requests for better performance
+        batch_requests: bool = False,
+        # Configure batch processor settings
+        batch_settings: BatchSettings | None = None,
         # Enable or disable schema validation for data returned by the API.
         # When enabled an error APIResponseValidationError is raised
         # if the API responds with invalid data for the expected schema.
@@ -106,6 +122,9 @@ class WeaveTrace(SyncAPIClient):
                 "The password client option must be set either by passing password to the client or by setting the WANDB_API_KEY environment variable"
             )
         self.password = password
+        self.batch_requests = batch_requests
+        self._batch_processor = None
+        self.batch_settings = batch_settings or {}
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -122,6 +141,18 @@ class WeaveTrace(SyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+        if self.batch_requests:
+            self._batch_processor = AsyncBatchProcessor(
+                self._flush_batch,
+                max_batch_size=self.batch_settings.get("max_batch_size", 100),
+                min_batch_interval=self.batch_settings.get("min_batch_interval", 1.0),
+                max_queue_size=self.batch_settings.get("max_queue_size", 100_000),
+                enable_disk_fallback=self.batch_settings.get("enable_disk_fallback", False),
+                disk_fallback_path=self.batch_settings.get(
+                    "disk_fallback_path", ".weave_client_dropped_items_log.jsonl"
+                ),
+            )
 
     @cached_property
     def services(self) -> ServicesResource:
@@ -225,6 +256,8 @@ class WeaveTrace(SyncAPIClient):
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
         set_default_query: Mapping[str, object] | None = None,
+        batch_requests: bool | NotGiven = not_given,
+        batch_settings: BatchSettings | None | NotGiven = not_given,
         _extra_kwargs: Mapping[str, Any] = {},
     ) -> Self:
         """
@@ -258,8 +291,17 @@ class WeaveTrace(SyncAPIClient):
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
             default_headers=headers,
             default_query=params,
+            batch_requests=batch_requests if is_given(batch_requests) else self.batch_requests,
+            batch_settings=batch_settings if is_given(batch_settings) else self.batch_settings,
             **_extra_kwargs,
         )
+
+    def _flush_batch(self, batch: List[Batch]) -> None:
+        """Process a batch of calls by sending them to the upsert_batch endpoint."""
+        if not batch:
+            return
+
+        self.calls.upsert_batch(batch=batch)
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
@@ -303,6 +345,7 @@ class AsyncWeaveTrace(AsyncAPIClient):
     # client options
     username: str
     password: str
+    _batch_processor: AsyncBatchProcessor[Batch] | None
 
     def __init__(
         self,
@@ -318,6 +361,10 @@ class AsyncWeaveTrace(AsyncAPIClient):
         # We provide a `DefaultAsyncHttpxClient` class that you can pass to retain the default values we use for `limits`, `timeout` & `follow_redirects`.
         # See the [httpx documentation](https://www.python-httpx.org/api/#asyncclient) for more details.
         http_client: httpx.AsyncClient | None = None,
+        # Enable batching of requests for better performance
+        batch_requests: bool = False,
+        # Configure batch processor settings
+        batch_settings: BatchSettings | None = None,
         # Enable or disable schema validation for data returned by the API.
         # When enabled an error APIResponseValidationError is raised
         # if the API responds with invalid data for the expected schema.
@@ -349,6 +396,9 @@ class AsyncWeaveTrace(AsyncAPIClient):
                 "The password client option must be set either by passing password to the client or by setting the WANDB_API_KEY environment variable"
             )
         self.password = password
+        self.batch_requests = batch_requests
+        self._batch_processor = None
+        self.batch_settings = batch_settings or {}
 
         if base_url is None:
             base_url = os.environ.get("WEAVE_TRACE_BASE_URL")
@@ -365,6 +415,18 @@ class AsyncWeaveTrace(AsyncAPIClient):
             custom_query=default_query,
             _strict_response_validation=_strict_response_validation,
         )
+
+        if self.batch_requests:
+            self._batch_processor = AsyncBatchProcessor(
+                lambda batch: asyncio.run(self._flush_batch(batch)),
+                max_batch_size=self.batch_settings.get("max_batch_size", 100),
+                min_batch_interval=self.batch_settings.get("min_batch_interval", 1.0),
+                max_queue_size=self.batch_settings.get("max_queue_size", 100_000),
+                enable_disk_fallback=self.batch_settings.get("enable_disk_fallback", False),
+                disk_fallback_path=self.batch_settings.get(
+                    "disk_fallback_path", ".weave_client_dropped_items_log.jsonl"
+                ),
+            )
 
     @cached_property
     def services(self) -> AsyncServicesResource:
@@ -468,6 +530,8 @@ class AsyncWeaveTrace(AsyncAPIClient):
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
         set_default_query: Mapping[str, object] | None = None,
+        batch_requests: bool | NotGiven = not_given,
+        batch_settings: BatchSettings | None | NotGiven = not_given,
         _extra_kwargs: Mapping[str, Any] = {},
     ) -> Self:
         """
@@ -501,8 +565,17 @@ class AsyncWeaveTrace(AsyncAPIClient):
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
             default_headers=headers,
             default_query=params,
+            batch_requests=batch_requests if is_given(batch_requests) else self.batch_requests,
+            batch_settings=batch_settings if is_given(batch_settings) else self.batch_settings,
             **_extra_kwargs,
         )
+
+    async def _flush_batch(self, batch: List[Batch]) -> None:
+        """Process a batch of calls by sending them to the upsert_batch endpoint."""
+        if not batch:
+            return
+
+        await self.calls.upsert_batch(batch=batch)
 
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)

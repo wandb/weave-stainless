@@ -30,6 +30,7 @@ from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.call_read_response import CallReadResponse
 from ..types.call_start_response import CallStartResponse
+from ..types.call_upsert_batch_params import BatchCallBatchEndMode, BatchCallBatchStartMode
 from ..types.call_query_stats_response import CallQueryStatsResponse
 from ..types.call_stream_query_response import CallStreamQueryResponse
 from ..types.call_upsert_batch_response import CallUpsertBatchResponse
@@ -170,6 +171,13 @@ class CallsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        if self._client.batch_requests and self._client._batch_processor:
+            batch_item: BatchCallBatchEndMode = {"mode": "end", "req": {"end": end}}
+
+            self._client._batch_processor.enqueue([batch_item])
+
+            return {}
+
         return self._post(
             "/call/end",
             body=maybe_transform({"end": end}, call_end_params.CallEndParams),
@@ -297,6 +305,19 @@ class CallsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+
+        if self._client.batch_requests and self._client._batch_processor:
+            start_id = start.get("id")
+            start_trace_id = start.get("trace_id")
+
+            if not start_id or not start_trace_id:
+                raise ValueError("CallStartReq must have id and trace_id when batching.")
+
+            batch_item: BatchCallBatchStartMode = {"mode": "start", "req": {"start": start}}
+            self._client._batch_processor.enqueue([batch_item])
+
+            return CallStartResponse(id=start_id, trace_id=start_trace_id)
+
         return self._post(
             "/call/start",
             body=maybe_transform({"start": start}, call_start_params.CallStartParams),
@@ -684,6 +705,19 @@ class AsyncCallsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+
+        if self._client.batch_requests and self._client._batch_processor:
+            start_id = start.get("id")
+            start_trace_id = start.get("trace_id")
+
+            if not start_id or not start_trace_id:
+                raise ValueError("CallStartReq must have id and trace_id when batching.")
+
+            batch_item: BatchCallBatchStartMode = {"mode": "start", "req": {"start": start}}
+            self._client._batch_processor.enqueue([batch_item])
+
+            return CallStartResponse(id=start_id, trace_id=start_trace_id)
+
         return await self._post(
             "/call/start",
             body=await async_maybe_transform({"start": start}, call_start_params.CallStartParams),
