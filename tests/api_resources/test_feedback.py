@@ -82,7 +82,7 @@ class TestFeedback:
     def test_method_purge(self, client: WeaveTrace) -> None:
         feedback = client.feedback.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(object, feedback, path=["response"])
 
@@ -90,7 +90,7 @@ class TestFeedback:
     def test_raw_response_purge(self, client: WeaveTrace) -> None:
         response = client.feedback.with_raw_response.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
 
         assert response.is_closed is True
@@ -102,7 +102,7 @@ class TestFeedback:
     def test_streaming_response_purge(self, client: WeaveTrace) -> None:
         with client.feedback.with_streaming_response.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -126,7 +126,7 @@ class TestFeedback:
             fields=["id", "feedback_type", "payload.note"],
             limit=10,
             offset=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             sort_by=[
                 {
                     "direction": "asc",
@@ -288,7 +288,7 @@ class TestAsyncFeedback:
     async def test_method_purge(self, async_client: AsyncWeaveTrace) -> None:
         feedback = await async_client.feedback.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(object, feedback, path=["response"])
 
@@ -296,7 +296,7 @@ class TestAsyncFeedback:
     async def test_raw_response_purge(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.feedback.with_raw_response.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
 
         assert response.is_closed is True
@@ -308,7 +308,7 @@ class TestAsyncFeedback:
     async def test_streaming_response_purge(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.feedback.with_streaming_response.purge(
             project_id="entity/project",
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -332,7 +332,7 @@ class TestAsyncFeedback:
             fields=["id", "feedback_type", "payload.note"],
             limit=10,
             offset=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             sort_by=[
                 {
                     "direction": "asc",

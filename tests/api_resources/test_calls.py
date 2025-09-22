@@ -211,7 +211,7 @@ class TestCalls:
             },
             include_total_storage_size=True,
             limit=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
 
@@ -389,7 +389,7 @@ class TestCalls:
             include_total_storage_size=True,
             limit=0,
             offset=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             return_expanded_column_values=True,
             sort_by=[
                 {
@@ -685,7 +685,7 @@ class TestAsyncCalls:
             },
             include_total_storage_size=True,
             limit=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
         )
         assert_matches_type(CallQueryStatsResponse, call, path=["response"])
 
@@ -863,7 +863,7 @@ class TestAsyncCalls:
             include_total_storage_size=True,
             limit=0,
             offset=0,
-            query={"expr": {"and_": []}},
+            query={"expr": {"and_": [{"literal": "string"}]}},
             return_expanded_column_values=True,
             sort_by=[
                 {
