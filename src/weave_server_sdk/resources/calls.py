@@ -383,7 +383,7 @@ class CallsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/x-ndjson", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
         return self._post(
             "/calls/stream_query",
@@ -783,7 +783,7 @@ class AsyncCallsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        extra_headers = {"Accept": "application/x-ndjson", **(extra_headers or {})}
         extra_headers = {**strip_not_given({"accept": accept}), **(extra_headers or {})}
         return await self._post(
             "/calls/stream_query",
