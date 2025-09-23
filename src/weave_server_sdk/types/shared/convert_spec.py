@@ -11,12 +11,6 @@ __all__ = ["ConvertSpec"]
 
 class ConvertSpec(BaseModel):
     input: "Operation"
-    """Represents a constant value in the query language.
-
-    This can be any standard JSON-serializable value.
-
-    Example: ` {"$literal": "predict"} `
-    """
 
     to: Literal["double", "string", "int", "bool", "exists"]
 
