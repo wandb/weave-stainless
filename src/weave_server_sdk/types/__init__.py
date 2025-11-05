@@ -41,6 +41,7 @@ from .file_content_params import FileContentParams as FileContentParams
 from .object_query_params import ObjectQueryParams as ObjectQueryParams
 from .table_create_params import TableCreateParams as TableCreateParams
 from .table_update_params import TableUpdateParams as TableUpdateParams
+from .call_delete_response import CallDeleteResponse as CallDeleteResponse
 from .cost_create_response import CostCreateResponse as CostCreateResponse
 from .file_create_response import FileCreateResponse as FileCreateResponse
 from .object_create_params import ObjectCreateParams as ObjectCreateParams
@@ -72,7 +73,11 @@ from .call_stream_query_response import CallStreamQueryResponse as CallStreamQue
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
 from .completion_create_response import CompletionCreateResponse as CompletionCreateResponse
 from .table_query_stats_response import TableQueryStatsResponse as TableQueryStatsResponse
+from .thread_stream_query_params import ThreadStreamQueryParams as ThreadStreamQueryParams
+from .thread_stream_query_response import ThreadStreamQueryResponse as ThreadStreamQueryResponse
 from .service_health_check_response import ServiceHealthCheckResponse as ServiceHealthCheckResponse
+from .completion_create_stream_params import CompletionCreateStreamParams as CompletionCreateStreamParams
+from .completion_create_stream_response import CompletionCreateStreamResponse as CompletionCreateStreamResponse
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,

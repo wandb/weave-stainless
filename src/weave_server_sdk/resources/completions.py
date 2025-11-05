@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..types import completion_create_params
+from ..types import completion_create_params, completion_create_stream_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,7 +18,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.completion_create_response import CompletionCreateResponse
+from ..types.completion_create_stream_response import CompletionCreateStreamResponse
 
 __all__ = ["CompletionsResource", "AsyncCompletionsResource"]
 
@@ -90,6 +92,55 @@ class CompletionsResource(SyncAPIResource):
             cast_to=CompletionCreateResponse,
         )
 
+    def create_stream(
+        self,
+        *,
+        inputs: completion_create_stream_params.Inputs,
+        project_id: str,
+        track_llm_call: Optional[bool] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> JSONLDecoder[CompletionCreateStreamResponse]:
+        """
+        Completions Create Stream
+
+        Args:
+          track_llm_call: Whether to track this LLM call in the trace server
+
+          wb_user_id: Do not set directly. Server will automatically populate this field.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        return self._post(
+            "/completions/create_stream",
+            body=maybe_transform(
+                {
+                    "inputs": inputs,
+                    "project_id": project_id,
+                    "track_llm_call": track_llm_call,
+                    "wb_user_id": wb_user_id,
+                },
+                completion_create_stream_params.CompletionCreateStreamParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=JSONLDecoder[CompletionCreateStreamResponse],
+            stream=True,
+        )
+
 
 class AsyncCompletionsResource(AsyncAPIResource):
     @cached_property
@@ -158,6 +209,55 @@ class AsyncCompletionsResource(AsyncAPIResource):
             cast_to=CompletionCreateResponse,
         )
 
+    async def create_stream(
+        self,
+        *,
+        inputs: completion_create_stream_params.Inputs,
+        project_id: str,
+        track_llm_call: Optional[bool] | Omit = omit,
+        wb_user_id: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncJSONLDecoder[CompletionCreateStreamResponse]:
+        """
+        Completions Create Stream
+
+        Args:
+          track_llm_call: Whether to track this LLM call in the trace server
+
+          wb_user_id: Do not set directly. Server will automatically populate this field.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
+        return await self._post(
+            "/completions/create_stream",
+            body=await async_maybe_transform(
+                {
+                    "inputs": inputs,
+                    "project_id": project_id,
+                    "track_llm_call": track_llm_call,
+                    "wb_user_id": wb_user_id,
+                },
+                completion_create_stream_params.CompletionCreateStreamParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncJSONLDecoder[CompletionCreateStreamResponse],
+            stream=True,
+        )
+
 
 class CompletionsResourceWithRawResponse:
     def __init__(self, completions: CompletionsResource) -> None:
@@ -165,6 +265,9 @@ class CompletionsResourceWithRawResponse:
 
         self.create = to_raw_response_wrapper(
             completions.create,
+        )
+        self.create_stream = to_raw_response_wrapper(
+            completions.create_stream,
         )
 
 
@@ -175,6 +278,9 @@ class AsyncCompletionsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             completions.create,
         )
+        self.create_stream = async_to_raw_response_wrapper(
+            completions.create_stream,
+        )
 
 
 class CompletionsResourceWithStreamingResponse:
@@ -184,6 +290,9 @@ class CompletionsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             completions.create,
         )
+        self.create_stream = to_streamed_response_wrapper(
+            completions.create_stream,
+        )
 
 
 class AsyncCompletionsResourceWithStreamingResponse:
@@ -192,4 +301,7 @@ class AsyncCompletionsResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             completions.create,
+        )
+        self.create_stream = async_to_streamed_response_wrapper(
+            completions.create_stream,
         )

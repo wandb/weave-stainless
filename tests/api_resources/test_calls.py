@@ -12,6 +12,7 @@ from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
 from weave_server_sdk.types import (
     CallReadResponse,
     CallStartResponse,
+    CallDeleteResponse,
     CallQueryStatsResponse,
     CallStreamQueryResponse,
     CallUpsertBatchResponse,
@@ -75,7 +76,7 @@ class TestCalls:
             call_ids=["string"],
             project_id="project_id",
         )
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     def test_method_delete_with_all_params(self, client: WeaveTrace) -> None:
@@ -84,7 +85,7 @@ class TestCalls:
             project_id="project_id",
             wb_user_id="wb_user_id",
         )
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: WeaveTrace) -> None:
@@ -96,7 +97,7 @@ class TestCalls:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         call = response.parse()
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     def test_streaming_response_delete(self, client: WeaveTrace) -> None:
@@ -108,7 +109,7 @@ class TestCalls:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             call = response.parse()
-            assert_matches_type(object, call, path=["response"])
+            assert_matches_type(CallDeleteResponse, call, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -146,6 +147,7 @@ class TestCalls:
                 },
                 "exception": "exception",
                 "output": {},
+                "wb_run_step_end": 0,
             },
         )
         assert_matches_type(object, call, path=["response"])
@@ -308,6 +310,7 @@ class TestCalls:
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "id": "id",
                 "display_name": "display_name",
+                "otel_dump": {"foo": "bar"},
                 "parent_id": "parent_id",
                 "thread_id": "thread_id",
                 "trace_id": "trace_id",
@@ -549,7 +552,7 @@ class TestAsyncCalls:
             call_ids=["string"],
             project_id="project_id",
         )
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     async def test_method_delete_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
@@ -558,7 +561,7 @@ class TestAsyncCalls:
             project_id="project_id",
             wb_user_id="wb_user_id",
         )
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncWeaveTrace) -> None:
@@ -570,7 +573,7 @@ class TestAsyncCalls:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         call = await response.parse()
-        assert_matches_type(object, call, path=["response"])
+        assert_matches_type(CallDeleteResponse, call, path=["response"])
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncWeaveTrace) -> None:
@@ -582,7 +585,7 @@ class TestAsyncCalls:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             call = await response.parse()
-            assert_matches_type(object, call, path=["response"])
+            assert_matches_type(CallDeleteResponse, call, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -620,6 +623,7 @@ class TestAsyncCalls:
                 },
                 "exception": "exception",
                 "output": {},
+                "wb_run_step_end": 0,
             },
         )
         assert_matches_type(object, call, path=["response"])
@@ -782,6 +786,7 @@ class TestAsyncCalls:
                 "started_at": parse_datetime("2019-12-27T18:11:19.117Z"),
                 "id": "id",
                 "display_name": "display_name",
+                "otel_dump": {"foo": "bar"},
                 "parent_id": "parent_id",
                 "thread_id": "thread_id",
                 "trace_id": "trace_id",

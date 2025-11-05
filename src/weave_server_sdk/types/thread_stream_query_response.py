@@ -3,6 +3,6 @@
 from typing import List
 from typing_extensions import TypeAlias
 
-__all__ = ["CallStreamQueryResponse"]
+__all__ = ["ThreadStreamQueryResponse"]
 
-CallStreamQueryResponse: TypeAlias = List[object]
+ThreadStreamQueryResponse: TypeAlias = List[object]

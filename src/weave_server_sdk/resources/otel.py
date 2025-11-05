@@ -48,6 +48,7 @@ class OtelResource(SyncAPIResource):
         *,
         project_id: str,
         traces: object,
+        wb_run_id: Optional[str] | Omit = omit,
         wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -77,6 +78,7 @@ class OtelResource(SyncAPIResource):
                 {
                     "project_id": project_id,
                     "traces": traces,
+                    "wb_run_id": wb_run_id,
                     "wb_user_id": wb_user_id,
                 },
                 otel_export_params.OtelExportParams,
@@ -113,6 +115,7 @@ class AsyncOtelResource(AsyncAPIResource):
         *,
         project_id: str,
         traces: object,
+        wb_run_id: Optional[str] | Omit = omit,
         wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -142,6 +145,7 @@ class AsyncOtelResource(AsyncAPIResource):
                 {
                     "project_id": project_id,
                     "traces": traces,
+                    "wb_run_id": wb_run_id,
                     "wb_user_id": wb_user_id,
                 },
                 otel_export_params.OtelExportParams,

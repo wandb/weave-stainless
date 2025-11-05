@@ -135,6 +135,7 @@ class TestObjects:
             project_id="user/project",
             filter={
                 "base_object_classes": ["Model"],
+                "exclude_base_object_classes": ["Model"],
                 "is_op": True,
                 "latest_only": True,
                 "leaf_object_classes": ["Model"],
@@ -343,6 +344,7 @@ class TestAsyncObjects:
             project_id="user/project",
             filter={
                 "base_object_classes": ["Model"],
+                "exclude_base_object_classes": ["Model"],
                 "is_op": True,
                 "latest_only": True,
                 "leaf_object_classes": ["Model"],

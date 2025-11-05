@@ -39,6 +39,7 @@ Types:
 
 ```python
 from weave_server_sdk.types import (
+    CallDeleteResponse,
     CallQueryStatsResponse,
     CallReadResponse,
     CallStartResponse,
@@ -50,7 +51,7 @@ from weave_server_sdk.types import (
 Methods:
 
 - <code title="post /call/update">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">update</a>(\*\*<a href="src/weave_server_sdk/types/call_update_params.py">params</a>) -> object</code>
-- <code title="post /calls/delete">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">delete</a>(\*\*<a href="src/weave_server_sdk/types/call_delete_params.py">params</a>) -> object</code>
+- <code title="post /calls/delete">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">delete</a>(\*\*<a href="src/weave_server_sdk/types/call_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_delete_response.py">CallDeleteResponse</a></code>
 - <code title="post /call/end">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">end</a>(\*\*<a href="src/weave_server_sdk/types/call_end_params.py">params</a>) -> object</code>
 - <code title="post /calls/query_stats">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">query_stats</a>(\*\*<a href="src/weave_server_sdk/types/call_query_stats_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_query_stats_response.py">CallQueryStatsResponse</a></code>
 - <code title="post /call/read">client.calls.<a href="./src/weave_server_sdk/resources/calls.py">read</a>(\*\*<a href="src/weave_server_sdk/types/call_read_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/call_read_response.py">CallReadResponse</a></code>
@@ -173,9 +174,22 @@ Methods:
 Types:
 
 ```python
-from weave_server_sdk.types import CompletionCreateResponse
+from weave_server_sdk.types import CompletionCreateResponse, CompletionCreateStreamResponse
 ```
 
 Methods:
 
 - <code title="post /completions/create">client.completions.<a href="./src/weave_server_sdk/resources/completions.py">create</a>(\*\*<a href="src/weave_server_sdk/types/completion_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/completion_create_response.py">CompletionCreateResponse</a></code>
+- <code title="post /completions/create_stream">client.completions.<a href="./src/weave_server_sdk/resources/completions.py">create_stream</a>(\*\*<a href="src/weave_server_sdk/types/completion_create_stream_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/completion_create_stream_response.py">JSONLDecoder[CompletionCreateStreamResponse]</a></code>
+
+# Threads
+
+Types:
+
+```python
+from weave_server_sdk.types import ThreadStreamQueryResponse
+```
+
+Methods:
+
+- <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>

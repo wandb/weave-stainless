@@ -30,6 +30,8 @@ class Start(TypedDict, total=False):
 
     display_name: Optional[str]
 
+    otel_dump: Optional[Dict[str, object]]
+
     parent_id: Optional[str]
 
     thread_id: Optional[str]

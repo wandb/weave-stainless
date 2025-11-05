@@ -13,5 +13,7 @@ class OtelExportParams(TypedDict, total=False):
 
     traces: Required[object]
 
+    wb_run_id: Optional[str]
+
     wb_user_id: Optional[str]
     """Do not set directly. Server will automatically populate this field."""

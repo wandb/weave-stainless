@@ -43,6 +43,9 @@ class Filter(TypedDict, total=False):
     base_object_classes: Optional[SequenceNotStr[str]]
     """Filter objects by their base classes"""
 
+    exclude_base_object_classes: Optional[SequenceNotStr[str]]
+    """Exclude objects by their base classes"""
+
     is_op: Optional[bool]
     """Filter objects based on whether they are weave.ops or not.
 

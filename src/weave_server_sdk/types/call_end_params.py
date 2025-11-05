@@ -50,3 +50,5 @@ class End(TypedDict, total=False):
     exception: Optional[str]
 
     output: object
+
+    wb_run_step_end: Optional[int]

@@ -30,6 +30,7 @@ class TestOtel:
         otel = client.otel.export(
             project_id="project_id",
             traces={},
+            wb_run_id="wb_run_id",
             wb_user_id="wb_user_id",
         )
         assert_matches_type(OtelExportResponse, otel, path=["response"])
@@ -79,6 +80,7 @@ class TestAsyncOtel:
         otel = await async_client.otel.export(
             project_id="project_id",
             traces={},
+            wb_run_id="wb_run_id",
             wb_user_id="wb_user_id",
         )
         assert_matches_type(OtelExportResponse, otel, path=["response"])

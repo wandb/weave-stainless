@@ -41,6 +41,8 @@ class BatchCallBatchStartModeReqStart(TypedDict, total=False):
 
     display_name: Optional[str]
 
+    otel_dump: Optional[Dict[str, object]]
+
     parent_id: Optional[str]
 
     thread_id: Optional[str]
@@ -102,6 +104,8 @@ class BatchCallBatchEndModeReqEnd(TypedDict, total=False):
     exception: Optional[str]
 
     output: object
+
+    wb_run_step_end: Optional[int]
 
 
 class BatchCallBatchEndModeReq(TypedDict, total=False):

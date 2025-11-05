@@ -49,6 +49,8 @@ class Call(BaseModel):
 
     wb_run_step: Optional[int] = None
 
+    wb_run_step_end: Optional[int] = None
+
     wb_user_id: Optional[str] = None
 
 
