@@ -35,13 +35,27 @@ from .lib.async_batch_processor import AsyncBatchProcessor
 from .types.call_upsert_batch_params import Batch
 
 if TYPE_CHECKING:
-    from .resources import otel, refs, calls, costs, files, tables, objects, threads, feedback, services, completions
+    from .resources import (
+        otel,
+        refs,
+        calls,
+        costs,
+        files,
+        tables,
+        v2_ops,
+        objects,
+        threads,
+        feedback,
+        services,
+        completions,
+    )
     from .resources.otel import OtelResource, AsyncOtelResource
     from .resources.refs import RefsResource, AsyncRefsResource
     from .resources.calls import CallsResource, AsyncCallsResource
     from .resources.costs import CostsResource, AsyncCostsResource
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.tables import TablesResource, AsyncTablesResource
+    from .resources.v2_ops import V2OpsResource, AsyncV2OpsResource
     from .resources.objects import ObjectsResource, AsyncObjectsResource
     from .resources.threads import ThreadsResource, AsyncThreadsResource
     from .resources.feedback import FeedbackResource, AsyncFeedbackResource
@@ -220,6 +234,12 @@ class WeaveTrace(SyncAPIClient):
         from .resources.threads import ThreadsResource
 
         return ThreadsResource(self)
+
+    @cached_property
+    def v2_ops(self) -> V2OpsResource:
+        from .resources.v2_ops import V2OpsResource
+
+        return V2OpsResource(self)
 
     @cached_property
     def with_raw_response(self) -> WeaveTraceWithRawResponse:
@@ -502,6 +522,12 @@ class AsyncWeaveTrace(AsyncAPIClient):
         return AsyncThreadsResource(self)
 
     @cached_property
+    def v2_ops(self) -> AsyncV2OpsResource:
+        from .resources.v2_ops import AsyncV2OpsResource
+
+        return AsyncV2OpsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncWeaveTraceWithRawResponse:
         return AsyncWeaveTraceWithRawResponse(self)
 
@@ -700,6 +726,12 @@ class WeaveTraceWithRawResponse:
 
         return ThreadsResourceWithRawResponse(self._client.threads)
 
+    @cached_property
+    def v2_ops(self) -> v2_ops.V2OpsResourceWithRawResponse:
+        from .resources.v2_ops import V2OpsResourceWithRawResponse
+
+        return V2OpsResourceWithRawResponse(self._client.v2_ops)
+
 
 class AsyncWeaveTraceWithRawResponse:
     _client: AsyncWeaveTrace
@@ -772,6 +804,12 @@ class AsyncWeaveTraceWithRawResponse:
         from .resources.threads import AsyncThreadsResourceWithRawResponse
 
         return AsyncThreadsResourceWithRawResponse(self._client.threads)
+
+    @cached_property
+    def v2_ops(self) -> v2_ops.AsyncV2OpsResourceWithRawResponse:
+        from .resources.v2_ops import AsyncV2OpsResourceWithRawResponse
+
+        return AsyncV2OpsResourceWithRawResponse(self._client.v2_ops)
 
 
 class WeaveTraceWithStreamedResponse:
@@ -846,6 +884,12 @@ class WeaveTraceWithStreamedResponse:
 
         return ThreadsResourceWithStreamingResponse(self._client.threads)
 
+    @cached_property
+    def v2_ops(self) -> v2_ops.V2OpsResourceWithStreamingResponse:
+        from .resources.v2_ops import V2OpsResourceWithStreamingResponse
+
+        return V2OpsResourceWithStreamingResponse(self._client.v2_ops)
+
 
 class AsyncWeaveTraceWithStreamedResponse:
     _client: AsyncWeaveTrace
@@ -918,6 +962,12 @@ class AsyncWeaveTraceWithStreamedResponse:
         from .resources.threads import AsyncThreadsResourceWithStreamingResponse
 
         return AsyncThreadsResourceWithStreamingResponse(self._client.threads)
+
+    @cached_property
+    def v2_ops(self) -> v2_ops.AsyncV2OpsResourceWithStreamingResponse:
+        from .resources.v2_ops import AsyncV2OpsResourceWithStreamingResponse
+
+        return AsyncV2OpsResourceWithStreamingResponse(self._client.v2_ops)
 
 
 Client = WeaveTrace
