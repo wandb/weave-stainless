@@ -1,8 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List
+from typing import Dict, List
 from typing_extensions import TypeAlias
 
 __all__ = ["ThreadStreamQueryResponse"]
 
-ThreadStreamQueryResponse: TypeAlias = List[object]
+ThreadStreamQueryResponse: TypeAlias = List[Dict[str, object]]
