@@ -36,45 +36,31 @@ from .types.call_upsert_batch_params import Batch
 
 if TYPE_CHECKING:
     from .resources import (
+        v2,
         otel,
         refs,
         calls,
         costs,
         files,
         tables,
-        v2_ops,
         objects,
         threads,
         feedback,
         services,
-        v2_models,
-        v2_scores,
-        v2_scorers,
         completions,
-        v2_datasets,
-        v2_evaluations,
-        v2_predictions,
-        v2_evaluation_runs,
     )
     from .resources.otel import OtelResource, AsyncOtelResource
     from .resources.refs import RefsResource, AsyncRefsResource
     from .resources.calls import CallsResource, AsyncCallsResource
     from .resources.costs import CostsResource, AsyncCostsResource
     from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.v2.v2 import V2Resource, AsyncV2Resource
     from .resources.tables import TablesResource, AsyncTablesResource
-    from .resources.v2_ops import V2OpsResource, AsyncV2OpsResource
     from .resources.objects import ObjectsResource, AsyncObjectsResource
     from .resources.threads import ThreadsResource, AsyncThreadsResource
     from .resources.feedback import FeedbackResource, AsyncFeedbackResource
     from .resources.services import ServicesResource, AsyncServicesResource
-    from .resources.v2_models import V2ModelsResource, AsyncV2ModelsResource
-    from .resources.v2_scores import V2ScoresResource, AsyncV2ScoresResource
-    from .resources.v2_scorers import V2ScorersResource, AsyncV2ScorersResource
     from .resources.completions import CompletionsResource, AsyncCompletionsResource
-    from .resources.v2_datasets import V2DatasetsResource, AsyncV2DatasetsResource
-    from .resources.v2_evaluations import V2EvaluationsResource, AsyncV2EvaluationsResource
-    from .resources.v2_predictions import V2PredictionsResource, AsyncV2PredictionsResource
-    from .resources.v2_evaluation_runs import V2EvaluationRunsResource, AsyncV2EvaluationRunsResource
 
 __all__ = [
     "Timeout",
@@ -250,52 +236,10 @@ class WeaveTrace(SyncAPIClient):
         return ThreadsResource(self)
 
     @cached_property
-    def v2_ops(self) -> V2OpsResource:
-        from .resources.v2_ops import V2OpsResource
+    def v2(self) -> V2Resource:
+        from .resources.v2 import V2Resource
 
-        return V2OpsResource(self)
-
-    @cached_property
-    def v2_scorers(self) -> V2ScorersResource:
-        from .resources.v2_scorers import V2ScorersResource
-
-        return V2ScorersResource(self)
-
-    @cached_property
-    def v2_datasets(self) -> V2DatasetsResource:
-        from .resources.v2_datasets import V2DatasetsResource
-
-        return V2DatasetsResource(self)
-
-    @cached_property
-    def v2_evaluations(self) -> V2EvaluationsResource:
-        from .resources.v2_evaluations import V2EvaluationsResource
-
-        return V2EvaluationsResource(self)
-
-    @cached_property
-    def v2_models(self) -> V2ModelsResource:
-        from .resources.v2_models import V2ModelsResource
-
-        return V2ModelsResource(self)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> V2EvaluationRunsResource:
-        from .resources.v2_evaluation_runs import V2EvaluationRunsResource
-
-        return V2EvaluationRunsResource(self)
-
-    @cached_property
-    def v2_predictions(self) -> V2PredictionsResource:
-        from .resources.v2_predictions import V2PredictionsResource
-
-        return V2PredictionsResource(self)
-
-    @cached_property
-    def v2_scores(self) -> V2ScoresResource:
-        from .resources.v2_scores import V2ScoresResource
-
-        return V2ScoresResource(self)
+        return V2Resource(self)
 
     @cached_property
     def with_raw_response(self) -> WeaveTraceWithRawResponse:
@@ -578,52 +522,10 @@ class AsyncWeaveTrace(AsyncAPIClient):
         return AsyncThreadsResource(self)
 
     @cached_property
-    def v2_ops(self) -> AsyncV2OpsResource:
-        from .resources.v2_ops import AsyncV2OpsResource
+    def v2(self) -> AsyncV2Resource:
+        from .resources.v2 import AsyncV2Resource
 
-        return AsyncV2OpsResource(self)
-
-    @cached_property
-    def v2_scorers(self) -> AsyncV2ScorersResource:
-        from .resources.v2_scorers import AsyncV2ScorersResource
-
-        return AsyncV2ScorersResource(self)
-
-    @cached_property
-    def v2_datasets(self) -> AsyncV2DatasetsResource:
-        from .resources.v2_datasets import AsyncV2DatasetsResource
-
-        return AsyncV2DatasetsResource(self)
-
-    @cached_property
-    def v2_evaluations(self) -> AsyncV2EvaluationsResource:
-        from .resources.v2_evaluations import AsyncV2EvaluationsResource
-
-        return AsyncV2EvaluationsResource(self)
-
-    @cached_property
-    def v2_models(self) -> AsyncV2ModelsResource:
-        from .resources.v2_models import AsyncV2ModelsResource
-
-        return AsyncV2ModelsResource(self)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> AsyncV2EvaluationRunsResource:
-        from .resources.v2_evaluation_runs import AsyncV2EvaluationRunsResource
-
-        return AsyncV2EvaluationRunsResource(self)
-
-    @cached_property
-    def v2_predictions(self) -> AsyncV2PredictionsResource:
-        from .resources.v2_predictions import AsyncV2PredictionsResource
-
-        return AsyncV2PredictionsResource(self)
-
-    @cached_property
-    def v2_scores(self) -> AsyncV2ScoresResource:
-        from .resources.v2_scores import AsyncV2ScoresResource
-
-        return AsyncV2ScoresResource(self)
+        return AsyncV2Resource(self)
 
     @cached_property
     def with_raw_response(self) -> AsyncWeaveTraceWithRawResponse:
@@ -825,52 +727,10 @@ class WeaveTraceWithRawResponse:
         return ThreadsResourceWithRawResponse(self._client.threads)
 
     @cached_property
-    def v2_ops(self) -> v2_ops.V2OpsResourceWithRawResponse:
-        from .resources.v2_ops import V2OpsResourceWithRawResponse
+    def v2(self) -> v2.V2ResourceWithRawResponse:
+        from .resources.v2 import V2ResourceWithRawResponse
 
-        return V2OpsResourceWithRawResponse(self._client.v2_ops)
-
-    @cached_property
-    def v2_scorers(self) -> v2_scorers.V2ScorersResourceWithRawResponse:
-        from .resources.v2_scorers import V2ScorersResourceWithRawResponse
-
-        return V2ScorersResourceWithRawResponse(self._client.v2_scorers)
-
-    @cached_property
-    def v2_datasets(self) -> v2_datasets.V2DatasetsResourceWithRawResponse:
-        from .resources.v2_datasets import V2DatasetsResourceWithRawResponse
-
-        return V2DatasetsResourceWithRawResponse(self._client.v2_datasets)
-
-    @cached_property
-    def v2_evaluations(self) -> v2_evaluations.V2EvaluationsResourceWithRawResponse:
-        from .resources.v2_evaluations import V2EvaluationsResourceWithRawResponse
-
-        return V2EvaluationsResourceWithRawResponse(self._client.v2_evaluations)
-
-    @cached_property
-    def v2_models(self) -> v2_models.V2ModelsResourceWithRawResponse:
-        from .resources.v2_models import V2ModelsResourceWithRawResponse
-
-        return V2ModelsResourceWithRawResponse(self._client.v2_models)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> v2_evaluation_runs.V2EvaluationRunsResourceWithRawResponse:
-        from .resources.v2_evaluation_runs import V2EvaluationRunsResourceWithRawResponse
-
-        return V2EvaluationRunsResourceWithRawResponse(self._client.v2_evaluation_runs)
-
-    @cached_property
-    def v2_predictions(self) -> v2_predictions.V2PredictionsResourceWithRawResponse:
-        from .resources.v2_predictions import V2PredictionsResourceWithRawResponse
-
-        return V2PredictionsResourceWithRawResponse(self._client.v2_predictions)
-
-    @cached_property
-    def v2_scores(self) -> v2_scores.V2ScoresResourceWithRawResponse:
-        from .resources.v2_scores import V2ScoresResourceWithRawResponse
-
-        return V2ScoresResourceWithRawResponse(self._client.v2_scores)
+        return V2ResourceWithRawResponse(self._client.v2)
 
 
 class AsyncWeaveTraceWithRawResponse:
@@ -946,52 +806,10 @@ class AsyncWeaveTraceWithRawResponse:
         return AsyncThreadsResourceWithRawResponse(self._client.threads)
 
     @cached_property
-    def v2_ops(self) -> v2_ops.AsyncV2OpsResourceWithRawResponse:
-        from .resources.v2_ops import AsyncV2OpsResourceWithRawResponse
+    def v2(self) -> v2.AsyncV2ResourceWithRawResponse:
+        from .resources.v2 import AsyncV2ResourceWithRawResponse
 
-        return AsyncV2OpsResourceWithRawResponse(self._client.v2_ops)
-
-    @cached_property
-    def v2_scorers(self) -> v2_scorers.AsyncV2ScorersResourceWithRawResponse:
-        from .resources.v2_scorers import AsyncV2ScorersResourceWithRawResponse
-
-        return AsyncV2ScorersResourceWithRawResponse(self._client.v2_scorers)
-
-    @cached_property
-    def v2_datasets(self) -> v2_datasets.AsyncV2DatasetsResourceWithRawResponse:
-        from .resources.v2_datasets import AsyncV2DatasetsResourceWithRawResponse
-
-        return AsyncV2DatasetsResourceWithRawResponse(self._client.v2_datasets)
-
-    @cached_property
-    def v2_evaluations(self) -> v2_evaluations.AsyncV2EvaluationsResourceWithRawResponse:
-        from .resources.v2_evaluations import AsyncV2EvaluationsResourceWithRawResponse
-
-        return AsyncV2EvaluationsResourceWithRawResponse(self._client.v2_evaluations)
-
-    @cached_property
-    def v2_models(self) -> v2_models.AsyncV2ModelsResourceWithRawResponse:
-        from .resources.v2_models import AsyncV2ModelsResourceWithRawResponse
-
-        return AsyncV2ModelsResourceWithRawResponse(self._client.v2_models)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> v2_evaluation_runs.AsyncV2EvaluationRunsResourceWithRawResponse:
-        from .resources.v2_evaluation_runs import AsyncV2EvaluationRunsResourceWithRawResponse
-
-        return AsyncV2EvaluationRunsResourceWithRawResponse(self._client.v2_evaluation_runs)
-
-    @cached_property
-    def v2_predictions(self) -> v2_predictions.AsyncV2PredictionsResourceWithRawResponse:
-        from .resources.v2_predictions import AsyncV2PredictionsResourceWithRawResponse
-
-        return AsyncV2PredictionsResourceWithRawResponse(self._client.v2_predictions)
-
-    @cached_property
-    def v2_scores(self) -> v2_scores.AsyncV2ScoresResourceWithRawResponse:
-        from .resources.v2_scores import AsyncV2ScoresResourceWithRawResponse
-
-        return AsyncV2ScoresResourceWithRawResponse(self._client.v2_scores)
+        return AsyncV2ResourceWithRawResponse(self._client.v2)
 
 
 class WeaveTraceWithStreamedResponse:
@@ -1067,52 +885,10 @@ class WeaveTraceWithStreamedResponse:
         return ThreadsResourceWithStreamingResponse(self._client.threads)
 
     @cached_property
-    def v2_ops(self) -> v2_ops.V2OpsResourceWithStreamingResponse:
-        from .resources.v2_ops import V2OpsResourceWithStreamingResponse
+    def v2(self) -> v2.V2ResourceWithStreamingResponse:
+        from .resources.v2 import V2ResourceWithStreamingResponse
 
-        return V2OpsResourceWithStreamingResponse(self._client.v2_ops)
-
-    @cached_property
-    def v2_scorers(self) -> v2_scorers.V2ScorersResourceWithStreamingResponse:
-        from .resources.v2_scorers import V2ScorersResourceWithStreamingResponse
-
-        return V2ScorersResourceWithStreamingResponse(self._client.v2_scorers)
-
-    @cached_property
-    def v2_datasets(self) -> v2_datasets.V2DatasetsResourceWithStreamingResponse:
-        from .resources.v2_datasets import V2DatasetsResourceWithStreamingResponse
-
-        return V2DatasetsResourceWithStreamingResponse(self._client.v2_datasets)
-
-    @cached_property
-    def v2_evaluations(self) -> v2_evaluations.V2EvaluationsResourceWithStreamingResponse:
-        from .resources.v2_evaluations import V2EvaluationsResourceWithStreamingResponse
-
-        return V2EvaluationsResourceWithStreamingResponse(self._client.v2_evaluations)
-
-    @cached_property
-    def v2_models(self) -> v2_models.V2ModelsResourceWithStreamingResponse:
-        from .resources.v2_models import V2ModelsResourceWithStreamingResponse
-
-        return V2ModelsResourceWithStreamingResponse(self._client.v2_models)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> v2_evaluation_runs.V2EvaluationRunsResourceWithStreamingResponse:
-        from .resources.v2_evaluation_runs import V2EvaluationRunsResourceWithStreamingResponse
-
-        return V2EvaluationRunsResourceWithStreamingResponse(self._client.v2_evaluation_runs)
-
-    @cached_property
-    def v2_predictions(self) -> v2_predictions.V2PredictionsResourceWithStreamingResponse:
-        from .resources.v2_predictions import V2PredictionsResourceWithStreamingResponse
-
-        return V2PredictionsResourceWithStreamingResponse(self._client.v2_predictions)
-
-    @cached_property
-    def v2_scores(self) -> v2_scores.V2ScoresResourceWithStreamingResponse:
-        from .resources.v2_scores import V2ScoresResourceWithStreamingResponse
-
-        return V2ScoresResourceWithStreamingResponse(self._client.v2_scores)
+        return V2ResourceWithStreamingResponse(self._client.v2)
 
 
 class AsyncWeaveTraceWithStreamedResponse:
@@ -1188,52 +964,10 @@ class AsyncWeaveTraceWithStreamedResponse:
         return AsyncThreadsResourceWithStreamingResponse(self._client.threads)
 
     @cached_property
-    def v2_ops(self) -> v2_ops.AsyncV2OpsResourceWithStreamingResponse:
-        from .resources.v2_ops import AsyncV2OpsResourceWithStreamingResponse
+    def v2(self) -> v2.AsyncV2ResourceWithStreamingResponse:
+        from .resources.v2 import AsyncV2ResourceWithStreamingResponse
 
-        return AsyncV2OpsResourceWithStreamingResponse(self._client.v2_ops)
-
-    @cached_property
-    def v2_scorers(self) -> v2_scorers.AsyncV2ScorersResourceWithStreamingResponse:
-        from .resources.v2_scorers import AsyncV2ScorersResourceWithStreamingResponse
-
-        return AsyncV2ScorersResourceWithStreamingResponse(self._client.v2_scorers)
-
-    @cached_property
-    def v2_datasets(self) -> v2_datasets.AsyncV2DatasetsResourceWithStreamingResponse:
-        from .resources.v2_datasets import AsyncV2DatasetsResourceWithStreamingResponse
-
-        return AsyncV2DatasetsResourceWithStreamingResponse(self._client.v2_datasets)
-
-    @cached_property
-    def v2_evaluations(self) -> v2_evaluations.AsyncV2EvaluationsResourceWithStreamingResponse:
-        from .resources.v2_evaluations import AsyncV2EvaluationsResourceWithStreamingResponse
-
-        return AsyncV2EvaluationsResourceWithStreamingResponse(self._client.v2_evaluations)
-
-    @cached_property
-    def v2_models(self) -> v2_models.AsyncV2ModelsResourceWithStreamingResponse:
-        from .resources.v2_models import AsyncV2ModelsResourceWithStreamingResponse
-
-        return AsyncV2ModelsResourceWithStreamingResponse(self._client.v2_models)
-
-    @cached_property
-    def v2_evaluation_runs(self) -> v2_evaluation_runs.AsyncV2EvaluationRunsResourceWithStreamingResponse:
-        from .resources.v2_evaluation_runs import AsyncV2EvaluationRunsResourceWithStreamingResponse
-
-        return AsyncV2EvaluationRunsResourceWithStreamingResponse(self._client.v2_evaluation_runs)
-
-    @cached_property
-    def v2_predictions(self) -> v2_predictions.AsyncV2PredictionsResourceWithStreamingResponse:
-        from .resources.v2_predictions import AsyncV2PredictionsResourceWithStreamingResponse
-
-        return AsyncV2PredictionsResourceWithStreamingResponse(self._client.v2_predictions)
-
-    @cached_property
-    def v2_scores(self) -> v2_scores.AsyncV2ScoresResourceWithStreamingResponse:
-        from .resources.v2_scores import AsyncV2ScoresResourceWithStreamingResponse
-
-        return AsyncV2ScoresResourceWithStreamingResponse(self._client.v2_scores)
+        return AsyncV2ResourceWithStreamingResponse(self._client.v2)
 
 
 Client = WeaveTrace
