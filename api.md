@@ -194,166 +194,168 @@ Methods:
 
 - <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>
 
-# V2Ops
+# V2
+
+## Ops
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2OpCreateResponse,
-    V2OpListResponse,
-    V2OpDeleteResponse,
-    V2OpReadResponse,
+from weave_server_sdk.types.v2 import (
+    OpCreateResponse,
+    OpListResponse,
+    OpDeleteResponse,
+    OpReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_create_response.py">V2OpCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_list_response.py">JSONLDecoder[V2OpListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/ops/{object_id}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_op_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_delete_response.py">V2OpDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/ops/{object_id}/versions/{digest}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_op_read_response.py">V2OpReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/ops">client.v2.ops.<a href="./src/weave_server_sdk/resources/v2/ops.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/op_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/op_create_response.py">OpCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/ops">client.v2.ops.<a href="./src/weave_server_sdk/resources/v2/ops.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/op_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/op_list_response.py">JSONLDecoder[OpListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/ops/{object_id}">client.v2.ops.<a href="./src/weave_server_sdk/resources/v2/ops.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/op_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/op_delete_response.py">OpDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/ops/{object_id}/versions/{digest}">client.v2.ops.<a href="./src/weave_server_sdk/resources/v2/ops.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2/op_read_response.py">OpReadResponse</a></code>
 
-# V2Scorers
+## Scorers
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2ScorerCreateResponse,
-    V2ScorerListResponse,
-    V2ScorerDeleteResponse,
-    V2ScorerReadResponse,
+from weave_server_sdk.types.v2 import (
+    ScorerCreateResponse,
+    ScorerListResponse,
+    ScorerDeleteResponse,
+    ScorerReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/scorers">client.v2_scorers.<a href="./src/weave_server_sdk/resources/v2_scorers.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_scorer_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_scorer_create_response.py">V2ScorerCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/scorers">client.v2_scorers.<a href="./src/weave_server_sdk/resources/v2_scorers.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_scorer_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_scorer_list_response.py">JSONLDecoder[V2ScorerListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/scorers/{object_id}">client.v2_scorers.<a href="./src/weave_server_sdk/resources/v2_scorers.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_scorer_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_scorer_delete_response.py">V2ScorerDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/scorers/{object_id}/versions/{digest}">client.v2_scorers.<a href="./src/weave_server_sdk/resources/v2_scorers.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_scorer_read_response.py">V2ScorerReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/scorers">client.v2.scorers.<a href="./src/weave_server_sdk/resources/v2/scorers.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/scorer_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/scorer_create_response.py">ScorerCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/scorers">client.v2.scorers.<a href="./src/weave_server_sdk/resources/v2/scorers.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/scorer_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/scorer_list_response.py">JSONLDecoder[ScorerListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/scorers/{object_id}">client.v2.scorers.<a href="./src/weave_server_sdk/resources/v2/scorers.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/scorer_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/scorer_delete_response.py">ScorerDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/scorers/{object_id}/versions/{digest}">client.v2.scorers.<a href="./src/weave_server_sdk/resources/v2/scorers.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2/scorer_read_response.py">ScorerReadResponse</a></code>
 
-# V2Datasets
+## Datasets
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2DatasetCreateResponse,
-    V2DatasetListResponse,
-    V2DatasetDeleteResponse,
-    V2DatasetReadResponse,
+from weave_server_sdk.types.v2 import (
+    DatasetCreateResponse,
+    DatasetListResponse,
+    DatasetDeleteResponse,
+    DatasetReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/datasets">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_dataset_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_create_response.py">V2DatasetCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/datasets">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_dataset_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_list_response.py">JSONLDecoder[V2DatasetListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/datasets/{object_id}">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_dataset_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_delete_response.py">V2DatasetDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/datasets/{object_id}/versions/{digest}">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_dataset_read_response.py">V2DatasetReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/datasets">client.v2.datasets.<a href="./src/weave_server_sdk/resources/v2/datasets.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/dataset_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/dataset_create_response.py">DatasetCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/datasets">client.v2.datasets.<a href="./src/weave_server_sdk/resources/v2/datasets.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/dataset_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/dataset_list_response.py">JSONLDecoder[DatasetListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/datasets/{object_id}">client.v2.datasets.<a href="./src/weave_server_sdk/resources/v2/datasets.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/dataset_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/dataset_delete_response.py">DatasetDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/datasets/{object_id}/versions/{digest}">client.v2.datasets.<a href="./src/weave_server_sdk/resources/v2/datasets.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2/dataset_read_response.py">DatasetReadResponse</a></code>
 
-# V2Evaluations
+## Evaluations
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2EvaluationCreateResponse,
-    V2EvaluationListResponse,
-    V2EvaluationDeleteResponse,
-    V2EvaluationReadResponse,
+from weave_server_sdk.types.v2 import (
+    EvaluationCreateResponse,
+    EvaluationListResponse,
+    EvaluationDeleteResponse,
+    EvaluationReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/evaluations">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_create_response.py">V2EvaluationCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/evaluations">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_list_response.py">JSONLDecoder[V2EvaluationListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/evaluations/{object_id}">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_delete_response.py">V2EvaluationDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/evaluations/{object_id}/versions/{digest}">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_evaluation_read_response.py">V2EvaluationReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/evaluations">client.v2.evaluations.<a href="./src/weave_server_sdk/resources/v2/evaluations.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_create_response.py">EvaluationCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/evaluations">client.v2.evaluations.<a href="./src/weave_server_sdk/resources/v2/evaluations.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_list_response.py">JSONLDecoder[EvaluationListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/evaluations/{object_id}">client.v2.evaluations.<a href="./src/weave_server_sdk/resources/v2/evaluations.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_delete_response.py">EvaluationDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/evaluations/{object_id}/versions/{digest}">client.v2.evaluations.<a href="./src/weave_server_sdk/resources/v2/evaluations.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2/evaluation_read_response.py">EvaluationReadResponse</a></code>
 
-# V2Models
+## Models
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2ModelCreateResponse,
-    V2ModelListResponse,
-    V2ModelDeleteResponse,
-    V2ModelReadResponse,
+from weave_server_sdk.types.v2 import (
+    ModelCreateResponse,
+    ModelListResponse,
+    ModelDeleteResponse,
+    ModelReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/models">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_model_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_create_response.py">V2ModelCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/models">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_model_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_list_response.py">JSONLDecoder[V2ModelListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/models/{object_id}">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_model_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_delete_response.py">V2ModelDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/models/{object_id}/versions/{digest}">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_model_read_response.py">V2ModelReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/models">client.v2.models.<a href="./src/weave_server_sdk/resources/v2/models.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/model_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/model_create_response.py">ModelCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/models">client.v2.models.<a href="./src/weave_server_sdk/resources/v2/models.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/model_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/model_list_response.py">JSONLDecoder[ModelListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/models/{object_id}">client.v2.models.<a href="./src/weave_server_sdk/resources/v2/models.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/model_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/model_delete_response.py">ModelDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/models/{object_id}/versions/{digest}">client.v2.models.<a href="./src/weave_server_sdk/resources/v2/models.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2/model_read_response.py">ModelReadResponse</a></code>
 
-# V2EvaluationRuns
+## EvaluationRuns
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2EvaluationRunCreateResponse,
-    V2EvaluationRunListResponse,
-    V2EvaluationRunDeleteResponse,
-    V2EvaluationRunFinishResponse,
-    V2EvaluationRunReadResponse,
+from weave_server_sdk.types.v2 import (
+    EvaluationRunCreateResponse,
+    EvaluationRunListResponse,
+    EvaluationRunDeleteResponse,
+    EvaluationRunFinishResponse,
+    EvaluationRunReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_create_response.py">V2EvaluationRunCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_list_response.py">JSONLDecoder[V2EvaluationRunListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_delete_response.py">V2EvaluationRunDeleteResponse</a></code>
-- <code title="post /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">finish</a>(evaluation_run_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_finish_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_finish_response.py">V2EvaluationRunFinishResponse</a></code>
-- <code title="get /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">read</a>(evaluation_run_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_read_response.py">V2EvaluationRunReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/evaluation_runs">client.v2.evaluation_runs.<a href="./src/weave_server_sdk/resources/v2/evaluation_runs.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_run_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_run_create_response.py">EvaluationRunCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/evaluation_runs">client.v2.evaluation_runs.<a href="./src/weave_server_sdk/resources/v2/evaluation_runs.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_run_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_run_list_response.py">JSONLDecoder[EvaluationRunListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/evaluation_runs">client.v2.evaluation_runs.<a href="./src/weave_server_sdk/resources/v2/evaluation_runs.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_run_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_run_delete_response.py">EvaluationRunDeleteResponse</a></code>
+- <code title="post /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish">client.v2.evaluation_runs.<a href="./src/weave_server_sdk/resources/v2/evaluation_runs.py">finish</a>(evaluation_run_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2/evaluation_run_finish_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/evaluation_run_finish_response.py">EvaluationRunFinishResponse</a></code>
+- <code title="get /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}">client.v2.evaluation_runs.<a href="./src/weave_server_sdk/resources/v2/evaluation_runs.py">read</a>(evaluation_run_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2/evaluation_run_read_response.py">EvaluationRunReadResponse</a></code>
 
-# V2Predictions
+## Predictions
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2PredictionCreateResponse,
-    V2PredictionListResponse,
-    V2PredictionDeleteResponse,
-    V2PredictionFinishResponse,
-    V2PredictionReadResponse,
+from weave_server_sdk.types.v2 import (
+    PredictionCreateResponse,
+    PredictionListResponse,
+    PredictionDeleteResponse,
+    PredictionFinishResponse,
+    PredictionReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_create_response.py">V2PredictionCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_list_response.py">JSONLDecoder[V2PredictionListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_delete_response.py">V2PredictionDeleteResponse</a></code>
-- <code title="post /v2/{entity}/{project}/predictions/{prediction_id}/finish">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">finish</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_finish_response.py">V2PredictionFinishResponse</a></code>
-- <code title="get /v2/{entity}/{project}/predictions/{prediction_id}">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">read</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_read_response.py">V2PredictionReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/predictions">client.v2.predictions.<a href="./src/weave_server_sdk/resources/v2/predictions.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/prediction_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/prediction_create_response.py">PredictionCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/predictions">client.v2.predictions.<a href="./src/weave_server_sdk/resources/v2/predictions.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/prediction_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/prediction_list_response.py">JSONLDecoder[PredictionListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/predictions">client.v2.predictions.<a href="./src/weave_server_sdk/resources/v2/predictions.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/prediction_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/prediction_delete_response.py">PredictionDeleteResponse</a></code>
+- <code title="post /v2/{entity}/{project}/predictions/{prediction_id}/finish">client.v2.predictions.<a href="./src/weave_server_sdk/resources/v2/predictions.py">finish</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2/prediction_finish_response.py">PredictionFinishResponse</a></code>
+- <code title="get /v2/{entity}/{project}/predictions/{prediction_id}">client.v2.predictions.<a href="./src/weave_server_sdk/resources/v2/predictions.py">read</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2/prediction_read_response.py">PredictionReadResponse</a></code>
 
-# V2Scores
+## Scores
 
 Types:
 
 ```python
-from weave_server_sdk.types import (
-    V2ScoreCreateResponse,
-    V2ScoreListResponse,
-    V2ScoreDeleteResponse,
-    V2ScoreReadResponse,
+from weave_server_sdk.types.v2 import (
+    ScoreCreateResponse,
+    ScoreListResponse,
+    ScoreDeleteResponse,
+    ScoreReadResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_create_response.py">V2ScoreCreateResponse</a></code>
-- <code title="get /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_list_response.py">JSONLDecoder[V2ScoreListResponse]</a></code>
-- <code title="delete /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_delete_response.py">V2ScoreDeleteResponse</a></code>
-- <code title="get /v2/{entity}/{project}/scores/{score_id}">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">read</a>(score_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_score_read_response.py">V2ScoreReadResponse</a></code>
+- <code title="post /v2/{entity}/{project}/scores">client.v2.scores.<a href="./src/weave_server_sdk/resources/v2/scores.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/score_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/score_create_response.py">ScoreCreateResponse</a></code>
+- <code title="get /v2/{entity}/{project}/scores">client.v2.scores.<a href="./src/weave_server_sdk/resources/v2/scores.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/score_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/score_list_response.py">JSONLDecoder[ScoreListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/scores">client.v2.scores.<a href="./src/weave_server_sdk/resources/v2/scores.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2/score_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2/score_delete_response.py">ScoreDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/scores/{score_id}">client.v2.scores.<a href="./src/weave_server_sdk/resources/v2/scores.py">read</a>(score_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2/score_read_response.py">ScoreReadResponse</a></code>
