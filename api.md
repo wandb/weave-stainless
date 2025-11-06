@@ -317,13 +317,18 @@ Methods:
 Types:
 
 ```python
-from weave_server_sdk.types import V2PredictionCreateResponse, V2PredictionListResponse
+from weave_server_sdk.types import (
+    V2PredictionCreateResponse,
+    V2PredictionListResponse,
+    V2PredictionFinishResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_create_response.py">V2PredictionCreateResponse</a></code>
 - <code title="get /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_list_response.py">JSONLDecoder[V2PredictionListResponse]</a></code>
+- <code title="post /v2/{entity}/{project}/predictions/{prediction_id}/finish">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">finish</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_finish_response.py">V2PredictionFinishResponse</a></code>
 
 # V2Scores
 

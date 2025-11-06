@@ -21,6 +21,7 @@ from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.v2_prediction_list_response import V2PredictionListResponse
 from ..types.v2_prediction_create_response import V2PredictionCreateResponse
+from ..types.v2_prediction_finish_response import V2PredictionFinishResponse
 
 __all__ = ["V2PredictionsResource", "AsyncV2PredictionsResource"]
 
@@ -154,6 +155,45 @@ class V2PredictionsResource(SyncAPIResource):
             stream=True,
         )
 
+    def finish(
+        self,
+        prediction_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2PredictionFinishResponse:
+        """
+        Finish a prediction.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not prediction_id:
+            raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
+        return self._post(
+            f"/v2/{entity}/{project}/predictions/{prediction_id}/finish",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2PredictionFinishResponse,
+        )
+
 
 class AsyncV2PredictionsResource(AsyncAPIResource):
     @cached_property
@@ -284,6 +324,45 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
             stream=True,
         )
 
+    async def finish(
+        self,
+        prediction_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2PredictionFinishResponse:
+        """
+        Finish a prediction.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not prediction_id:
+            raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
+        return await self._post(
+            f"/v2/{entity}/{project}/predictions/{prediction_id}/finish",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2PredictionFinishResponse,
+        )
+
 
 class V2PredictionsResourceWithRawResponse:
     def __init__(self, v2_predictions: V2PredictionsResource) -> None:
@@ -294,6 +373,9 @@ class V2PredictionsResourceWithRawResponse:
         )
         self.list = to_raw_response_wrapper(
             v2_predictions.list,
+        )
+        self.finish = to_raw_response_wrapper(
+            v2_predictions.finish,
         )
 
 
@@ -307,6 +389,9 @@ class AsyncV2PredictionsResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             v2_predictions.list,
         )
+        self.finish = async_to_raw_response_wrapper(
+            v2_predictions.finish,
+        )
 
 
 class V2PredictionsResourceWithStreamingResponse:
@@ -319,6 +404,9 @@ class V2PredictionsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             v2_predictions.list,
         )
+        self.finish = to_streamed_response_wrapper(
+            v2_predictions.finish,
+        )
 
 
 class AsyncV2PredictionsResourceWithStreamingResponse:
@@ -330,4 +418,7 @@ class AsyncV2PredictionsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             v2_predictions.list,
+        )
+        self.finish = async_to_streamed_response_wrapper(
+            v2_predictions.finish,
         )
