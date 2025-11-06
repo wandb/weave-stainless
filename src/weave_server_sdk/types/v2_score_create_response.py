@@ -2,10 +2,9 @@
 
 from .._models import BaseModel
 
-__all__ = ["ObjectCreateResponse"]
+__all__ = ["V2ScoreCreateResponse"]
 
 
-class ObjectCreateResponse(BaseModel):
-    digest: str
-
-    object_id: str
+class V2ScoreCreateResponse(BaseModel):
+    score_id: str
+    """The score ID"""

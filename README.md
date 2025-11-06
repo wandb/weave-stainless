@@ -43,7 +43,7 @@ object = client.objects.create(
         "val": {},
     },
 )
-print(object.digest)
+print(object.object_id)
 ```
 
 While you can provide a `username` keyword argument,
@@ -74,7 +74,7 @@ async def main() -> None:
             "val": {},
         },
     )
-    print(object.digest)
+    print(object.object_id)
 
 
 asyncio.run(main())
@@ -114,7 +114,7 @@ async def main() -> None:
                 "val": {},
             },
         )
-        print(object.digest)
+        print(object.object_id)
 
 
 asyncio.run(main())
@@ -317,7 +317,7 @@ response = client.objects.with_raw_response.create(
 print(response.headers.get('X-My-Header'))
 
 object_ = response.parse()  # get the object that `objects.create()` would have returned
-print(object_.digest)
+print(object_.object_id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/weave-python/tree/main/src/weave_server_sdk/_response.py) object.

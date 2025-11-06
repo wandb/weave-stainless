@@ -1,13 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from .v2 import (
-    V2Resource,
-    AsyncV2Resource,
-    V2ResourceWithRawResponse,
-    AsyncV2ResourceWithRawResponse,
-    V2ResourceWithStreamingResponse,
-    AsyncV2ResourceWithStreamingResponse,
-)
 from .otel import (
     OtelResource,
     AsyncOtelResource,
@@ -56,6 +48,14 @@ from .tables import (
     TablesResourceWithStreamingResponse,
     AsyncTablesResourceWithStreamingResponse,
 )
+from .v2_ops import (
+    V2OpsResource,
+    AsyncV2OpsResource,
+    V2OpsResourceWithRawResponse,
+    AsyncV2OpsResourceWithRawResponse,
+    V2OpsResourceWithStreamingResponse,
+    AsyncV2OpsResourceWithStreamingResponse,
+)
 from .objects import (
     ObjectsResource,
     AsyncObjectsResource,
@@ -88,6 +88,30 @@ from .services import (
     ServicesResourceWithStreamingResponse,
     AsyncServicesResourceWithStreamingResponse,
 )
+from .v2_models import (
+    V2ModelsResource,
+    AsyncV2ModelsResource,
+    V2ModelsResourceWithRawResponse,
+    AsyncV2ModelsResourceWithRawResponse,
+    V2ModelsResourceWithStreamingResponse,
+    AsyncV2ModelsResourceWithStreamingResponse,
+)
+from .v2_scores import (
+    V2ScoresResource,
+    AsyncV2ScoresResource,
+    V2ScoresResourceWithRawResponse,
+    AsyncV2ScoresResourceWithRawResponse,
+    V2ScoresResourceWithStreamingResponse,
+    AsyncV2ScoresResourceWithStreamingResponse,
+)
+from .v2_scorers import (
+    V2ScorersResource,
+    AsyncV2ScorersResource,
+    V2ScorersResourceWithRawResponse,
+    AsyncV2ScorersResourceWithRawResponse,
+    V2ScorersResourceWithStreamingResponse,
+    AsyncV2ScorersResourceWithStreamingResponse,
+)
 from .completions import (
     CompletionsResource,
     AsyncCompletionsResource,
@@ -95,6 +119,38 @@ from .completions import (
     AsyncCompletionsResourceWithRawResponse,
     CompletionsResourceWithStreamingResponse,
     AsyncCompletionsResourceWithStreamingResponse,
+)
+from .v2_datasets import (
+    V2DatasetsResource,
+    AsyncV2DatasetsResource,
+    V2DatasetsResourceWithRawResponse,
+    AsyncV2DatasetsResourceWithRawResponse,
+    V2DatasetsResourceWithStreamingResponse,
+    AsyncV2DatasetsResourceWithStreamingResponse,
+)
+from .v2_evaluations import (
+    V2EvaluationsResource,
+    AsyncV2EvaluationsResource,
+    V2EvaluationsResourceWithRawResponse,
+    AsyncV2EvaluationsResourceWithRawResponse,
+    V2EvaluationsResourceWithStreamingResponse,
+    AsyncV2EvaluationsResourceWithStreamingResponse,
+)
+from .v2_predictions import (
+    V2PredictionsResource,
+    AsyncV2PredictionsResource,
+    V2PredictionsResourceWithRawResponse,
+    AsyncV2PredictionsResourceWithRawResponse,
+    V2PredictionsResourceWithStreamingResponse,
+    AsyncV2PredictionsResourceWithStreamingResponse,
+)
+from .v2_evaluation_runs import (
+    V2EvaluationRunsResource,
+    AsyncV2EvaluationRunsResource,
+    V2EvaluationRunsResourceWithRawResponse,
+    AsyncV2EvaluationRunsResourceWithRawResponse,
+    V2EvaluationRunsResourceWithStreamingResponse,
+    AsyncV2EvaluationRunsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -164,10 +220,52 @@ __all__ = [
     "AsyncThreadsResourceWithRawResponse",
     "ThreadsResourceWithStreamingResponse",
     "AsyncThreadsResourceWithStreamingResponse",
-    "V2Resource",
-    "AsyncV2Resource",
-    "V2ResourceWithRawResponse",
-    "AsyncV2ResourceWithRawResponse",
-    "V2ResourceWithStreamingResponse",
-    "AsyncV2ResourceWithStreamingResponse",
+    "V2OpsResource",
+    "AsyncV2OpsResource",
+    "V2OpsResourceWithRawResponse",
+    "AsyncV2OpsResourceWithRawResponse",
+    "V2OpsResourceWithStreamingResponse",
+    "AsyncV2OpsResourceWithStreamingResponse",
+    "V2ScorersResource",
+    "AsyncV2ScorersResource",
+    "V2ScorersResourceWithRawResponse",
+    "AsyncV2ScorersResourceWithRawResponse",
+    "V2ScorersResourceWithStreamingResponse",
+    "AsyncV2ScorersResourceWithStreamingResponse",
+    "V2DatasetsResource",
+    "AsyncV2DatasetsResource",
+    "V2DatasetsResourceWithRawResponse",
+    "AsyncV2DatasetsResourceWithRawResponse",
+    "V2DatasetsResourceWithStreamingResponse",
+    "AsyncV2DatasetsResourceWithStreamingResponse",
+    "V2EvaluationsResource",
+    "AsyncV2EvaluationsResource",
+    "V2EvaluationsResourceWithRawResponse",
+    "AsyncV2EvaluationsResourceWithRawResponse",
+    "V2EvaluationsResourceWithStreamingResponse",
+    "AsyncV2EvaluationsResourceWithStreamingResponse",
+    "V2ModelsResource",
+    "AsyncV2ModelsResource",
+    "V2ModelsResourceWithRawResponse",
+    "AsyncV2ModelsResourceWithRawResponse",
+    "V2ModelsResourceWithStreamingResponse",
+    "AsyncV2ModelsResourceWithStreamingResponse",
+    "V2EvaluationRunsResource",
+    "AsyncV2EvaluationRunsResource",
+    "V2EvaluationRunsResourceWithRawResponse",
+    "AsyncV2EvaluationRunsResourceWithRawResponse",
+    "V2EvaluationRunsResourceWithStreamingResponse",
+    "AsyncV2EvaluationRunsResourceWithStreamingResponse",
+    "V2PredictionsResource",
+    "AsyncV2PredictionsResource",
+    "V2PredictionsResourceWithRawResponse",
+    "AsyncV2PredictionsResourceWithRawResponse",
+    "V2PredictionsResourceWithStreamingResponse",
+    "AsyncV2PredictionsResourceWithStreamingResponse",
+    "V2ScoresResource",
+    "AsyncV2ScoresResource",
+    "V2ScoresResourceWithRawResponse",
+    "AsyncV2ScoresResourceWithRawResponse",
+    "V2ScoresResourceWithStreamingResponse",
+    "AsyncV2ScoresResourceWithStreamingResponse",
 ]
