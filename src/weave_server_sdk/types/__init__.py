@@ -64,6 +64,7 @@ from .table_create_response import TableCreateResponse as TableCreateResponse
 from .table_update_response import TableUpdateResponse as TableUpdateResponse
 from .v2_op_create_response import V2OpCreateResponse as V2OpCreateResponse
 from .v2_op_delete_response import V2OpDeleteResponse as V2OpDeleteResponse
+from .v2_scorer_list_params import V2ScorerListParams as V2ScorerListParams
 from .feedback_create_params import FeedbackCreateParams as FeedbackCreateParams
 from .object_create_response import ObjectCreateResponse as ObjectCreateResponse
 from .object_delete_response import ObjectDeleteResponse as ObjectDeleteResponse
@@ -78,6 +79,10 @@ from .call_query_stats_params import CallQueryStatsParams as CallQueryStatsParam
 from .feedback_query_response import FeedbackQueryResponse as FeedbackQueryResponse
 from .feedback_replace_params import FeedbackReplaceParams as FeedbackReplaceParams
 from .ref_read_batch_response import RefReadBatchResponse as RefReadBatchResponse
+from .v2_scorer_create_params import V2ScorerCreateParams as V2ScorerCreateParams
+from .v2_scorer_delete_params import V2ScorerDeleteParams as V2ScorerDeleteParams
+from .v2_scorer_list_response import V2ScorerListResponse as V2ScorerListResponse
+from .v2_scorer_read_response import V2ScorerReadResponse as V2ScorerReadResponse
 from .call_stream_query_params import CallStreamQueryParams as CallStreamQueryParams
 from .call_upsert_batch_params import CallUpsertBatchParams as CallUpsertBatchParams
 from .completion_create_params import CompletionCreateParams as CompletionCreateParams
@@ -94,6 +99,8 @@ from .call_query_stats_response import CallQueryStatsResponse as CallQueryStatsR
 from .feedback_replace_response import FeedbackReplaceResponse as FeedbackReplaceResponse
 from .v2_evaluation_list_params import V2EvaluationListParams as V2EvaluationListParams
 from .v2_prediction_list_params import V2PredictionListParams as V2PredictionListParams
+from .v2_scorer_create_response import V2ScorerCreateResponse as V2ScorerCreateResponse
+from .v2_scorer_delete_response import V2ScorerDeleteResponse as V2ScorerDeleteResponse
 from .call_stream_query_response import CallStreamQueryResponse as CallStreamQueryResponse
 from .call_upsert_batch_response import CallUpsertBatchResponse as CallUpsertBatchResponse
 from .completion_create_response import CompletionCreateResponse as CompletionCreateResponse
