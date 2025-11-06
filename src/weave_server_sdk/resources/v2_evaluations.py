@@ -54,13 +54,11 @@ class V2EvaluationsResource(SyncAPIResource):
         entity: str,
         dataset: str,
         name: str,
-        project_id: str,
         description: Optional[str] | Omit = omit,
         eval_attributes: Optional[Dict[str, object]] | Omit = omit,
         evaluation_name: Optional[str] | Omit = omit,
         scorers: Optional[SequenceNotStr[str]] | Omit = omit,
         trials: int | Omit = omit,
-        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,8 +75,6 @@ class V2EvaluationsResource(SyncAPIResource):
           name: The name of this evaluation. Evaluations with the same name will be versioned
               together.
 
-          project_id: The `entity/project` where this evaluation will be saved
-
           description: A description of this evaluation
 
           eval_attributes: Optional attributes for the evaluation
@@ -88,8 +84,6 @@ class V2EvaluationsResource(SyncAPIResource):
           scorers: List of scorer references (weave:// URIs)
 
           trials: Number of trials to run
-
-          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -109,13 +103,11 @@ class V2EvaluationsResource(SyncAPIResource):
                 {
                     "dataset": dataset,
                     "name": name,
-                    "project_id": project_id,
                     "description": description,
                     "eval_attributes": eval_attributes,
                     "evaluation_name": evaluation_name,
                     "scorers": scorers,
                     "trials": trials,
-                    "wb_user_id": wb_user_id,
                 },
                 v2_evaluation_create_params.V2EvaluationCreateParams,
             ),
@@ -286,13 +278,11 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         entity: str,
         dataset: str,
         name: str,
-        project_id: str,
         description: Optional[str] | Omit = omit,
         eval_attributes: Optional[Dict[str, object]] | Omit = omit,
         evaluation_name: Optional[str] | Omit = omit,
         scorers: Optional[SequenceNotStr[str]] | Omit = omit,
         trials: int | Omit = omit,
-        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -309,8 +299,6 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
           name: The name of this evaluation. Evaluations with the same name will be versioned
               together.
 
-          project_id: The `entity/project` where this evaluation will be saved
-
           description: A description of this evaluation
 
           eval_attributes: Optional attributes for the evaluation
@@ -320,8 +308,6 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
           scorers: List of scorer references (weave:// URIs)
 
           trials: Number of trials to run
-
-          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -341,13 +327,11 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
                 {
                     "dataset": dataset,
                     "name": name,
-                    "project_id": project_id,
                     "description": description,
                     "eval_attributes": eval_attributes,
                     "evaluation_name": evaluation_name,
                     "scorers": scorers,
                     "trials": trials,
-                    "wb_user_id": wb_user_id,
                 },
                 v2_evaluation_create_params.V2EvaluationCreateParams,
             ),

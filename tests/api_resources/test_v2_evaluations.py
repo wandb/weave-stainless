@@ -30,7 +30,6 @@ class TestV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         )
         assert_matches_type(V2EvaluationCreateResponse, v2_evaluation, path=["response"])
 
@@ -41,13 +40,11 @@ class TestV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
             description="description",
             eval_attributes={"foo": "bar"},
             evaluation_name="evaluation_name",
             scorers=["string"],
             trials=0,
-            wb_user_id="wb_user_id",
         )
         assert_matches_type(V2EvaluationCreateResponse, v2_evaluation, path=["response"])
 
@@ -58,7 +55,6 @@ class TestV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         )
 
         assert response.is_closed is True
@@ -73,7 +69,6 @@ class TestV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -91,7 +86,6 @@ class TestV2Evaluations:
                 entity="",
                 dataset="dataset",
                 name="name",
-                project_id="project_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
@@ -100,7 +94,6 @@ class TestV2Evaluations:
                 entity="entity",
                 dataset="dataset",
                 name="name",
-                project_id="project_id",
             )
 
     @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
@@ -322,7 +315,6 @@ class TestAsyncV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         )
         assert_matches_type(V2EvaluationCreateResponse, v2_evaluation, path=["response"])
 
@@ -333,13 +325,11 @@ class TestAsyncV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
             description="description",
             eval_attributes={"foo": "bar"},
             evaluation_name="evaluation_name",
             scorers=["string"],
             trials=0,
-            wb_user_id="wb_user_id",
         )
         assert_matches_type(V2EvaluationCreateResponse, v2_evaluation, path=["response"])
 
@@ -350,7 +340,6 @@ class TestAsyncV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         )
 
         assert response.is_closed is True
@@ -365,7 +354,6 @@ class TestAsyncV2Evaluations:
             entity="entity",
             dataset="dataset",
             name="name",
-            project_id="project_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -383,7 +371,6 @@ class TestAsyncV2Evaluations:
                 entity="",
                 dataset="dataset",
                 name="name",
-                project_id="project_id",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
@@ -392,7 +379,6 @@ class TestAsyncV2Evaluations:
                 entity="entity",
                 dataset="dataset",
                 name="name",
-                project_id="project_id",
             )
 
     @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
