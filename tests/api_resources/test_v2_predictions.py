@@ -11,7 +11,9 @@ from tests.utils import assert_matches_type
 from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
 from weave_server_sdk.types import (
     V2PredictionListResponse,
+    V2PredictionReadResponse,
     V2PredictionCreateResponse,
+    V2PredictionDeleteResponse,
     V2PredictionFinishResponse,
 )
 from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
@@ -161,6 +163,59 @@ class TestV2Predictions:
             )
 
     @parametrize
+    def test_method_delete(self, client: WeaveTrace) -> None:
+        v2_prediction = client.v2_predictions.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        )
+        assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    def test_raw_response_delete(self, client: WeaveTrace) -> None:
+        response = client.v2_predictions.with_raw_response.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        v2_prediction = response.parse()
+        assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    def test_streaming_response_delete(self, client: WeaveTrace) -> None:
+        with client.v2_predictions.with_streaming_response.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            v2_prediction = response.parse()
+            assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_delete(self, client: WeaveTrace) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
+            client.v2_predictions.with_raw_response.delete(
+                project="project",
+                entity="",
+                body=["string"],
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
+            client.v2_predictions.with_raw_response.delete(
+                project="",
+                entity="entity",
+                body=["string"],
+            )
+
+    @parametrize
     def test_method_finish(self, client: WeaveTrace) -> None:
         v2_prediction = client.v2_predictions.finish(
             prediction_id="prediction_id",
@@ -215,6 +270,66 @@ class TestV2Predictions:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `prediction_id` but received ''"):
             client.v2_predictions.with_raw_response.finish(
+                prediction_id="",
+                entity="entity",
+                project="project",
+            )
+
+    @parametrize
+    def test_method_read(self, client: WeaveTrace) -> None:
+        v2_prediction = client.v2_predictions.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        )
+        assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    def test_raw_response_read(self, client: WeaveTrace) -> None:
+        response = client.v2_predictions.with_raw_response.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        v2_prediction = response.parse()
+        assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    def test_streaming_response_read(self, client: WeaveTrace) -> None:
+        with client.v2_predictions.with_streaming_response.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            v2_prediction = response.parse()
+            assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_read(self, client: WeaveTrace) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
+            client.v2_predictions.with_raw_response.read(
+                prediction_id="prediction_id",
+                entity="",
+                project="project",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
+            client.v2_predictions.with_raw_response.read(
+                prediction_id="prediction_id",
+                entity="entity",
+                project="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `prediction_id` but received ''"):
+            client.v2_predictions.with_raw_response.read(
                 prediction_id="",
                 entity="entity",
                 project="project",
@@ -365,6 +480,59 @@ class TestAsyncV2Predictions:
             )
 
     @parametrize
+    async def test_method_delete(self, async_client: AsyncWeaveTrace) -> None:
+        v2_prediction = await async_client.v2_predictions.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        )
+        assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    async def test_raw_response_delete(self, async_client: AsyncWeaveTrace) -> None:
+        response = await async_client.v2_predictions.with_raw_response.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        v2_prediction = await response.parse()
+        assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_delete(self, async_client: AsyncWeaveTrace) -> None:
+        async with async_client.v2_predictions.with_streaming_response.delete(
+            project="project",
+            entity="entity",
+            body=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            v2_prediction = await response.parse()
+            assert_matches_type(V2PredictionDeleteResponse, v2_prediction, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_delete(self, async_client: AsyncWeaveTrace) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
+            await async_client.v2_predictions.with_raw_response.delete(
+                project="project",
+                entity="",
+                body=["string"],
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
+            await async_client.v2_predictions.with_raw_response.delete(
+                project="",
+                entity="entity",
+                body=["string"],
+            )
+
+    @parametrize
     async def test_method_finish(self, async_client: AsyncWeaveTrace) -> None:
         v2_prediction = await async_client.v2_predictions.finish(
             prediction_id="prediction_id",
@@ -419,6 +587,66 @@ class TestAsyncV2Predictions:
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `prediction_id` but received ''"):
             await async_client.v2_predictions.with_raw_response.finish(
+                prediction_id="",
+                entity="entity",
+                project="project",
+            )
+
+    @parametrize
+    async def test_method_read(self, async_client: AsyncWeaveTrace) -> None:
+        v2_prediction = await async_client.v2_predictions.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        )
+        assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    async def test_raw_response_read(self, async_client: AsyncWeaveTrace) -> None:
+        response = await async_client.v2_predictions.with_raw_response.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        v2_prediction = await response.parse()
+        assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_read(self, async_client: AsyncWeaveTrace) -> None:
+        async with async_client.v2_predictions.with_streaming_response.read(
+            prediction_id="prediction_id",
+            entity="entity",
+            project="project",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            v2_prediction = await response.parse()
+            assert_matches_type(V2PredictionReadResponse, v2_prediction, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_read(self, async_client: AsyncWeaveTrace) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
+            await async_client.v2_predictions.with_raw_response.read(
+                prediction_id="prediction_id",
+                entity="",
+                project="project",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
+            await async_client.v2_predictions.with_raw_response.read(
+                prediction_id="prediction_id",
+                entity="entity",
+                project="",
+            )
+
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `prediction_id` but received ''"):
+            await async_client.v2_predictions.with_raw_response.read(
                 prediction_id="",
                 entity="entity",
                 project="project",

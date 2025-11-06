@@ -302,7 +302,9 @@ Types:
 from weave_server_sdk.types import (
     V2EvaluationRunCreateResponse,
     V2EvaluationRunListResponse,
+    V2EvaluationRunDeleteResponse,
     V2EvaluationRunFinishResponse,
+    V2EvaluationRunReadResponse,
 )
 ```
 
@@ -310,7 +312,9 @@ Methods:
 
 - <code title="post /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_create_response.py">V2EvaluationRunCreateResponse</a></code>
 - <code title="get /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_list_response.py">JSONLDecoder[V2EvaluationRunListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_delete_response.py">V2EvaluationRunDeleteResponse</a></code>
 - <code title="post /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">finish</a>(evaluation_run_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_finish_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_finish_response.py">V2EvaluationRunFinishResponse</a></code>
+- <code title="get /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">read</a>(evaluation_run_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_read_response.py">V2EvaluationRunReadResponse</a></code>
 
 # V2Predictions
 
@@ -320,7 +324,9 @@ Types:
 from weave_server_sdk.types import (
     V2PredictionCreateResponse,
     V2PredictionListResponse,
+    V2PredictionDeleteResponse,
     V2PredictionFinishResponse,
+    V2PredictionReadResponse,
 )
 ```
 
@@ -328,17 +334,26 @@ Methods:
 
 - <code title="post /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_create_response.py">V2PredictionCreateResponse</a></code>
 - <code title="get /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_list_response.py">JSONLDecoder[V2PredictionListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_delete_response.py">V2PredictionDeleteResponse</a></code>
 - <code title="post /v2/{entity}/{project}/predictions/{prediction_id}/finish">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">finish</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_finish_response.py">V2PredictionFinishResponse</a></code>
+- <code title="get /v2/{entity}/{project}/predictions/{prediction_id}">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">read</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_read_response.py">V2PredictionReadResponse</a></code>
 
 # V2Scores
 
 Types:
 
 ```python
-from weave_server_sdk.types import V2ScoreCreateResponse, V2ScoreListResponse
+from weave_server_sdk.types import (
+    V2ScoreCreateResponse,
+    V2ScoreListResponse,
+    V2ScoreDeleteResponse,
+    V2ScoreReadResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_create_response.py">V2ScoreCreateResponse</a></code>
 - <code title="get /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_list_response.py">JSONLDecoder[V2ScoreListResponse]</a></code>
+- <code title="delete /v2/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_delete_response.py">V2ScoreDeleteResponse</a></code>
+- <code title="get /v2/{entity}/{project}/scores/{score_id}">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">read</a>(score_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_score_read_response.py">V2ScoreReadResponse</a></code>

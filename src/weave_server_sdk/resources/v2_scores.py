@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..types import v2_score_list_params, v2_score_create_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -20,7 +20,9 @@ from .._response import (
 from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.v2_score_list_response import V2ScoreListResponse
+from ..types.v2_score_read_response import V2ScoreReadResponse
 from ..types.v2_score_create_response import V2ScoreCreateResponse
+from ..types.v2_score_delete_response import V2ScoreDeleteResponse
 
 __all__ = ["V2ScoresResource", "AsyncV2ScoresResource"]
 
@@ -154,6 +156,83 @@ class V2ScoresResource(SyncAPIResource):
             stream=True,
         )
 
+    def delete(
+        self,
+        project: str,
+        *,
+        entity: str,
+        body: SequenceNotStr[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2ScoreDeleteResponse:
+        """
+        Delete scores.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        return self._delete(
+            f"/v2/{entity}/{project}/scores",
+            body=maybe_transform(body, SequenceNotStr[str]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2ScoreDeleteResponse,
+        )
+
+    def read(
+        self,
+        score_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2ScoreReadResponse:
+        """
+        Get a score.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not score_id:
+            raise ValueError(f"Expected a non-empty value for `score_id` but received {score_id!r}")
+        return self._get(
+            f"/v2/{entity}/{project}/scores/{score_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2ScoreReadResponse,
+        )
+
 
 class AsyncV2ScoresResource(AsyncAPIResource):
     @cached_property
@@ -284,6 +363,83 @@ class AsyncV2ScoresResource(AsyncAPIResource):
             stream=True,
         )
 
+    async def delete(
+        self,
+        project: str,
+        *,
+        entity: str,
+        body: SequenceNotStr[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2ScoreDeleteResponse:
+        """
+        Delete scores.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        return await self._delete(
+            f"/v2/{entity}/{project}/scores",
+            body=await async_maybe_transform(body, SequenceNotStr[str]),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2ScoreDeleteResponse,
+        )
+
+    async def read(
+        self,
+        score_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2ScoreReadResponse:
+        """
+        Get a score.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not score_id:
+            raise ValueError(f"Expected a non-empty value for `score_id` but received {score_id!r}")
+        return await self._get(
+            f"/v2/{entity}/{project}/scores/{score_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2ScoreReadResponse,
+        )
+
 
 class V2ScoresResourceWithRawResponse:
     def __init__(self, v2_scores: V2ScoresResource) -> None:
@@ -294,6 +450,12 @@ class V2ScoresResourceWithRawResponse:
         )
         self.list = to_raw_response_wrapper(
             v2_scores.list,
+        )
+        self.delete = to_raw_response_wrapper(
+            v2_scores.delete,
+        )
+        self.read = to_raw_response_wrapper(
+            v2_scores.read,
         )
 
 
@@ -307,6 +469,12 @@ class AsyncV2ScoresResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             v2_scores.list,
         )
+        self.delete = async_to_raw_response_wrapper(
+            v2_scores.delete,
+        )
+        self.read = async_to_raw_response_wrapper(
+            v2_scores.read,
+        )
 
 
 class V2ScoresResourceWithStreamingResponse:
@@ -319,6 +487,12 @@ class V2ScoresResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             v2_scores.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            v2_scores.delete,
+        )
+        self.read = to_streamed_response_wrapper(
+            v2_scores.read,
+        )
 
 
 class AsyncV2ScoresResourceWithStreamingResponse:
@@ -330,4 +504,10 @@ class AsyncV2ScoresResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             v2_scores.list,
+        )
+        self.delete = async_to_streamed_response_wrapper(
+            v2_scores.delete,
+        )
+        self.read = async_to_streamed_response_wrapper(
+            v2_scores.read,
         )
