@@ -299,13 +299,18 @@ Methods:
 Types:
 
 ```python
-from weave_server_sdk.types import V2EvaluationRunCreateResponse, V2EvaluationRunListResponse
+from weave_server_sdk.types import (
+    V2EvaluationRunCreateResponse,
+    V2EvaluationRunListResponse,
+    V2EvaluationRunFinishResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_create_response.py">V2EvaluationRunCreateResponse</a></code>
 - <code title="get /v2/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_list_response.py">JSONLDecoder[V2EvaluationRunListResponse]</a></code>
+- <code title="post /v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">finish</a>(evaluation_run_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_finish_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_finish_response.py">V2EvaluationRunFinishResponse</a></code>
 
 # V2Predictions
 

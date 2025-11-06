@@ -389,8 +389,8 @@ class TestWeaveTrace:
         with pytest.raises(WeaveTraceError):
             with update_env(
                 **{
-                    "USERNAME": Omit(),
-                    "PASSWORD": Omit(),
+                    "WANDB_USERNAME": Omit(),
+                    "WANDB_API_KEY": Omit(),
                 }
             ):
                 client2 = WeaveTrace(base_url=base_url, username=None, password=None, _strict_response_validation=True)
@@ -1322,8 +1322,8 @@ class TestAsyncWeaveTrace:
         with pytest.raises(WeaveTraceError):
             with update_env(
                 **{
-                    "USERNAME": Omit(),
-                    "PASSWORD": Omit(),
+                    "WANDB_USERNAME": Omit(),
+                    "WANDB_API_KEY": Omit(),
                 }
             ):
                 client2 = AsyncWeaveTrace(
