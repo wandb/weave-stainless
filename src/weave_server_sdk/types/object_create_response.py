@@ -10,4 +10,4 @@ __all__ = ["ObjectCreateResponse"]
 class ObjectCreateResponse(BaseModel):
     digest: str
 
-    object_id: Optional[str] = None
+    object_id: str
