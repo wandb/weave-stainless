@@ -89,7 +89,7 @@ class V2ModelsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/v2/{entity}/{project}/models",
+            f"/object/{entity}/{project}/models",
             body=maybe_transform(
                 {
                     "name": name,
@@ -137,7 +137,7 @@ class V2ModelsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/v2/{entity}/{project}/models",
+            f"/object/{entity}/{project}/models",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -190,7 +190,7 @@ class V2ModelsResource(SyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return self._delete(
-            f"/v2/{entity}/{project}/models/{object_id}",
+            f"/object/{entity}/{project}/models/{object_id}",
             body=maybe_transform(body, Optional[SequenceNotStr[str]]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -233,7 +233,7 @@ class V2ModelsResource(SyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return self._get(
-            f"/v2/{entity}/{project}/models/{object_id}/versions/{digest}",
+            f"/object/{entity}/{project}/models/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -303,7 +303,7 @@ class AsyncV2ModelsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/v2/{entity}/{project}/models",
+            f"/object/{entity}/{project}/models",
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -351,7 +351,7 @@ class AsyncV2ModelsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/v2/{entity}/{project}/models",
+            f"/object/{entity}/{project}/models",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -404,7 +404,7 @@ class AsyncV2ModelsResource(AsyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return await self._delete(
-            f"/v2/{entity}/{project}/models/{object_id}",
+            f"/object/{entity}/{project}/models/{object_id}",
             body=await async_maybe_transform(body, Optional[SequenceNotStr[str]]),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -447,7 +447,7 @@ class AsyncV2ModelsResource(AsyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return await self._get(
-            f"/v2/{entity}/{project}/models/{object_id}/versions/{digest}",
+            f"/object/{entity}/{project}/models/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

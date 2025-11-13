@@ -86,7 +86,7 @@ class V2ScoresResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/v2/{entity}/{project}/scores",
+            f"/object/{entity}/{project}/scores",
             body=maybe_transform(
                 {
                     "prediction_id": prediction_id,
@@ -135,7 +135,7 @@ class V2ScoresResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/v2/{entity}/{project}/scores",
+            f"/object/{entity}/{project}/scores",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -216,7 +216,7 @@ class AsyncV2ScoresResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/v2/{entity}/{project}/scores",
+            f"/object/{entity}/{project}/scores",
             body=await async_maybe_transform(
                 {
                     "prediction_id": prediction_id,
@@ -265,7 +265,7 @@ class AsyncV2ScoresResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/v2/{entity}/{project}/scores",
+            f"/object/{entity}/{project}/scores",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,

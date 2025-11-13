@@ -7,4 +7,4 @@ __all__ = ["V2DatasetDeleteResponse"]
 
 class V2DatasetDeleteResponse(BaseModel):
     num_deleted: int
-    """Number of d ataset versions deleted"""
+    """Number of dataset versions deleted"""
