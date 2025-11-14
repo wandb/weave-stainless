@@ -48,6 +48,14 @@ from .tables import (
     TablesResourceWithStreamingResponse,
     AsyncTablesResourceWithStreamingResponse,
 )
+from .v2_ops import (
+    V2OpsResource,
+    AsyncV2OpsResource,
+    V2OpsResourceWithRawResponse,
+    AsyncV2OpsResourceWithRawResponse,
+    V2OpsResourceWithStreamingResponse,
+    AsyncV2OpsResourceWithStreamingResponse,
+)
 from .objects import (
     ObjectsResource,
     AsyncObjectsResource,
@@ -95,6 +103,14 @@ from .v2_scores import (
     AsyncV2ScoresResourceWithRawResponse,
     V2ScoresResourceWithStreamingResponse,
     AsyncV2ScoresResourceWithStreamingResponse,
+)
+from .v2_scorers import (
+    V2ScorersResource,
+    AsyncV2ScorersResource,
+    V2ScorersResourceWithRawResponse,
+    AsyncV2ScorersResourceWithRawResponse,
+    V2ScorersResourceWithStreamingResponse,
+    AsyncV2ScorersResourceWithStreamingResponse,
 )
 from .completions import (
     CompletionsResource,
@@ -204,6 +220,18 @@ __all__ = [
     "AsyncThreadsResourceWithRawResponse",
     "ThreadsResourceWithStreamingResponse",
     "AsyncThreadsResourceWithStreamingResponse",
+    "V2OpsResource",
+    "AsyncV2OpsResource",
+    "V2OpsResourceWithRawResponse",
+    "AsyncV2OpsResourceWithRawResponse",
+    "V2OpsResourceWithStreamingResponse",
+    "AsyncV2OpsResourceWithStreamingResponse",
+    "V2ScorersResource",
+    "AsyncV2ScorersResource",
+    "V2ScorersResourceWithRawResponse",
+    "AsyncV2ScorersResourceWithRawResponse",
+    "V2ScorersResourceWithStreamingResponse",
+    "AsyncV2ScorersResourceWithStreamingResponse",
     "V2DatasetsResource",
     "AsyncV2DatasetsResource",
     "V2DatasetsResourceWithRawResponse",
