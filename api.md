@@ -194,26 +194,6 @@ Methods:
 
 - <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>
 
-# V2Ops
-
-Types:
-
-```python
-from weave_server_sdk.types import (
-    V2OpCreateResponse,
-    V2OpListResponse,
-    V2OpDeleteResponse,
-    V2OpReadResponse,
-)
-```
-
-Methods:
-
-- <code title="post /object/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_create_response.py">V2OpCreateResponse</a></code>
-- <code title="get /object/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_list_response.py">JSONLDecoder[V2OpListResponse]</a></code>
-- <code title="delete /object/{entity}/{project}/ops/{object_id}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_op_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_delete_response.py">V2OpDeleteResponse</a></code>
-- <code title="get /object/{entity}/{project}/ops/{object_id}/versions/{digest}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_op_read_response.py">V2OpReadResponse</a></code>
-
 # V2Datasets
 
 Types:

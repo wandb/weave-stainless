@@ -48,14 +48,6 @@ from .tables import (
     TablesResourceWithStreamingResponse,
     AsyncTablesResourceWithStreamingResponse,
 )
-from .v2_ops import (
-    V2OpsResource,
-    AsyncV2OpsResource,
-    V2OpsResourceWithRawResponse,
-    AsyncV2OpsResourceWithRawResponse,
-    V2OpsResourceWithStreamingResponse,
-    AsyncV2OpsResourceWithStreamingResponse,
-)
 from .objects import (
     ObjectsResource,
     AsyncObjectsResource,
@@ -212,12 +204,6 @@ __all__ = [
     "AsyncThreadsResourceWithRawResponse",
     "ThreadsResourceWithStreamingResponse",
     "AsyncThreadsResourceWithStreamingResponse",
-    "V2OpsResource",
-    "AsyncV2OpsResource",
-    "V2OpsResourceWithRawResponse",
-    "AsyncV2OpsResourceWithRawResponse",
-    "V2OpsResourceWithStreamingResponse",
-    "AsyncV2OpsResourceWithStreamingResponse",
     "V2DatasetsResource",
     "AsyncV2DatasetsResource",
     "V2DatasetsResourceWithRawResponse",

@@ -27,7 +27,6 @@ from .call_read_params import CallReadParams as CallReadParams
 from .call_start_params import CallStartParams as CallStartParams
 from .cost_purge_params import CostPurgeParams as CostPurgeParams
 from .cost_query_params import CostQueryParams as CostQueryParams
-from .v2_op_list_params import V2OpListParams as V2OpListParams
 from .call_delete_params import CallDeleteParams as CallDeleteParams
 from .call_read_response import CallReadResponse as CallReadResponse
 from .call_update_params import CallUpdateParams as CallUpdateParams
@@ -42,10 +41,6 @@ from .file_content_params import FileContentParams as FileContentParams
 from .object_query_params import ObjectQueryParams as ObjectQueryParams
 from .table_create_params import TableCreateParams as TableCreateParams
 from .table_update_params import TableUpdateParams as TableUpdateParams
-from .v2_op_create_params import V2OpCreateParams as V2OpCreateParams
-from .v2_op_delete_params import V2OpDeleteParams as V2OpDeleteParams
-from .v2_op_list_response import V2OpListResponse as V2OpListResponse
-from .v2_op_read_response import V2OpReadResponse as V2OpReadResponse
 from .call_delete_response import CallDeleteResponse as CallDeleteResponse
 from .cost_create_response import CostCreateResponse as CostCreateResponse
 from .file_create_response import FileCreateResponse as FileCreateResponse
@@ -62,8 +57,6 @@ from .object_query_response import ObjectQueryResponse as ObjectQueryResponse
 from .ref_read_batch_params import RefReadBatchParams as RefReadBatchParams
 from .table_create_response import TableCreateResponse as TableCreateResponse
 from .table_update_response import TableUpdateResponse as TableUpdateResponse
-from .v2_op_create_response import V2OpCreateResponse as V2OpCreateResponse
-from .v2_op_delete_response import V2OpDeleteResponse as V2OpDeleteResponse
 from .feedback_create_params import FeedbackCreateParams as FeedbackCreateParams
 from .object_create_response import ObjectCreateResponse as ObjectCreateResponse
 from .object_delete_response import ObjectDeleteResponse as ObjectDeleteResponse
