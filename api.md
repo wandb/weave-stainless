@@ -193,3 +193,132 @@ from weave_server_sdk.types import ThreadStreamQueryResponse
 Methods:
 
 - <code title="post /threads/stream_query">client.threads.<a href="./src/weave_server_sdk/resources/threads.py">stream_query</a>(\*\*<a href="src/weave_server_sdk/types/thread_stream_query_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/thread_stream_query_response.py">JSONLDecoder[ThreadStreamQueryResponse]</a></code>
+
+# V2Ops
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2OpCreateResponse,
+    V2OpListResponse,
+    V2OpDeleteResponse,
+    V2OpReadResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_create_response.py">V2OpCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/ops">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_op_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_list_response.py">JSONLDecoder[V2OpListResponse]</a></code>
+- <code title="delete /object/{entity}/{project}/ops/{object_id}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_op_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_op_delete_response.py">V2OpDeleteResponse</a></code>
+- <code title="get /object/{entity}/{project}/ops/{object_id}/versions/{digest}">client.v2_ops.<a href="./src/weave_server_sdk/resources/v2_ops.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_op_read_response.py">V2OpReadResponse</a></code>
+
+# V2Datasets
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2DatasetCreateResponse,
+    V2DatasetListResponse,
+    V2DatasetDeleteResponse,
+    V2DatasetReadResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/datasets">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_dataset_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_create_response.py">V2DatasetCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/datasets">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_dataset_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_list_response.py">JSONLDecoder[V2DatasetListResponse]</a></code>
+- <code title="delete /object/{entity}/{project}/datasets/{object_id}">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_dataset_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_dataset_delete_response.py">V2DatasetDeleteResponse</a></code>
+- <code title="get /object/{entity}/{project}/datasets/{object_id}/versions/{digest}">client.v2_datasets.<a href="./src/weave_server_sdk/resources/v2_datasets.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_dataset_read_response.py">V2DatasetReadResponse</a></code>
+
+# V2Evaluations
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2EvaluationCreateResponse,
+    V2EvaluationListResponse,
+    V2EvaluationDeleteResponse,
+    V2EvaluationReadResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/evaluations">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_create_response.py">V2EvaluationCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/evaluations">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_list_response.py">JSONLDecoder[V2EvaluationListResponse]</a></code>
+- <code title="delete /object/{entity}/{project}/evaluations/{object_id}">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_delete_response.py">V2EvaluationDeleteResponse</a></code>
+- <code title="get /object/{entity}/{project}/evaluations/{object_id}/versions/{digest}">client.v2_evaluations.<a href="./src/weave_server_sdk/resources/v2_evaluations.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_evaluation_read_response.py">V2EvaluationReadResponse</a></code>
+
+# V2Models
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2ModelCreateResponse,
+    V2ModelListResponse,
+    V2ModelDeleteResponse,
+    V2ModelReadResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/models">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_model_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_create_response.py">V2ModelCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/models">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_model_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_list_response.py">JSONLDecoder[V2ModelListResponse]</a></code>
+- <code title="delete /object/{entity}/{project}/models/{object_id}">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">delete</a>(object_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_model_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_model_delete_response.py">V2ModelDeleteResponse</a></code>
+- <code title="get /object/{entity}/{project}/models/{object_id}/versions/{digest}">client.v2_models.<a href="./src/weave_server_sdk/resources/v2_models.py">read</a>(digest, \*, entity, project, object_id) -> <a href="./src/weave_server_sdk/types/v2_model_read_response.py">V2ModelReadResponse</a></code>
+
+# V2EvaluationRuns
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2EvaluationRunCreateResponse,
+    V2EvaluationRunListResponse,
+    V2EvaluationRunFinishResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_create_response.py">V2EvaluationRunCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/evaluation_runs">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_list_response.py">JSONLDecoder[V2EvaluationRunListResponse]</a></code>
+- <code title="post /object/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish">client.v2_evaluation_runs.<a href="./src/weave_server_sdk/resources/v2_evaluation_runs.py">finish</a>(evaluation_run_id, \*, entity, project, \*\*<a href="src/weave_server_sdk/types/v2_evaluation_run_finish_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_evaluation_run_finish_response.py">V2EvaluationRunFinishResponse</a></code>
+
+# V2Predictions
+
+Types:
+
+```python
+from weave_server_sdk.types import (
+    V2PredictionCreateResponse,
+    V2PredictionListResponse,
+    V2PredictionFinishResponse,
+)
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_create_response.py">V2PredictionCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/predictions">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_prediction_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_prediction_list_response.py">JSONLDecoder[V2PredictionListResponse]</a></code>
+- <code title="post /object/{entity}/{project}/predictions/{prediction_id}/finish">client.v2_predictions.<a href="./src/weave_server_sdk/resources/v2_predictions.py">finish</a>(prediction_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_prediction_finish_response.py">V2PredictionFinishResponse</a></code>
+
+# V2Scores
+
+Types:
+
+```python
+from weave_server_sdk.types import V2ScoreCreateResponse, V2ScoreListResponse
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_create_response.py">V2ScoreCreateResponse</a></code>
+- <code title="get /object/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_list_response.py">JSONLDecoder[V2ScoreListResponse]</a></code>
