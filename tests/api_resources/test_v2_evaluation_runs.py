@@ -12,7 +12,6 @@ from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
 from weave_server_sdk.types import (
     V2EvaluationRunListResponse,
     V2EvaluationRunCreateResponse,
-    V2EvaluationRunFinishResponse,
 )
 from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
@@ -142,76 +141,6 @@ class TestV2EvaluationRuns:
                 entity="entity",
             )
 
-    @parametrize
-    def test_method_finish(self, client: WeaveTrace) -> None:
-        v2_evaluation_run = client.v2_evaluation_runs.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        )
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    def test_method_finish_with_all_params(self, client: WeaveTrace) -> None:
-        v2_evaluation_run = client.v2_evaluation_runs.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-            summary={"foo": "bar"},
-        )
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    def test_raw_response_finish(self, client: WeaveTrace) -> None:
-        response = client.v2_evaluation_runs.with_raw_response.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        v2_evaluation_run = response.parse()
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    def test_streaming_response_finish(self, client: WeaveTrace) -> None:
-        with client.v2_evaluation_runs.with_streaming_response.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            v2_evaluation_run = response.parse()
-            assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_finish(self, client: WeaveTrace) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
-            client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="evaluation_run_id",
-                entity="",
-                project="project",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
-            client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="evaluation_run_id",
-                entity="entity",
-                project="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `evaluation_run_id` but received ''"):
-            client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="",
-                entity="entity",
-                project="project",
-            )
-
 
 class TestAsyncV2EvaluationRuns:
     parametrize = pytest.mark.parametrize(
@@ -336,74 +265,4 @@ class TestAsyncV2EvaluationRuns:
             await async_client.v2_evaluation_runs.with_raw_response.list(
                 project="",
                 entity="entity",
-            )
-
-    @parametrize
-    async def test_method_finish(self, async_client: AsyncWeaveTrace) -> None:
-        v2_evaluation_run = await async_client.v2_evaluation_runs.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        )
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    async def test_method_finish_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
-        v2_evaluation_run = await async_client.v2_evaluation_runs.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-            summary={"foo": "bar"},
-        )
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    async def test_raw_response_finish(self, async_client: AsyncWeaveTrace) -> None:
-        response = await async_client.v2_evaluation_runs.with_raw_response.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        v2_evaluation_run = await response.parse()
-        assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_finish(self, async_client: AsyncWeaveTrace) -> None:
-        async with async_client.v2_evaluation_runs.with_streaming_response.finish(
-            evaluation_run_id="evaluation_run_id",
-            entity="entity",
-            project="project",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            v2_evaluation_run = await response.parse()
-            assert_matches_type(V2EvaluationRunFinishResponse, v2_evaluation_run, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_finish(self, async_client: AsyncWeaveTrace) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
-            await async_client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="evaluation_run_id",
-                entity="",
-                project="project",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `project` but received ''"):
-            await async_client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="evaluation_run_id",
-                entity="entity",
-                project="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `evaluation_run_id` but received ''"):
-            await async_client.v2_evaluation_runs.with_raw_response.finish(
-                evaluation_run_id="",
-                entity="entity",
-                project="project",
             )

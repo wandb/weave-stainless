@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 
 import httpx
 
-from ..types import v2_evaluation_run_list_params, v2_evaluation_run_create_params, v2_evaluation_run_finish_params
+from ..types import v2_evaluation_run_list_params, v2_evaluation_run_create_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -21,7 +21,6 @@ from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.v2_evaluation_run_list_response import V2EvaluationRunListResponse
 from ..types.v2_evaluation_run_create_response import V2EvaluationRunCreateResponse
-from ..types.v2_evaluation_run_finish_response import V2EvaluationRunFinishResponse
 
 __all__ = ["V2EvaluationRunsResource", "AsyncV2EvaluationRunsResource"]
 
@@ -145,49 +144,6 @@ class V2EvaluationRunsResource(SyncAPIResource):
             stream=True,
         )
 
-    def finish(
-        self,
-        evaluation_run_id: str,
-        *,
-        entity: str,
-        project: str,
-        summary: Optional[Dict[str, object]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> V2EvaluationRunFinishResponse:
-        """
-        Finish an evaluation run.
-
-        Args:
-          summary: Optional summary dictionary for the evaluation run
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not entity:
-            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
-        if not project:
-            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        if not evaluation_run_id:
-            raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
-        return self._post(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
-            body=maybe_transform({"summary": summary}, v2_evaluation_run_finish_params.V2EvaluationRunFinishParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=V2EvaluationRunFinishResponse,
-        )
-
 
 class AsyncV2EvaluationRunsResource(AsyncAPIResource):
     @cached_property
@@ -308,51 +264,6 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
             stream=True,
         )
 
-    async def finish(
-        self,
-        evaluation_run_id: str,
-        *,
-        entity: str,
-        project: str,
-        summary: Optional[Dict[str, object]] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> V2EvaluationRunFinishResponse:
-        """
-        Finish an evaluation run.
-
-        Args:
-          summary: Optional summary dictionary for the evaluation run
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not entity:
-            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
-        if not project:
-            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        if not evaluation_run_id:
-            raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
-        return await self._post(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
-            body=await async_maybe_transform(
-                {"summary": summary}, v2_evaluation_run_finish_params.V2EvaluationRunFinishParams
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=V2EvaluationRunFinishResponse,
-        )
-
 
 class V2EvaluationRunsResourceWithRawResponse:
     def __init__(self, v2_evaluation_runs: V2EvaluationRunsResource) -> None:
@@ -363,9 +274,6 @@ class V2EvaluationRunsResourceWithRawResponse:
         )
         self.list = to_raw_response_wrapper(
             v2_evaluation_runs.list,
-        )
-        self.finish = to_raw_response_wrapper(
-            v2_evaluation_runs.finish,
         )
 
 
@@ -379,9 +287,6 @@ class AsyncV2EvaluationRunsResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             v2_evaluation_runs.list,
         )
-        self.finish = async_to_raw_response_wrapper(
-            v2_evaluation_runs.finish,
-        )
 
 
 class V2EvaluationRunsResourceWithStreamingResponse:
@@ -394,9 +299,6 @@ class V2EvaluationRunsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             v2_evaluation_runs.list,
         )
-        self.finish = to_streamed_response_wrapper(
-            v2_evaluation_runs.finish,
-        )
 
 
 class AsyncV2EvaluationRunsResourceWithStreamingResponse:
@@ -408,7 +310,4 @@ class AsyncV2EvaluationRunsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             v2_evaluation_runs.list,
-        )
-        self.finish = async_to_streamed_response_wrapper(
-            v2_evaluation_runs.finish,
         )

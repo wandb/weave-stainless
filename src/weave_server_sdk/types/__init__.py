@@ -123,11 +123,9 @@ from .v2_prediction_create_response import V2PredictionCreateResponse as V2Predi
 from .v2_prediction_finish_response import V2PredictionFinishResponse as V2PredictionFinishResponse
 from .completion_create_stream_params import CompletionCreateStreamParams as CompletionCreateStreamParams
 from .v2_evaluation_run_create_params import V2EvaluationRunCreateParams as V2EvaluationRunCreateParams
-from .v2_evaluation_run_finish_params import V2EvaluationRunFinishParams as V2EvaluationRunFinishParams
 from .v2_evaluation_run_list_response import V2EvaluationRunListResponse as V2EvaluationRunListResponse
 from .completion_create_stream_response import CompletionCreateStreamResponse as CompletionCreateStreamResponse
 from .v2_evaluation_run_create_response import V2EvaluationRunCreateResponse as V2EvaluationRunCreateResponse
-from .v2_evaluation_run_finish_response import V2EvaluationRunFinishResponse as V2EvaluationRunFinishResponse
 
 # Rebuild cyclical models only after all modules are imported.
 # This ensures that, when building the deferred (due to cyclical references) model schema,
