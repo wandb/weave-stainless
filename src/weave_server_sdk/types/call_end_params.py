@@ -15,7 +15,7 @@ class CallEndParams(TypedDict, total=False):
     end: Required[End]
 
 
-class EndSummaryUsageTyped(TypedDict, total=False):
+class EndSummaryUsage(TypedDict, total=False):
     completion_tokens: Optional[int]
 
     input_tokens: Optional[int]
@@ -27,9 +27,6 @@ class EndSummaryUsageTyped(TypedDict, total=False):
     requests: Optional[int]
 
     total_tokens: Optional[int]
-
-
-EndSummaryUsage: TypeAlias = Union[EndSummaryUsageTyped, Dict[str, object]]
 
 
 class EndSummaryTyped(TypedDict, total=False):
