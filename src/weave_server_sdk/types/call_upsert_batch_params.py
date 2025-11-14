@@ -69,7 +69,7 @@ class BatchCallBatchStartMode(TypedDict, total=False):
     mode: str
 
 
-class BatchCallBatchEndModeReqEndSummaryUsageTyped(TypedDict, total=False):
+class BatchCallBatchEndModeReqEndSummaryUsage(TypedDict, total=False):
     completion_tokens: Optional[int]
 
     input_tokens: Optional[int]
@@ -81,11 +81,6 @@ class BatchCallBatchEndModeReqEndSummaryUsageTyped(TypedDict, total=False):
     requests: Optional[int]
 
     total_tokens: Optional[int]
-
-
-BatchCallBatchEndModeReqEndSummaryUsage: TypeAlias = Union[
-    BatchCallBatchEndModeReqEndSummaryUsageTyped, Dict[str, object]
-]
 
 
 class BatchCallBatchEndModeReqEndSummaryTyped(TypedDict, total=False):
