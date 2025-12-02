@@ -96,6 +96,7 @@ pip install 'weave_server_sdk[aiohttp] @ git+ssh://git@github.com/stainless-sdks
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from weave_server_sdk import DefaultAioHttpClient
 from weave_server_sdk import AsyncWeaveTrace
@@ -103,8 +104,8 @@ from weave_server_sdk import AsyncWeaveTrace
 
 async def main() -> None:
     async with AsyncWeaveTrace(
-        username="My Username",
-        password="My Password",
+        username=os.environ.get("WANDB_USERNAME"),  # This is the default and can be omitted
+        password=os.environ.get("WANDB_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         object = await client.objects.create(
