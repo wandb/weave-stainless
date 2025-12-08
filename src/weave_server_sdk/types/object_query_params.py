@@ -40,6 +40,8 @@ class ObjectQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
+    """Filter criteria for the query. See `ObjectVersionFilter`"""
+
     base_object_classes: Optional[SequenceNotStr[str]]
     """Filter objects by their base classes"""
 

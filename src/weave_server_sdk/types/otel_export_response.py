@@ -8,6 +8,11 @@ __all__ = ["OtelExportResponse", "PartialSuccess"]
 
 
 class PartialSuccess(BaseModel):
+    """The details of a partially successful export request.
+
+    When None or rejected_spans is 0, the request was fully accepted.
+    """
+
     error_message: str
 
     rejected_spans: int

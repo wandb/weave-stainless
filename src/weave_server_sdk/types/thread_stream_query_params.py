@@ -34,6 +34,8 @@ class ThreadStreamQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
+    """Filter criteria for the threads query"""
+
     after_datetime: Annotated[Union[str, datetime, None], PropertyInfo(format="iso8601")]
     """Only include threads with start_time after this timestamp"""
 

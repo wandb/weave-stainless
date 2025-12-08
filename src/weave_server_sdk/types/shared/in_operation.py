@@ -12,6 +12,16 @@ __all__ = ["InOperation"]
 
 
 class InOperation(BaseModel):
+    """Membership check.
+
+    Returns true if the left operand is in the list provided as the second operand.
+
+    Example:
+        ```
+        {"$in": [{"$getField": "op_name"}, [{"$literal": "predict"}, {"$literal": "generate"}]]}
+        ```
+    """
+
     in_: List["Operation"] = FieldInfo(alias="$in")
 
 

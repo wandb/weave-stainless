@@ -12,6 +12,19 @@ __all__ = ["OrOperation"]
 
 
 class OrOperation(BaseModel):
+    """Logical OR. At least one condition must be true.
+
+    Example:
+        ```
+        {
+            "$or": [
+                {"$eq": [{"$getField": "op_name"}, {"$literal": "a"}]},
+                {"$eq": [{"$getField": "op_name"}, {"$literal": "b"}]},
+            ]
+        }
+        ```
+    """
+
     or_: List["Operation"] = FieldInfo(alias="$or")
 
 

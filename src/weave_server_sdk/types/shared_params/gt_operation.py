@@ -11,6 +11,14 @@ __all__ = ["GtOperation"]
 
 
 class GtOperation(TypedDict, total=False):
+    """Greater than comparison.
+
+    Example:
+        ```
+        {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 100}]}
+        ```
+    """
+
     gt: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$gt")]]
 
 

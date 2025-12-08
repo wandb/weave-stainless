@@ -11,6 +11,14 @@ __all__ = ["EqOperation"]
 
 
 class EqOperation(TypedDict, total=False):
+    """Equality check between two operands.
+
+    Example:
+        ```
+        {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]}
+        ```
+    """
+
     eq: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$eq")]]
 
 

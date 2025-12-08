@@ -10,6 +10,12 @@ __all__ = ["ConvertSpec"]
 
 
 class ConvertSpec(BaseModel):
+    """Specifies conversion details for `$convert`.
+
+    - `input`: The operand to convert.
+    - `to`: The type to convert to.
+    """
+
     input: "Operation"
 
     to: Literal["double", "string", "int", "bool", "exists"]

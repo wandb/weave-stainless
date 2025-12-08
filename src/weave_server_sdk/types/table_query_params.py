@@ -35,6 +35,8 @@ class TableQueryParams(TypedDict, total=False):
 
 
 class Filter(TypedDict, total=False):
+    """Optional filter to apply to the query. See `TableRowFilter` for more details."""
+
     row_digests: Optional[SequenceNotStr[str]]
     """List of row digests to filter by"""
 

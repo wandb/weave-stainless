@@ -11,6 +11,19 @@ __all__ = ["AndOperation"]
 
 
 class AndOperation(TypedDict, total=False):
+    """Logical AND. All conditions must evaluate to true.
+
+    Example:
+        ```
+        {
+            "$and": [
+                {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]},
+                {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 1000}]},
+            ]
+        }
+        ```
+    """
+
     and_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$and")]]
 
 

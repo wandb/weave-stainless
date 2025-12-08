@@ -12,6 +12,14 @@ __all__ = ["NotOperation"]
 
 
 class NotOperation(BaseModel):
+    """Logical NOT. Inverts the condition.
+
+    Example:
+        ```
+        {"$not": [{"$eq": [{"$getField": "op_name"}, {"$literal": "debug"}]}]}
+        ```
+    """
+
     not_: List["Operation"] = FieldInfo(alias="$not")
 
 

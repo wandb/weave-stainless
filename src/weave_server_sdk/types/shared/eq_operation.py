@@ -12,6 +12,14 @@ __all__ = ["EqOperation"]
 
 
 class EqOperation(BaseModel):
+    """Equality check between two operands.
+
+    Example:
+        ```
+        {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]}
+        ```
+    """
+
     eq: List["Operation"] = FieldInfo(alias="$eq")
 
 

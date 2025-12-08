@@ -10,6 +10,14 @@ __all__ = ["ConvertOperation"]
 
 
 class ConvertOperation(TypedDict, total=False):
+    """Convert the input value to a specific type (e.g., `int`, `bool`, `string`).
+
+    Example:
+        ```
+        {"$convert": {"input": {"$getField": "inputs.value"}, "to": "int"}}
+        ```
+    """
+
     convert: Required[Annotated["ConvertSpec", PropertyInfo(alias="$convert")]]
     """Specifies conversion details for `$convert`.
 

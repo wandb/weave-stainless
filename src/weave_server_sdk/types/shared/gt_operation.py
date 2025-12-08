@@ -12,6 +12,14 @@ __all__ = ["GtOperation"]
 
 
 class GtOperation(BaseModel):
+    """Greater than comparison.
+
+    Example:
+        ```
+        {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 100}]}
+        ```
+    """
+
     gt: List["Operation"] = FieldInfo(alias="$gt")
 
 
