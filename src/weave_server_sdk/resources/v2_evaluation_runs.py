@@ -6,7 +6,12 @@ from typing import Dict, Optional
 
 import httpx
 
-from ..types import v2_evaluation_run_list_params, v2_evaluation_run_create_params, v2_evaluation_run_finish_params
+from ..types import (
+    v2_evaluation_run_list_params,
+    v2_evaluation_run_create_params,
+    v2_evaluation_run_delete_params,
+    v2_evaluation_run_finish_params,
+)
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -20,7 +25,9 @@ from .._response import (
 from .._base_client import make_request_options
 from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 from ..types.v2_evaluation_run_list_response import V2EvaluationRunListResponse
+from ..types.v2_evaluation_run_read_response import V2EvaluationRunReadResponse
 from ..types.v2_evaluation_run_create_response import V2EvaluationRunCreateResponse
+from ..types.v2_evaluation_run_delete_response import V2EvaluationRunDeleteResponse
 from ..types.v2_evaluation_run_finish_response import V2EvaluationRunFinishResponse
 
 __all__ = ["V2EvaluationRunsResource", "AsyncV2EvaluationRunsResource"]
@@ -161,6 +168,52 @@ class V2EvaluationRunsResource(SyncAPIResource):
             stream=True,
         )
 
+    def delete(
+        self,
+        project: str,
+        *,
+        entity: str,
+        evaluation_run_ids: SequenceNotStr[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2EvaluationRunDeleteResponse:
+        """
+        Delete evaluation runs.
+
+        Args:
+          evaluation_run_ids: List of evaluation run IDs to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        return self._delete(
+            f"/object/{entity}/{project}/evaluation_runs",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {"evaluation_run_ids": evaluation_run_ids},
+                    v2_evaluation_run_delete_params.V2EvaluationRunDeleteParams,
+                ),
+            ),
+            cast_to=V2EvaluationRunDeleteResponse,
+        )
+
     def finish(
         self,
         evaluation_run_id: str,
@@ -202,6 +255,45 @@ class V2EvaluationRunsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=V2EvaluationRunFinishResponse,
+        )
+
+    def read(
+        self,
+        evaluation_run_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2EvaluationRunReadResponse:
+        """
+        Read an evaluation run.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not evaluation_run_id:
+            raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
+        return self._get(
+            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2EvaluationRunReadResponse,
         )
 
 
@@ -340,6 +432,52 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
             stream=True,
         )
 
+    async def delete(
+        self,
+        project: str,
+        *,
+        entity: str,
+        evaluation_run_ids: SequenceNotStr[str],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2EvaluationRunDeleteResponse:
+        """
+        Delete evaluation runs.
+
+        Args:
+          evaluation_run_ids: List of evaluation run IDs to delete
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        return await self._delete(
+            f"/object/{entity}/{project}/evaluation_runs",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"evaluation_run_ids": evaluation_run_ids},
+                    v2_evaluation_run_delete_params.V2EvaluationRunDeleteParams,
+                ),
+            ),
+            cast_to=V2EvaluationRunDeleteResponse,
+        )
+
     async def finish(
         self,
         evaluation_run_id: str,
@@ -385,6 +523,45 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
             cast_to=V2EvaluationRunFinishResponse,
         )
 
+    async def read(
+        self,
+        evaluation_run_id: str,
+        *,
+        entity: str,
+        project: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> V2EvaluationRunReadResponse:
+        """
+        Read an evaluation run.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not entity:
+            raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
+        if not project:
+            raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
+        if not evaluation_run_id:
+            raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
+        return await self._get(
+            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=V2EvaluationRunReadResponse,
+        )
+
 
 class V2EvaluationRunsResourceWithRawResponse:
     def __init__(self, v2_evaluation_runs: V2EvaluationRunsResource) -> None:
@@ -396,8 +573,14 @@ class V2EvaluationRunsResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             v2_evaluation_runs.list,
         )
+        self.delete = to_raw_response_wrapper(
+            v2_evaluation_runs.delete,
+        )
         self.finish = to_raw_response_wrapper(
             v2_evaluation_runs.finish,
+        )
+        self.read = to_raw_response_wrapper(
+            v2_evaluation_runs.read,
         )
 
 
@@ -411,8 +594,14 @@ class AsyncV2EvaluationRunsResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             v2_evaluation_runs.list,
         )
+        self.delete = async_to_raw_response_wrapper(
+            v2_evaluation_runs.delete,
+        )
         self.finish = async_to_raw_response_wrapper(
             v2_evaluation_runs.finish,
+        )
+        self.read = async_to_raw_response_wrapper(
+            v2_evaluation_runs.read,
         )
 
 
@@ -426,8 +615,14 @@ class V2EvaluationRunsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             v2_evaluation_runs.list,
         )
+        self.delete = to_streamed_response_wrapper(
+            v2_evaluation_runs.delete,
+        )
         self.finish = to_streamed_response_wrapper(
             v2_evaluation_runs.finish,
+        )
+        self.read = to_streamed_response_wrapper(
+            v2_evaluation_runs.read,
         )
 
 
@@ -441,6 +636,12 @@ class AsyncV2EvaluationRunsResourceWithStreamingResponse:
         self.list = async_to_streamed_response_wrapper(
             v2_evaluation_runs.list,
         )
+        self.delete = async_to_streamed_response_wrapper(
+            v2_evaluation_runs.delete,
+        )
         self.finish = async_to_streamed_response_wrapper(
             v2_evaluation_runs.finish,
+        )
+        self.read = async_to_streamed_response_wrapper(
+            v2_evaluation_runs.read,
         )
