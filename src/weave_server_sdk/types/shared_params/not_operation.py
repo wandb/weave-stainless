@@ -19,7 +19,4 @@ class NotOperation(TypedDict, total=False):
         ```
     """
 
-    not_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$not")]]
-
-
-from .operation import Operation
+    not_: Required[Annotated[Iterable[object], PropertyInfo(alias="$not")]]

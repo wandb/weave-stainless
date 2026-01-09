@@ -19,7 +19,4 @@ class GteOperation(TypedDict, total=False):
         ```
     """
 
-    gte: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$gte")]]
-
-
-from .operation import Operation
+    gte: Required[Annotated[Iterable[object], PropertyInfo(alias="$gte")]]

@@ -1,7 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from __future__ import annotations
-
 from typing import List
 
 from pydantic import Field as FieldInfo
@@ -20,7 +18,4 @@ class GtOperation(BaseModel):
         ```
     """
 
-    gt: List["Operation"] = FieldInfo(alias="$gt")
-
-
-from .operation import Operation
+    gt: List[object] = FieldInfo(alias="$gt")
