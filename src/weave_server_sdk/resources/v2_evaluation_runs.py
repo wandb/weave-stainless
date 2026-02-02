@@ -88,7 +88,7 @@ class V2EvaluationRunsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             body=maybe_transform(
                 {
                     "evaluation": evaluation,
@@ -147,7 +147,7 @@ class V2EvaluationRunsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -200,7 +200,7 @@ class V2EvaluationRunsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._delete(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -249,7 +249,7 @@ class V2EvaluationRunsResource(SyncAPIResource):
         if not evaluation_run_id:
             raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
         return self._post(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
+            f"/v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
             body=maybe_transform({"summary": summary}, v2_evaluation_run_finish_params.V2EvaluationRunFinishParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -289,7 +289,7 @@ class V2EvaluationRunsResource(SyncAPIResource):
         if not evaluation_run_id:
             raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
         return self._get(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
+            f"/v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -352,7 +352,7 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             body=await async_maybe_transform(
                 {
                     "evaluation": evaluation,
@@ -411,7 +411,7 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -464,7 +464,7 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/evaluation_runs",
+            f"/v2/{entity}/{project}/evaluation_runs",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -513,7 +513,7 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
         if not evaluation_run_id:
             raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
         return await self._post(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
+            f"/v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}/finish",
             body=await async_maybe_transform(
                 {"summary": summary}, v2_evaluation_run_finish_params.V2EvaluationRunFinishParams
             ),
@@ -555,7 +555,7 @@ class AsyncV2EvaluationRunsResource(AsyncAPIResource):
         if not evaluation_run_id:
             raise ValueError(f"Expected a non-empty value for `evaluation_run_id` but received {evaluation_run_id!r}")
         return await self._get(
-            f"/object/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
+            f"/v2/{entity}/{project}/evaluation_runs/{evaluation_run_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

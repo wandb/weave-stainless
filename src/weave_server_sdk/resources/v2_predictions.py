@@ -89,7 +89,7 @@ class V2PredictionsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             body=maybe_transform(
                 {
                     "inputs": inputs,
@@ -144,7 +144,7 @@ class V2PredictionsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -195,7 +195,7 @@ class V2PredictionsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._delete(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -240,7 +240,7 @@ class V2PredictionsResource(SyncAPIResource):
         if not prediction_id:
             raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
         return self._post(
-            f"/object/{entity}/{project}/predictions/{prediction_id}/finish",
+            f"/v2/{entity}/{project}/predictions/{prediction_id}/finish",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -279,7 +279,7 @@ class V2PredictionsResource(SyncAPIResource):
         if not prediction_id:
             raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
         return self._get(
-            f"/object/{entity}/{project}/predictions/{prediction_id}",
+            f"/v2/{entity}/{project}/predictions/{prediction_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -348,7 +348,7 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             body=await async_maybe_transform(
                 {
                     "inputs": inputs,
@@ -403,7 +403,7 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -454,7 +454,7 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/predictions",
+            f"/v2/{entity}/{project}/predictions",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -499,7 +499,7 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
         if not prediction_id:
             raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
         return await self._post(
-            f"/object/{entity}/{project}/predictions/{prediction_id}/finish",
+            f"/v2/{entity}/{project}/predictions/{prediction_id}/finish",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -538,7 +538,7 @@ class AsyncV2PredictionsResource(AsyncAPIResource):
         if not prediction_id:
             raise ValueError(f"Expected a non-empty value for `prediction_id` but received {prediction_id!r}")
         return await self._get(
-            f"/object/{entity}/{project}/predictions/{prediction_id}",
+            f"/v2/{entity}/{project}/predictions/{prediction_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

@@ -84,7 +84,7 @@ class V2ScorersResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             body=maybe_transform(
                 {
                     "name": name,
@@ -128,7 +128,7 @@ class V2ScorersResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._get(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -172,7 +172,7 @@ class V2ScorersResource(SyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return self._delete(
-            f"/object/{entity}/{project}/scorers/{object_id}",
+            f"/v2/{entity}/{project}/scorers/{object_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -218,7 +218,7 @@ class V2ScorersResource(SyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return self._get(
-            f"/object/{entity}/{project}/scorers/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/scorers/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -285,7 +285,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -329,7 +329,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._get(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -373,7 +373,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/scorers/{object_id}",
+            f"/v2/{entity}/{project}/scorers/{object_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -419,7 +419,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return await self._get(
-            f"/object/{entity}/{project}/scorers/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/scorers/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
