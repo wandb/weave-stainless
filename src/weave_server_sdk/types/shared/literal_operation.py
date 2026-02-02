@@ -12,6 +12,16 @@ __all__ = ["LiteralOperation"]
 
 
 class LiteralOperation(BaseModel):
+    """Represents a constant value in the query language.
+
+    This can be any standard JSON-serializable value.
+
+    Example:
+        ```
+        {"$literal": "predict"}
+        ```
+    """
+
     literal: Union[str, float, bool, Dict[str, "LiteralOperation"], List["LiteralOperation"], None] = FieldInfo(
         alias="$literal", default=None
     )

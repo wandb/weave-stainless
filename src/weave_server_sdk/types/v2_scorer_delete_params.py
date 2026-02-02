@@ -15,4 +15,8 @@ class V2ScorerDeleteParams(TypedDict, total=False):
 
     project: Required[str]
 
-    body: Optional[SequenceNotStr[str]]
+    digests: Optional[SequenceNotStr[str]]
+    """List of digests to delete.
+
+    If not provided, all digests for the scorer will be deleted.
+    """

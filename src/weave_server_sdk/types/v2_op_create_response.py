@@ -6,6 +6,8 @@ __all__ = ["V2OpCreateResponse"]
 
 
 class V2OpCreateResponse(BaseModel):
+    """Response model for creating an Op object."""
+
     digest: str
     """The digest of the created op"""
 

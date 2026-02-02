@@ -8,6 +8,11 @@ __all__ = ["V2OpReadResponse"]
 
 
 class V2OpReadResponse(BaseModel):
+    """Response model for reading an Op object.
+
+    The code field contains the actual source code of the op.
+    """
+
     code: str
     """The actual op source code"""
 

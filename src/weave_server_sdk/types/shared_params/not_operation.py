@@ -11,7 +11,12 @@ __all__ = ["NotOperation"]
 
 
 class NotOperation(TypedDict, total=False):
-    not_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$not")]]
+    """Logical NOT. Inverts the condition.
 
+    Example:
+        ```
+        {"$not": [{"$eq": [{"$getField": "op_name"}, {"$literal": "debug"}]}]}
+        ```
+    """
 
-from .operation import Operation
+    not_: Required[Annotated[Iterable[object], PropertyInfo(alias="$not")]]

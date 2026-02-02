@@ -12,6 +12,19 @@ __all__ = ["AndOperation"]
 
 
 class AndOperation(BaseModel):
+    """Logical AND. All conditions must evaluate to true.
+
+    Example:
+        ```
+        {
+            "$and": [
+                {"$eq": [{"$getField": "op_name"}, {"$literal": "predict"}]},
+                {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 1000}]},
+            ]
+        }
+        ```
+    """
+
     and_: List["Operation"] = FieldInfo(alias="$and")
 
 

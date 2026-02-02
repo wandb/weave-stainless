@@ -12,7 +12,10 @@ class V2PredictionListParams(TypedDict, total=False):
     entity: Required[str]
 
     evaluation_run_id: Optional[str]
+    """Filter by evaluation run ID"""
 
     limit: Optional[int]
+    """Maximum number of predictions to return"""
 
     offset: Optional[int]
+    """Number of predictions to skip"""

@@ -112,14 +112,6 @@ from .v2_scorers import (
     V2ScorersResourceWithStreamingResponse,
     AsyncV2ScorersResourceWithStreamingResponse,
 )
-from .completions import (
-    CompletionsResource,
-    AsyncCompletionsResource,
-    CompletionsResourceWithRawResponse,
-    AsyncCompletionsResourceWithRawResponse,
-    CompletionsResourceWithStreamingResponse,
-    AsyncCompletionsResourceWithStreamingResponse,
-)
 from .v2_datasets import (
     V2DatasetsResource,
     AsyncV2DatasetsResource,
@@ -208,12 +200,6 @@ __all__ = [
     "AsyncOtelResourceWithRawResponse",
     "OtelResourceWithStreamingResponse",
     "AsyncOtelResourceWithStreamingResponse",
-    "CompletionsResource",
-    "AsyncCompletionsResource",
-    "CompletionsResourceWithRawResponse",
-    "AsyncCompletionsResourceWithRawResponse",
-    "CompletionsResourceWithStreamingResponse",
-    "AsyncCompletionsResourceWithStreamingResponse",
     "ThreadsResource",
     "AsyncThreadsResource",
     "ThreadsResourceWithRawResponse",

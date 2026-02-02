@@ -2,15 +2,17 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import Required, TypedDict
 
-__all__ = ["V2ScorerListParams"]
+__all__ = ["V2OpReadParams"]
 
 
-class V2ScorerListParams(TypedDict, total=False):
+class V2OpReadParams(TypedDict, total=False):
     entity: Required[str]
 
-    limit: Optional[int]
+    project: Required[str]
 
-    offset: Optional[int]
+    object_id: Required[str]
+
+    eager: bool
+    """Whether to eagerly load the op code"""

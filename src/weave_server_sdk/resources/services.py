@@ -15,7 +15,6 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.server_info_res import ServerInfoRes
-from ..types.service_health_check_response import ServiceHealthCheckResponse
 
 __all__ = ["ServicesResource", "AsyncServicesResource"]
 
@@ -49,14 +48,14 @@ class ServicesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceHealthCheckResponse:
+    ) -> object:
         """Read Root"""
         return self._get(
             "/health",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceHealthCheckResponse,
+            cast_to=object,
         )
 
     def server_info(
@@ -108,14 +107,14 @@ class AsyncServicesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ServiceHealthCheckResponse:
+    ) -> object:
         """Read Root"""
         return await self._get(
             "/health",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ServiceHealthCheckResponse,
+            cast_to=object,
         )
 
     async def server_info(

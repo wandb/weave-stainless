@@ -6,7 +6,7 @@ from typing import Dict, Optional
 
 import httpx
 
-from ..types import v2_evaluation_list_params, v2_evaluation_create_params
+from ..types import v2_evaluation_create_params, v2_evaluation_delete_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,8 +18,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
-from ..types.v2_evaluation_list_response import V2EvaluationListResponse
 from ..types.v2_evaluation_read_response import V2EvaluationReadResponse
 from ..types.v2_evaluation_create_response import V2EvaluationCreateResponse
 from ..types.v2_evaluation_delete_response import V2EvaluationDeleteResponse
@@ -54,13 +52,11 @@ class V2EvaluationsResource(SyncAPIResource):
         entity: str,
         dataset: str,
         name: str,
-        project_id: str,
         description: Optional[str] | Omit = omit,
         eval_attributes: Optional[Dict[str, object]] | Omit = omit,
         evaluation_name: Optional[str] | Omit = omit,
         scorers: Optional[SequenceNotStr[str]] | Omit = omit,
         trials: int | Omit = omit,
-        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -77,8 +73,6 @@ class V2EvaluationsResource(SyncAPIResource):
           name: The name of this evaluation. Evaluations with the same name will be versioned
               together.
 
-          project_id: The `entity/project` where this evaluation will be saved
-
           description: A description of this evaluation
 
           eval_attributes: Optional attributes for the evaluation
@@ -88,8 +82,6 @@ class V2EvaluationsResource(SyncAPIResource):
           scorers: List of scorer references (weave:// URIs)
 
           trials: Number of trials to run
-
-          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -104,18 +96,16 @@ class V2EvaluationsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/evaluations",
+            f"/v2/{entity}/{project}/evaluations",
             body=maybe_transform(
                 {
                     "dataset": dataset,
                     "name": name,
-                    "project_id": project_id,
                     "description": description,
                     "eval_attributes": eval_attributes,
                     "evaluation_name": evaluation_name,
                     "scorers": scorers,
                     "trials": trials,
-                    "wb_user_id": wb_user_id,
                 },
                 v2_evaluation_create_params.V2EvaluationCreateParams,
             ),
@@ -130,15 +120,13 @@ class V2EvaluationsResource(SyncAPIResource):
         project: str,
         *,
         entity: str,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JSONLDecoder[V2EvaluationListResponse]:
+    ) -> object:
         """
         List evaluation objects.
 
@@ -155,24 +143,12 @@ class V2EvaluationsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/object/{entity}/{project}/evaluations",
+            f"/v2/{entity}/{project}/evaluations",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    v2_evaluation_list_params.V2EvaluationListParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JSONLDecoder[V2EvaluationListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     def delete(
@@ -181,7 +157,7 @@ class V2EvaluationsResource(SyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -189,10 +165,14 @@ class V2EvaluationsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2EvaluationDeleteResponse:
-        """
-        Delete an evaluation object.
+        """Delete an evaluation object.
 
         Args:
+          digests: List of digests to delete.
+
+        If not provided, all digests for the evaluation will
+              be deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -208,10 +188,13 @@ class V2EvaluationsResource(SyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return self._delete(
-            f"/object/{entity}/{project}/evaluations/{object_id}",
-            body=maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/evaluations/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"digests": digests}, v2_evaluation_delete_params.V2EvaluationDeleteParams),
             ),
             cast_to=V2EvaluationDeleteResponse,
         )
@@ -251,7 +234,7 @@ class V2EvaluationsResource(SyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return self._get(
-            f"/object/{entity}/{project}/evaluations/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/evaluations/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -286,13 +269,11 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         entity: str,
         dataset: str,
         name: str,
-        project_id: str,
         description: Optional[str] | Omit = omit,
         eval_attributes: Optional[Dict[str, object]] | Omit = omit,
         evaluation_name: Optional[str] | Omit = omit,
         scorers: Optional[SequenceNotStr[str]] | Omit = omit,
         trials: int | Omit = omit,
-        wb_user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -309,8 +290,6 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
           name: The name of this evaluation. Evaluations with the same name will be versioned
               together.
 
-          project_id: The `entity/project` where this evaluation will be saved
-
           description: A description of this evaluation
 
           eval_attributes: Optional attributes for the evaluation
@@ -320,8 +299,6 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
           scorers: List of scorer references (weave:// URIs)
 
           trials: Number of trials to run
-
-          wb_user_id: Do not set directly. Server will automatically populate this field.
 
           extra_headers: Send extra headers
 
@@ -336,18 +313,16 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/evaluations",
+            f"/v2/{entity}/{project}/evaluations",
             body=await async_maybe_transform(
                 {
                     "dataset": dataset,
                     "name": name,
-                    "project_id": project_id,
                     "description": description,
                     "eval_attributes": eval_attributes,
                     "evaluation_name": evaluation_name,
                     "scorers": scorers,
                     "trials": trials,
-                    "wb_user_id": wb_user_id,
                 },
                 v2_evaluation_create_params.V2EvaluationCreateParams,
             ),
@@ -362,15 +337,13 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         project: str,
         *,
         entity: str,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncJSONLDecoder[V2EvaluationListResponse]:
+    ) -> object:
         """
         List evaluation objects.
 
@@ -387,24 +360,12 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/object/{entity}/{project}/evaluations",
+            f"/v2/{entity}/{project}/evaluations",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    v2_evaluation_list_params.V2EvaluationListParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncJSONLDecoder[V2EvaluationListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     async def delete(
@@ -413,7 +374,7 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -421,10 +382,14 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2EvaluationDeleteResponse:
-        """
-        Delete an evaluation object.
+        """Delete an evaluation object.
 
         Args:
+          digests: List of digests to delete.
+
+        If not provided, all digests for the evaluation will
+              be deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -440,10 +405,15 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/evaluations/{object_id}",
-            body=await async_maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/evaluations/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"digests": digests}, v2_evaluation_delete_params.V2EvaluationDeleteParams
+                ),
             ),
             cast_to=V2EvaluationDeleteResponse,
         )
@@ -483,7 +453,7 @@ class AsyncV2EvaluationsResource(AsyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return await self._get(
-            f"/object/{entity}/{project}/evaluations/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/evaluations/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

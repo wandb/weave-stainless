@@ -12,5 +12,7 @@ class V2DatasetListParams(TypedDict, total=False):
     entity: Required[str]
 
     limit: Optional[int]
+    """Maximum number of datasets to return"""
 
     offset: Optional[int]
+    """Number of datasets to skip"""

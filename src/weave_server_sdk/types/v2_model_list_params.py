@@ -12,5 +12,7 @@ class V2ModelListParams(TypedDict, total=False):
     entity: Required[str]
 
     limit: Optional[int]
+    """Maximum number of models to return"""
 
     offset: Optional[int]
+    """Number of models to skip"""

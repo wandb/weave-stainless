@@ -1,7 +1,5 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from __future__ import annotations
-
 from typing import List
 
 from pydantic import Field as FieldInfo
@@ -12,7 +10,12 @@ __all__ = ["GtOperation"]
 
 
 class GtOperation(BaseModel):
-    gt: List["Operation"] = FieldInfo(alias="$gt")
+    """Greater than comparison.
 
+    Example:
+        ```
+        {"$gt": [{"$getField": "summary.usage.tokens"}, {"$literal": 100}]}
+        ```
+    """
 
-from .operation import Operation
+    gt: List[object] = FieldInfo(alias="$gt")

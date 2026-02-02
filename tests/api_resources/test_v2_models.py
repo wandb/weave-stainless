@@ -10,12 +10,10 @@ import pytest
 from tests.utils import assert_matches_type
 from weave_server_sdk import WeaveTrace, AsyncWeaveTrace
 from weave_server_sdk.types import (
-    V2ModelListResponse,
     V2ModelReadResponse,
     V2ModelCreateResponse,
     V2ModelDeleteResponse,
 )
-from weave_server_sdk._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -93,27 +91,24 @@ class TestV2Models:
                 source_code="source_code",
             )
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     def test_method_list(self, client: WeaveTrace) -> None:
-        v2_model_stream = client.v2_models.list(
+        v2_model = client.v2_models.list(
             project="project",
             entity="entity",
         )
-        assert_matches_type(JSONLDecoder[V2ModelListResponse], v2_model_stream, path=["response"])
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     def test_method_list_with_all_params(self, client: WeaveTrace) -> None:
-        v2_model_stream = client.v2_models.list(
+        v2_model = client.v2_models.list(
             project="project",
             entity="entity",
             limit=0,
             offset=0,
         )
-        assert_matches_type(JSONLDecoder[V2ModelListResponse], v2_model_stream, path=["response"])
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     def test_raw_response_list(self, client: WeaveTrace) -> None:
         response = client.v2_models.with_raw_response.list(
@@ -121,11 +116,11 @@ class TestV2Models:
             entity="entity",
         )
 
+        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        stream = response.parse()
-        stream.close()
+        v2_model = response.parse()
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     def test_streaming_response_list(self, client: WeaveTrace) -> None:
         with client.v2_models.with_streaming_response.list(
@@ -135,12 +130,11 @@ class TestV2Models:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            stream = response.parse()
-            stream.close()
+            v2_model = response.parse()
+            assert_matches_type(object, v2_model, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     def test_path_params_list(self, client: WeaveTrace) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
@@ -170,7 +164,7 @@ class TestV2Models:
             object_id="object_id",
             entity="entity",
             project="project",
-            body=["string"],
+            digests=["string"],
         )
         assert_matches_type(V2ModelDeleteResponse, v2_model, path=["response"])
 
@@ -375,27 +369,24 @@ class TestAsyncV2Models:
                 source_code="source_code",
             )
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     async def test_method_list(self, async_client: AsyncWeaveTrace) -> None:
-        v2_model_stream = await async_client.v2_models.list(
+        v2_model = await async_client.v2_models.list(
             project="project",
             entity="entity",
         )
-        assert_matches_type(AsyncJSONLDecoder[V2ModelListResponse], v2_model_stream, path=["response"])
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncWeaveTrace) -> None:
-        v2_model_stream = await async_client.v2_models.list(
+        v2_model = await async_client.v2_models.list(
             project="project",
             entity="entity",
             limit=0,
             offset=0,
         )
-        assert_matches_type(AsyncJSONLDecoder[V2ModelListResponse], v2_model_stream, path=["response"])
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncWeaveTrace) -> None:
         response = await async_client.v2_models.with_raw_response.list(
@@ -403,11 +394,11 @@ class TestAsyncV2Models:
             entity="entity",
         )
 
+        assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        stream = await response.parse()
-        await stream.close()
+        v2_model = await response.parse()
+        assert_matches_type(object, v2_model, path=["response"])
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncWeaveTrace) -> None:
         async with async_client.v2_models.with_streaming_response.list(
@@ -417,12 +408,11 @@ class TestAsyncV2Models:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            stream = await response.parse()
-            await stream.close()
+            v2_model = await response.parse()
+            assert_matches_type(object, v2_model, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism doesn't support application/jsonl responses")
     @parametrize
     async def test_path_params_list(self, async_client: AsyncWeaveTrace) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `entity` but received ''"):
@@ -452,7 +442,7 @@ class TestAsyncV2Models:
             object_id="object_id",
             entity="entity",
             project="project",
-            body=["string"],
+            digests=["string"],
         )
         assert_matches_type(V2ModelDeleteResponse, v2_model, path=["response"])
 

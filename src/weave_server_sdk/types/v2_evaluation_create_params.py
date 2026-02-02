@@ -22,9 +22,6 @@ class V2EvaluationCreateParams(TypedDict, total=False):
     Evaluations with the same name will be versioned together.
     """
 
-    project_id: Required[str]
-    """The `entity/project` where this evaluation will be saved"""
-
     description: Optional[str]
     """A description of this evaluation"""
 
@@ -39,6 +36,3 @@ class V2EvaluationCreateParams(TypedDict, total=False):
 
     trials: int
     """Number of trials to run"""
-
-    wb_user_id: Optional[str]
-    """Do not set directly. Server will automatically populate this field."""

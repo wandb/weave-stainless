@@ -12,5 +12,7 @@ class V2OpListParams(TypedDict, total=False):
     entity: Required[str]
 
     limit: Optional[int]
+    """Maximum number of ops to return"""
 
     offset: Optional[int]
+    """Number of ops to skip"""

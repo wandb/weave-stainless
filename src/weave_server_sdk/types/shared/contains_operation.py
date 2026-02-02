@@ -10,6 +10,16 @@ __all__ = ["ContainsOperation"]
 
 
 class ContainsOperation(BaseModel):
+    """Case-insensitive substring match.
+
+    Not part of MongoDB. Weave-specific addition.
+
+    Example:
+        ```
+        {"$contains": {"input": {"$getField": "display_name"}, "substr": {"$literal": "llm"}, "case_insensitive": true}}
+        ```
+    """
+
     contains: "ContainsSpec" = FieldInfo(alias="$contains")
     """Specification for the `$contains` operation.
 

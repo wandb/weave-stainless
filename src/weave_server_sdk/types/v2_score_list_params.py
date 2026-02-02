@@ -12,7 +12,10 @@ class V2ScoreListParams(TypedDict, total=False):
     entity: Required[str]
 
     evaluation_run_id: Optional[str]
+    """Filter by evaluation run ID"""
 
     limit: Optional[int]
+    """Maximum number of scores to return"""
 
     offset: Optional[int]
+    """Number of scores to skip"""

@@ -11,7 +11,14 @@ __all__ = ["InOperation"]
 
 
 class InOperation(TypedDict, total=False):
-    in_: Required[Annotated[Iterable["Operation"], PropertyInfo(alias="$in")]]
+    """Membership check.
 
+    Returns true if the left operand is in the list provided as the second operand.
 
-from .operation import Operation
+    Example:
+        ```
+        {"$in": [{"$getField": "op_name"}, [{"$literal": "predict"}, {"$literal": "generate"}]]}
+        ```
+    """
+
+    in_: Required[Annotated[Iterable[object], PropertyInfo(alias="$in")]]

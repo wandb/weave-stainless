@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..types import v2_scorer_list_params, v2_scorer_create_params
+from ..types import v2_scorer_create_params, v2_scorer_delete_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,8 +18,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
-from ..types.v2_scorer_list_response import V2ScorerListResponse
 from ..types.v2_scorer_read_response import V2ScorerReadResponse
 from ..types.v2_scorer_create_response import V2ScorerCreateResponse
 from ..types.v2_scorer_delete_response import V2ScorerDeleteResponse
@@ -86,7 +84,7 @@ class V2ScorersResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             body=maybe_transform(
                 {
                     "name": name,
@@ -106,15 +104,13 @@ class V2ScorersResource(SyncAPIResource):
         project: str,
         *,
         entity: str,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JSONLDecoder[V2ScorerListResponse]:
+    ) -> object:
         """
         List scorer objects.
 
@@ -131,24 +127,12 @@ class V2ScorersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    v2_scorer_list_params.V2ScorerListParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=JSONLDecoder[V2ScorerListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     def delete(
@@ -157,7 +141,7 @@ class V2ScorersResource(SyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -165,10 +149,14 @@ class V2ScorersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2ScorerDeleteResponse:
-        """
-        Delete a scorer object.
+        """Delete a scorer object.
 
         Args:
+          digests: List of digests to delete.
+
+        If not provided, all digests for the scorer will be
+              deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -184,10 +172,13 @@ class V2ScorersResource(SyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return self._delete(
-            f"/object/{entity}/{project}/scorers/{object_id}",
-            body=maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/scorers/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"digests": digests}, v2_scorer_delete_params.V2ScorerDeleteParams),
             ),
             cast_to=V2ScorerDeleteResponse,
         )
@@ -227,7 +218,7 @@ class V2ScorersResource(SyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return self._get(
-            f"/object/{entity}/{project}/scorers/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/scorers/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -294,7 +285,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             body=await async_maybe_transform(
                 {
                     "name": name,
@@ -314,15 +305,13 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         project: str,
         *,
         entity: str,
-        limit: Optional[int] | Omit = omit,
-        offset: Optional[int] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncJSONLDecoder[V2ScorerListResponse]:
+    ) -> object:
         """
         List scorer objects.
 
@@ -339,24 +328,12 @@ class AsyncV2ScorersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/object/{entity}/{project}/scorers",
+            f"/v2/{entity}/{project}/scorers",
             options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "limit": limit,
-                        "offset": offset,
-                    },
-                    v2_scorer_list_params.V2ScorerListParams,
-                ),
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AsyncJSONLDecoder[V2ScorerListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     async def delete(
@@ -365,7 +342,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -373,10 +350,14 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2ScorerDeleteResponse:
-        """
-        Delete a scorer object.
+        """Delete a scorer object.
 
         Args:
+          digests: List of digests to delete.
+
+        If not provided, all digests for the scorer will be
+              deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -392,10 +373,13 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/scorers/{object_id}",
-            body=await async_maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/scorers/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"digests": digests}, v2_scorer_delete_params.V2ScorerDeleteParams),
             ),
             cast_to=V2ScorerDeleteResponse,
         )
@@ -435,7 +419,7 @@ class AsyncV2ScorersResource(AsyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return await self._get(
-            f"/object/{entity}/{project}/scorers/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/scorers/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

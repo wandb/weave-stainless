@@ -1,4 +1,4 @@
-configured_endpoints: 60
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/weights-biases%2Fweave-b6cf2a1c4dacb199b16712de6c3e447e61329394a75ecf2ad2506c92dd7ad3e8.yml
-openapi_spec_hash: 5f74da7e2f2e416a1c2556e0b635c53f
-config_hash: fdb002503d9b42c06d0fbbd22ed62b4e
+configured_endpoints: 64
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/weights-biases%2Fweave-56745769989bc10bf1b3ac5e72e9c903cf9b5dbc7d9e715e69a451f8d36bc0d7.yml
+openapi_spec_hash: 5fff05a09bb28beaf743d957a10cb99a
+config_hash: 455abc6b11d6188ef3c0ac896a4cb88d

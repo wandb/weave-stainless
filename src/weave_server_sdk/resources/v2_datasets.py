@@ -6,7 +6,7 @@ from typing import Dict, Iterable, Optional
 
 import httpx
 
-from ..types import v2_dataset_list_params, v2_dataset_create_params
+from ..types import v2_dataset_list_params, v2_dataset_create_params, v2_dataset_delete_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,8 +18,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from .._decoders.jsonl import JSONLDecoder, AsyncJSONLDecoder
-from ..types.v2_dataset_list_response import V2DatasetListResponse
 from ..types.v2_dataset_read_response import V2DatasetReadResponse
 from ..types.v2_dataset_create_response import V2DatasetCreateResponse
 from ..types.v2_dataset_delete_response import V2DatasetDeleteResponse
@@ -86,7 +84,7 @@ class V2DatasetsResource(SyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return self._post(
-            f"/object/{entity}/{project}/datasets",
+            f"/v2/{entity}/{project}/datasets",
             body=maybe_transform(
                 {
                     "rows": rows,
@@ -114,11 +112,15 @@ class V2DatasetsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> JSONLDecoder[V2DatasetListResponse]:
+    ) -> object:
         """
         List dataset objects.
 
         Args:
+          limit: Maximum number of datasets to return
+
+          offset: Number of datasets to skip
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -131,9 +133,8 @@ class V2DatasetsResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return self._get(
-            f"/object/{entity}/{project}/datasets",
+            f"/v2/{entity}/{project}/datasets",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -147,8 +148,7 @@ class V2DatasetsResource(SyncAPIResource):
                     v2_dataset_list_params.V2DatasetListParams,
                 ),
             ),
-            cast_to=JSONLDecoder[V2DatasetListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     def delete(
@@ -157,7 +157,7 @@ class V2DatasetsResource(SyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -165,10 +165,15 @@ class V2DatasetsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2DatasetDeleteResponse:
-        """
-        Delete a dataset object.
+        """Delete a dataset object.
+
+        If digests are provided, only those versions are
+        deleted. Otherwise, all versions are deleted.
 
         Args:
+          digests: List of digests to delete. If not provided, all digests for the dataset will be
+              deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -184,10 +189,13 @@ class V2DatasetsResource(SyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return self._delete(
-            f"/object/{entity}/{project}/datasets/{object_id}",
-            body=maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/datasets/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"digests": digests}, v2_dataset_delete_params.V2DatasetDeleteParams),
             ),
             cast_to=V2DatasetDeleteResponse,
         )
@@ -227,7 +235,7 @@ class V2DatasetsResource(SyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return self._get(
-            f"/object/{entity}/{project}/datasets/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/datasets/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -294,7 +302,7 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
         return await self._post(
-            f"/object/{entity}/{project}/datasets",
+            f"/v2/{entity}/{project}/datasets",
             body=await async_maybe_transform(
                 {
                     "rows": rows,
@@ -322,11 +330,15 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncJSONLDecoder[V2DatasetListResponse]:
+    ) -> object:
         """
         List dataset objects.
 
         Args:
+          limit: Maximum number of datasets to return
+
+          offset: Number of datasets to skip
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -339,9 +351,8 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `entity` but received {entity!r}")
         if not project:
             raise ValueError(f"Expected a non-empty value for `project` but received {project!r}")
-        extra_headers = {"Accept": "application/jsonl", **(extra_headers or {})}
         return await self._get(
-            f"/object/{entity}/{project}/datasets",
+            f"/v2/{entity}/{project}/datasets",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -355,8 +366,7 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
                     v2_dataset_list_params.V2DatasetListParams,
                 ),
             ),
-            cast_to=AsyncJSONLDecoder[V2DatasetListResponse],
-            stream=True,
+            cast_to=object,
         )
 
     async def delete(
@@ -365,7 +375,7 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         *,
         entity: str,
         project: str,
-        body: Optional[SequenceNotStr[str]] | Omit = omit,
+        digests: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -373,10 +383,15 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> V2DatasetDeleteResponse:
-        """
-        Delete a dataset object.
+        """Delete a dataset object.
+
+        If digests are provided, only those versions are
+        deleted. Otherwise, all versions are deleted.
 
         Args:
+          digests: List of digests to delete. If not provided, all digests for the dataset will be
+              deleted.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -392,10 +407,13 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         if not object_id:
             raise ValueError(f"Expected a non-empty value for `object_id` but received {object_id!r}")
         return await self._delete(
-            f"/object/{entity}/{project}/datasets/{object_id}",
-            body=await async_maybe_transform(body, Optional[SequenceNotStr[str]]),
+            f"/v2/{entity}/{project}/datasets/{object_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"digests": digests}, v2_dataset_delete_params.V2DatasetDeleteParams),
             ),
             cast_to=V2DatasetDeleteResponse,
         )
@@ -435,7 +453,7 @@ class AsyncV2DatasetsResource(AsyncAPIResource):
         if not digest:
             raise ValueError(f"Expected a non-empty value for `digest` but received {digest!r}")
         return await self._get(
-            f"/object/{entity}/{project}/datasets/{object_id}/versions/{digest}",
+            f"/v2/{entity}/{project}/datasets/{object_id}/versions/{digest}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
