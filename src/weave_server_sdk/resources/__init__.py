@@ -72,6 +72,14 @@ from .threads import (
     ThreadsResourceWithStreamingResponse,
     AsyncThreadsResourceWithStreamingResponse,
 )
+from .v2_test import (
+    V2TestResource,
+    AsyncV2TestResource,
+    V2TestResourceWithRawResponse,
+    AsyncV2TestResourceWithRawResponse,
+    V2TestResourceWithStreamingResponse,
+    AsyncV2TestResourceWithStreamingResponse,
+)
 from .feedback import (
     FeedbackResource,
     AsyncFeedbackResource,
@@ -254,4 +262,10 @@ __all__ = [
     "AsyncV2ScoresResourceWithRawResponse",
     "V2ScoresResourceWithStreamingResponse",
     "AsyncV2ScoresResourceWithStreamingResponse",
+    "V2TestResource",
+    "AsyncV2TestResource",
+    "V2TestResourceWithRawResponse",
+    "AsyncV2TestResourceWithRawResponse",
+    "V2TestResourceWithStreamingResponse",
+    "AsyncV2TestResourceWithStreamingResponse",
 ]

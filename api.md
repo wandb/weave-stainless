@@ -318,3 +318,15 @@ Methods:
 - <code title="get /object/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">list</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_list_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_list_response.py">JSONLDecoder[V2ScoreListResponse]</a></code>
 - <code title="delete /object/{entity}/{project}/scores">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">delete</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_score_delete_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_score_delete_response.py">V2ScoreDeleteResponse</a></code>
 - <code title="get /object/{entity}/{project}/scores/{score_id}">client.v2_scores.<a href="./src/weave_server_sdk/resources/v2_scores.py">read</a>(score_id, \*, entity, project) -> <a href="./src/weave_server_sdk/types/v2_score_read_response.py">V2ScoreReadResponse</a></code>
+
+# V2Test
+
+Types:
+
+```python
+from weave_server_sdk.types import V2TestCreateResponse
+```
+
+Methods:
+
+- <code title="post /object/{entity}/{project}/v2_test/create">client.v2_test.<a href="./src/weave_server_sdk/resources/v2_test.py">create</a>(project, \*, entity, \*\*<a href="src/weave_server_sdk/types/v2_test_create_params.py">params</a>) -> <a href="./src/weave_server_sdk/types/v2_test_create_response.py">V2TestCreateResponse</a></code>

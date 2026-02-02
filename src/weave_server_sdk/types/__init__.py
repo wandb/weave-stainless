@@ -62,6 +62,7 @@ from .table_create_response import TableCreateResponse as TableCreateResponse
 from .table_update_response import TableUpdateResponse as TableUpdateResponse
 from .v2_op_create_response import V2OpCreateResponse as V2OpCreateResponse
 from .v2_op_delete_response import V2OpDeleteResponse as V2OpDeleteResponse
+from .v2_test_create_params import V2TestCreateParams as V2TestCreateParams
 from .feedback_create_params import FeedbackCreateParams as FeedbackCreateParams
 from .object_create_response import ObjectCreateResponse as ObjectCreateResponse
 from .object_delete_response import ObjectDeleteResponse as ObjectDeleteResponse
@@ -80,6 +81,7 @@ from .ref_read_batch_response import RefReadBatchResponse as RefReadBatchRespons
 from .v2_scorer_create_params import V2ScorerCreateParams as V2ScorerCreateParams
 from .v2_scorer_delete_params import V2ScorerDeleteParams as V2ScorerDeleteParams
 from .v2_scorer_read_response import V2ScorerReadResponse as V2ScorerReadResponse
+from .v2_test_create_response import V2TestCreateResponse as V2TestCreateResponse
 from .call_stream_query_params import CallStreamQueryParams as CallStreamQueryParams
 from .call_upsert_batch_params import CallUpsertBatchParams as CallUpsertBatchParams
 from .feedback_create_response import FeedbackCreateResponse as FeedbackCreateResponse
