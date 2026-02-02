@@ -42,6 +42,7 @@ Repository = "https://github.com/stainless-sdks/weave-python"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
+stainless = ["weave_server_sdk @ git+https://github.com/wandb/weave-stainless.git@5418bc04357c1bba414316d97266c6e7ea8be6ed"]
 
 [tool.uv]
 managed = true
